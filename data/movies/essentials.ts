@@ -1,14 +1,10 @@
-
 import type { MovieCollection } from "@/types/movie";
 
 export const essentialsCollection: MovieCollection = {
   id: "essentials",
-
   title: "The Essentials",
-
   description:
-    "The 16 most important movies and series to watch before Avengers: Doomsday.",
-
+    "16 focused picks covering the Avengers, the multiverse, the New Avengers, the Fantastic Four and the returning Fox X-Men.",
   movieIds: [
     "the-avengers",
     "captain-america-the-winter-soldier",
@@ -24,7 +20,7 @@ export const essentialsCollection: MovieCollection = {
     "captain-america-brave-new-world",
     "thunderbolts",
     "the-fantastic-four-first-steps",
-    "spider-man-brand-new-day",
-    "visionquest",
+    "x-men",
+    "x2-x-men-united",
   ],
 };
