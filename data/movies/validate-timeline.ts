@@ -5,6 +5,7 @@ const EXPECTED_FOX_IDS = new Set([
   "x-men",
   "x2-x-men-united",
   "x-men-days-of-future-past",
+  "x-men-the-last-stand",
 ]);
 
 const EXPECTED_TVA_IDS = new Set([
