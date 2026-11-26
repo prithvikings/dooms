@@ -7,7 +7,6 @@ import { extraCollections } from "./extras";
 export function validateCollections() {
   const errors: string[] = [];
 
-  const mainIds = new Set(movies.map((movie) => movie.id));
   const extraIds = new Set(extraMovies.map((movie) => movie.id));
 
   // Validate Essentials
@@ -38,7 +37,9 @@ export function validateCollections() {
       movie.importance === "essential" &&
       !essentialIds.includes(movie.id)
     ) {
-      errors.push(`Movie marked essential but missing from Essentials: ${movie.id}`);
+      errors.push(
+        `Movie marked essential but missing from Essentials: ${movie.id}`
+      );
     }
   }
 
