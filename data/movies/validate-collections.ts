@@ -7,7 +7,6 @@ import { extraCollections } from "./extras";
 export function validateCollections() {
   const errors: string[] = [];
 
-  const mainIds = new Set(movies.map((movie) => movie.id));
   const extraIds = new Set(extraMovies.map((movie) => movie.id));
 
   // Validate Essentials
@@ -24,8 +23,23 @@ export function validateCollections() {
   }
 
   for (const id of essentialIds) {
-    if (!mainIds.has(id)) {
+    const movie = movies.find((item) => item.id === id);
+
+    if (!movie) {
       errors.push(`Unknown essential movie: ${id}`);
+    } else if (movie.importance !== "essential") {
+      errors.push(`Essential item is not marked essential: ${id}`);
+    }
+  }
+
+  for (const movie of movies) {
+    if (
+      movie.importance === "essential" &&
+      !essentialIds.includes(movie.id)
+    ) {
+      errors.push(
+        `Movie marked essential but missing from Essentials: ${movie.id}`
+      );
     }
   }
 
@@ -61,9 +75,9 @@ export function validateCollections() {
     );
   }
 
-  if (extraMovies.length !== 30) {
+  if (extraMovies.length !== 29) {
     errors.push(
-      `Expected 30 extra movies, found ${extraMovies.length}`
+      `Expected 29 extra movies, found ${extraMovies.length}`
     );
   }
 

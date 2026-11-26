@@ -44,7 +44,6 @@ export const extraCollections: ExtraCollection[] = [
 
     movieIds: [
       "x-men-first-class",
-      "x-men-the-last-stand",
       "x-men-origins-wolverine",
       "the-wolverine",
       "x-men-apocalypse",
