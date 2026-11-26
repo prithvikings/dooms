@@ -140,16 +140,7 @@ export const extraMovies: ExtraMovie[] = [
     synopsis: "Young Charles Xavier and Erik Lehnsherr form an alliance while mutantkind faces a global crisis.",
     doomsdayRelevance: "Provides background on the younger versions of Professor X and Magneto.",
   }),
-  createExtraMovie({
-    id: "x-men-the-last-stand",
-    slug: "x-men-the-last-stand",
-    title: "X-Men: The Last Stand",
-    year: 2006,
-    runtimeMinutes: 104,
-    universe: "FOX",
-    synopsis: "The X-Men face a conflict surrounding a controversial mutant cure and Jean Grey's transformation.",
-    doomsdayRelevance: "Completes the original trilogy and develops the original X-Men characters.",
-  }),
+
   createExtraMovie({
     id: "x-men-origins-wolverine",
     slug: "x-men-origins-wolverine",
