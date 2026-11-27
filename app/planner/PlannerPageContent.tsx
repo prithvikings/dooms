@@ -8,6 +8,12 @@ import { useWatchProgress } from "@/components/providers/WatchProgressProvider";
 import { Badge } from "@/components/ui/Badge";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { PlannerSchedule } from "@/components/planner/PlannerSchedule";
+
+import {
+  generateWatchSchedule,
+  getLocalDateString,
+} from "@/lib/planner";
 
 import {
   createDefaultPlannerConfig,
@@ -44,9 +50,11 @@ export function PlannerPageContent({
   defaultTargetDate,
 }: PlannerPageContentProps) {
   const {
-    isLoaded: isProgressLoaded,
-    isWatched,
-  } = useWatchProgress();
+  isLoaded: isProgressLoaded,
+  isWatched,
+  watchedMovieIds,
+  toggleWatched,
+} = useWatchProgress();
 
   const defaultConfig = useMemo(
     () =>
@@ -82,6 +90,10 @@ export function PlannerPageContent({
     defaultConfig,
     movies.map((movie) => movie.id)
   );
+
+  useEffect(() => {
+  setToday(getLocalDateString());
+}, []);
 
   const frameId = window.requestAnimationFrame(() => {
     setConfig(savedConfig);
@@ -120,6 +132,31 @@ export function PlannerPageContent({
       ),
     [orderedMovies, selectedMovieSet]
   );
+
+  const [today, setToday] = useState("");
+
+const scheduleResult = useMemo(() => {
+  if (!isLoaded || !isProgressLoaded || !today) {
+    return null;
+  }
+
+  return generateWatchSchedule({
+    movies,
+    selectedMovieIds: config.selectedMovieIds,
+    watchedMovieIds,
+    dailyBudgetMinutes: config.dailyBudgetMinutes,
+    targetDate: config.targetDate,
+    today,
+    includeWatched: config.includeWatched,
+  });
+}, [
+  movies,
+  config,
+  watchedMovieIds,
+  today,
+  isLoaded,
+  isProgressLoaded,
+]);
 
   const watchedSelectedCount = selectedMovies.filter(
     (movie) => isWatched(movie.id)
@@ -500,11 +537,17 @@ export function PlannerPageContent({
                     ))}
                   </select>
 
-                  <p className="mt-3 text-xs leading-6 text-foreground-muted">
-                    This is your daily target, not a strict
-                    limit. Longer titles may need more than
-                    one day&apos;s budget.
-                  </p>
+                 <div className="mt-6 rounded-xl border border-doom-gold/20 bg-doom-gold/5 p-4">
+  <p className="text-sm font-semibold text-foreground">
+    Your schedule updates automatically
+  </p>
+
+  <p className="mt-2 text-xs leading-6 text-foreground-secondary">
+    Change your watchlist, viewing budget, deadline,
+    or watched status. Your day-by-day plan will
+    recalculate using your latest settings.
+  </p>
+</div>
                 </div>
               </div>
 
@@ -703,6 +746,16 @@ export function PlannerPageContent({
           </div>
         </Container>
       </section>
+    {scheduleResult && (
+        <PlannerSchedule
+          result={scheduleResult}
+          movies={movies}
+          today={today}
+          watchedMovieIds={watchedMovieIds}
+          isProgressLoaded={isProgressLoaded}
+          onToggleWatched={toggleWatched}
+        />
+      )}
     </>
   );
 }
