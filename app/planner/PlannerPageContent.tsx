@@ -78,17 +78,21 @@ export function PlannerPageContent({
 
   // Load the saved planner configuration.
   useEffect(() => {
-    const savedConfig = readPlannerConfig(
-      defaultConfig,
-      movies.map((movie) => movie.id)
-    );
+  const savedConfig = readPlannerConfig(
+    defaultConfig,
+    movies.map((movie) => movie.id)
+  );
 
-    window.requestAnimationFrame(() => {
-      setConfig(savedConfig);
-      setIsLoaded(true);
-      setSaveStatus("saved");
-    });
-  }, [defaultConfig, movies]);
+  const frameId = window.requestAnimationFrame(() => {
+    setConfig(savedConfig);
+    setIsLoaded(true);
+    setSaveStatus("saved");
+  });
+
+  return () => {
+    window.cancelAnimationFrame(frameId);
+  };
+}, [defaultConfig, movies]);
 
   const updateConfig = (
     updater: (current: PlannerConfig) => PlannerConfig

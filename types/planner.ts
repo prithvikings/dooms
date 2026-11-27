@@ -1,3 +1,4 @@
+
 export type PlannerMode = "automatic" | "manual";
 
 export type PlannerOrder = "release" | "chronological";
@@ -18,23 +19,26 @@ export interface PlannerConfig {
 
 export type ScheduledMovie = {
   movieId: string;
-
   day: number;
-
   startMinute: number;
   duration: number;
-
   isContinuation: boolean;
+  overBudget: boolean;
 };
 
 export type PlannerResult = {
   schedule: ScheduledMovie[];
 
   selectedMovieIds: string[];
+  excludedWatchedMovieIds: string[];
+  unknownRuntimeMovieIds: string[];
   unscheduledMovieIds: string[];
 
   totalRuntime: number;
   totalDays: number;
-  essentialCount: number;
-};
+  availableDays: number;
+  dailyBudgetMinutes: number;
 
+  overBudgetMovieIds: string[];
+  isComplete: boolean;
+};
