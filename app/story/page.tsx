@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { InteractiveTimeline } from "@/components/story/InteractiveTimeline";
-
+import { StoryConnections } from "@/components/story/StoryConnections";
 export const metadata: Metadata = {
   title: "The Story",
   description:
@@ -37,7 +37,7 @@ const storyThreads = [
   {
     number: "03",
     title: "The Fantastic Four",
-    universe: "EARTH-828",
+    universe: "ALTERNATE REALITY",
     description:
       "Marvel's First Family comes from a distinct reality introduced in The Fantastic Four: First Steps. Reed Richards and his team bring another important corner of Marvel's universe into the wider story.",
     connection:
@@ -213,6 +213,7 @@ export default function StoryPage() {
         </Container>
       </section>
 <InteractiveTimeline />
+<StoryConnections />
       {/* Story threads */}
       <section className="border-y border-border bg-background-secondary py-20 sm:py-28">
         <Container>

@@ -206,9 +206,10 @@ export function InteractiveTimeline() {
 
                   return (
                     <article
-                      key={movie.id}
-                      className="relative rounded-xl border border-border bg-surface p-4 transition-colors hover:border-border-strong sm:p-5"
-                    >
+  id={`timeline-${movie.id}`}
+  key={movie.id}
+  className="relative scroll-mt-28 rounded-xl border border-border bg-surface p-4 transition-colors hover:border-border-strong sm:p-5"
+>
                       {/* Timeline marker */}
                       <span
                         className={[
