@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 
 import { WatchProgressProvider } from "@/components/providers/WatchProgressProvider";
-import { movies } from "@/data/movies";
+import { movies, extraMovies } from "@/data/movies";
 
 import "./globals.css";
 
@@ -38,10 +38,11 @@ export default function RootLayout({
     <html lang="en" className={geistSans.variable}>
       <body className="min-h-screen bg-background font-sans text-foreground antialiased">
         <WatchProgressProvider
-          validMovieIds={movies.map((movie) => movie.id)}
-        >
-          {children}
-        </WatchProgressProvider>
+  validMovieIds={movies.map((movie) => movie.id)}
+  validExtraMovieIds={extraMovies.map((movie) => movie.id)}
+>
+  {children}
+</WatchProgressProvider>
       </body>
     </html>
   );

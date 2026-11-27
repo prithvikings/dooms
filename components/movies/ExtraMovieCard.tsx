@@ -1,0 +1,104 @@
+
+"use client";
+
+import { useWatchProgress } from "@/components/providers/WatchProgressProvider";
+import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { formatRuntime } from "@/lib/format-runtime";
+import type { ExtraMovie } from "@/types/movie";
+
+type ExtraMovieCardProps = {
+  movie: ExtraMovie;
+};
+
+const posterBackgrounds = [
+  "linear-gradient(145deg, #49352d, #17191f 75%)",
+  "linear-gradient(145deg, #263d54, #17191f 75%)",
+  "linear-gradient(145deg, #5b292e, #17191f 75%)",
+  "linear-gradient(145deg, #344b3d, #17191f 75%)",
+  "linear-gradient(145deg, #51432e, #17191f 75%)",
+  "linear-gradient(145deg, #34304f, #17191f 75%)",
+];
+
+export function ExtraMovieCard({
+  movie,
+}: ExtraMovieCardProps) {
+  const {
+    isExtraLoaded,
+    isExtraWatched,
+    toggleExtraWatched,
+  } = useWatchProgress();
+
+  const backgroundIndex =
+    movie.id.split("").reduce(
+      (total, character) => total + character.charCodeAt(0),
+      0
+    ) % posterBackgrounds.length;
+
+  const watched = isExtraWatched(movie.id);
+
+  return (
+    <article
+      className={[
+        "group overflow-hidden rounded-xl border bg-surface transition-colors",
+        watched
+          ? "border-doom-gold/40"
+          : "border-border hover:border-border-strong",
+      ].join(" ")}
+    >
+      {/* Poster */}
+      <div
+        className="relative flex aspect-[3/4] items-center justify-center overflow-hidden"
+        style={{
+          background: posterBackgrounds[backgroundIndex],
+        }}
+      >
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_35%,rgba(255,255,255,0.08),transparent_65%)]" />
+
+        <div className="relative flex size-16 items-center justify-center rounded-full border border-white/15 bg-black/15 text-xl font-semibold text-white/70 transition-transform duration-300 group-hover:scale-110">
+          {movie.year}
+        </div>
+
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+          <Badge variant="neutral">
+            {movie.universe}
+          </Badge>
+        </div>
+
+        {watched && (
+          <div className="absolute right-3 top-3 rounded-full border border-doom-gold/40 bg-black/70 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-doom-gold">
+            Watched ✓
+          </div>
+        )}
+      </div>
+
+      {/* Movie information */}
+      <div className="flex min-h-[220px] flex-col gap-3 p-4">
+        <div className="flex-1">
+          <h3 className="line-clamp-2 text-sm font-semibold leading-5 text-foreground">
+            {movie.title}
+          </h3>
+
+          <p className="mt-2 text-xs text-foreground-muted">
+            {movie.year} · {formatRuntime(movie.runtimeMinutes)}
+          </p>
+
+          <p className="mt-3 line-clamp-3 text-xs leading-5 text-foreground-secondary">
+            {movie.doomsdayRelevance}
+          </p>
+        </div>
+
+        <Button
+          variant={watched ? "secondary" : "ghost"}
+          size="sm"
+          className="w-full"
+          disabled={!isExtraLoaded}
+          aria-pressed={watched}
+          onClick={() => toggleExtraWatched(movie.id)}
+        >
+          {watched ? "Mark unwatched" : "Mark as watched"}
+        </Button>
+      </div>
+    </article>
+  );
+}

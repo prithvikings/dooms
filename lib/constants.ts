@@ -5,6 +5,7 @@ export const APP_DESCRIPTION =
 
 export const STORAGE_KEYS = {
   WATCH_PROGRESS: "doomsday:watch-progress",
+  EXTRA_WATCH_PROGRESS: "doomsday:extra-watch-progress",
   PLANNER_CONFIG: "doomsday:planner-config",
   RELEASE_REGION: "doomsday:release-region",
 } as const;
@@ -39,3 +40,5 @@ export const NAVIGATION_ITEMS = [
     href: "/extras",
   },
 ] as const;
+
+

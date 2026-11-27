@@ -7,12 +7,18 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 
 
+
+
 const navigationLinks = [
   { label: "Home", href: "/" },
   { label: "Essentials", href: "/essentials" },
+  { label: "Catalogue", href: "/catalogue" },
+  { label: "Extras", href: "/extras" },
   { label: "Progress", href: "/#progress" },
   { label: "About", href: "/#about" },
 ];
+
+
 
 
 export function Header() {
