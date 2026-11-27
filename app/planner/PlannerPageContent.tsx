@@ -5,10 +5,10 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 import { useWatchProgress } from "@/components/providers/WatchProgressProvider";
+import { PlannerSchedule } from "@/components/planner/PlannerSchedule";
 import { Badge } from "@/components/ui/Badge";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { PlannerSchedule } from "@/components/planner/PlannerSchedule";
 
 import {
   generateWatchSchedule,
@@ -50,11 +50,11 @@ export function PlannerPageContent({
   defaultTargetDate,
 }: PlannerPageContentProps) {
   const {
-  isLoaded: isProgressLoaded,
-  isWatched,
-  watchedMovieIds,
-  toggleWatched,
-} = useWatchProgress();
+    isLoaded: isProgressLoaded,
+    isWatched,
+    watchedMovieIds,
+    toggleWatched,
+  } = useWatchProgress();
 
   const defaultConfig = useMemo(
     () =>
@@ -73,6 +73,7 @@ export function PlannerPageContent({
     [movies]
   );
 
+  // Component state
   const [config, setConfig] =
     useState<PlannerConfig>(defaultConfig);
 
@@ -84,6 +85,10 @@ export function PlannerPageContent({
 
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Today's date is populated after the component mounts.
+  // This avoids reading the current time during prerendering.
+  const [today, setToday] = useState("");
+
   // Load the saved planner configuration.
   useEffect(() => {
   const savedConfig = readPlannerConfig(
@@ -91,14 +96,11 @@ export function PlannerPageContent({
     movies.map((movie) => movie.id)
   );
 
-  useEffect(() => {
-  setToday(getLocalDateString());
-}, []);
-
   const frameId = window.requestAnimationFrame(() => {
     setConfig(savedConfig);
     setIsLoaded(true);
     setSaveStatus("saved");
+    setToday(getLocalDateString());
   });
 
   return () => {
@@ -106,6 +108,7 @@ export function PlannerPageContent({
   };
 }, [defaultConfig, movies]);
 
+  // Update and persist planner configuration.
   const updateConfig = (
     updater: (current: PlannerConfig) => PlannerConfig
   ) => {
@@ -120,6 +123,7 @@ export function PlannerPageContent({
     );
   };
 
+  // Selected movie IDs.
   const selectedMovieSet = useMemo(
     () => new Set(config.selectedMovieIds),
     [config.selectedMovieIds]
@@ -133,35 +137,35 @@ export function PlannerPageContent({
     [orderedMovies, selectedMovieSet]
   );
 
-  const [today, setToday] = useState("");
+  // Generate the schedule once configuration and progress are loaded.
+  const scheduleResult = useMemo(() => {
+    if (!isLoaded || !isProgressLoaded || !today) {
+      return null;
+    }
 
-const scheduleResult = useMemo(() => {
-  if (!isLoaded || !isProgressLoaded || !today) {
-    return null;
-  }
-
-  return generateWatchSchedule({
+    return generateWatchSchedule({
+      movies,
+      selectedMovieIds: config.selectedMovieIds,
+      watchedMovieIds,
+      dailyBudgetMinutes: config.dailyBudgetMinutes,
+      targetDate: config.targetDate,
+      today,
+      includeWatched: config.includeWatched,
+    });
+  }, [
     movies,
-    selectedMovieIds: config.selectedMovieIds,
+    config,
     watchedMovieIds,
-    dailyBudgetMinutes: config.dailyBudgetMinutes,
-    targetDate: config.targetDate,
     today,
-    includeWatched: config.includeWatched,
-  });
-}, [
-  movies,
-  config,
-  watchedMovieIds,
-  today,
-  isLoaded,
-  isProgressLoaded,
-]);
+    isLoaded,
+    isProgressLoaded,
+  ]);
 
   const watchedSelectedCount = selectedMovies.filter(
     (movie) => isWatched(movie.id)
   ).length;
 
+  // Search and filter movies.
   const filteredMovies = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
 
@@ -172,6 +176,7 @@ const scheduleResult = useMemo(() => {
     );
   }, [orderedMovies, searchQuery]);
 
+  // Collection selection.
   const handleCollectionChange = (
     collection: "essentials" | "catalogue" | "custom"
   ) => {
@@ -203,6 +208,7 @@ const scheduleResult = useMemo(() => {
     });
   };
 
+  // Toggle an individual movie in the custom watchlist.
   const toggleMovie = (movieId: string) => {
     updateConfig((current) => {
       const exists =
@@ -237,6 +243,7 @@ const scheduleResult = useMemo(() => {
     }));
   };
 
+  // Daily viewing budget.
   const handleBudgetChange = (value: string) => {
     updateConfig((current) => ({
       ...current,
@@ -244,6 +251,7 @@ const scheduleResult = useMemo(() => {
     }));
   };
 
+  // Target completion date.
   const handleTargetDateChange = (value: string) => {
     updateConfig((current) => ({
       ...current,
@@ -251,6 +259,7 @@ const scheduleResult = useMemo(() => {
     }));
   };
 
+  // Include or exclude already watched titles.
   const handleIncludeWatchedChange = (
     checked: boolean
   ) => {
@@ -537,17 +546,11 @@ const scheduleResult = useMemo(() => {
                     ))}
                   </select>
 
-                 <div className="mt-6 rounded-xl border border-doom-gold/20 bg-doom-gold/5 p-4">
-  <p className="text-sm font-semibold text-foreground">
-    Your schedule updates automatically
-  </p>
-
-  <p className="mt-2 text-xs leading-6 text-foreground-secondary">
-    Change your watchlist, viewing budget, deadline,
-    or watched status. Your day-by-day plan will
-    recalculate using your latest settings.
-  </p>
-</div>
+                  <p className="mt-3 text-xs leading-6 text-foreground-muted">
+                    This is your daily target. A title longer
+                    than your budget will stay intact and
+                    occupy its own day.
+                  </p>
                 </div>
               </div>
 
@@ -590,7 +593,7 @@ const scheduleResult = useMemo(() => {
                 <SectionHeading
                   eyebrow="STEP 04"
                   title="Already watched something?"
-                  description="Decide how the planner should handle titles you've completed."
+                  description="Decide how the planner should handle titles you have completed."
                 />
 
                 <label className="mt-7 flex cursor-pointer items-start gap-4 rounded-2xl border border-border bg-surface p-5">
@@ -717,14 +720,13 @@ const scheduleResult = useMemo(() => {
 
                 <div className="mt-6 rounded-xl border border-doom-gold/20 bg-doom-gold/5 p-4">
                   <p className="text-sm font-semibold text-foreground">
-                    Next up: your schedule
+                    Your schedule updates automatically
                   </p>
 
                   <p className="mt-2 text-xs leading-6 text-foreground-secondary">
-                    Once the setup is ready, we&apos;ll distribute
-                    your selected titles across the available
-                    days while respecting your daily viewing
-                    budget.
+                    Change your watchlist, viewing budget,
+                    deadline, or watched status. Your day-by-day
+                    plan will recalculate using your latest settings.
                   </p>
                 </div>
 
@@ -746,7 +748,9 @@ const scheduleResult = useMemo(() => {
           </div>
         </Container>
       </section>
-    {scheduleResult && (
+
+      {/* Generated Schedule */}
+      {scheduleResult && (
         <PlannerSchedule
           result={scheduleResult}
           movies={movies}
