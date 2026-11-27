@@ -2,18 +2,19 @@ export type PlannerMode = "automatic" | "manual";
 
 export type PlannerOrder = "release" | "chronological";
 
-export type PlannerConfig = {
-  daysAvailable: number;
-  hoursPerDay: number;
+export type PlannerCollection =
+  | "essentials"
+  | "catalogue"
+  | "custom";
 
-  mode: PlannerMode;
-  order: PlannerOrder;
-
-  includeShows: boolean;
-  excludeWatched: boolean;
-
+export interface PlannerConfig {
+  version: 1;
+  collection: PlannerCollection;
   selectedMovieIds: string[];
-};
+  dailyBudgetMinutes: number;
+  targetDate: string;
+  includeWatched: boolean;
+}
 
 export type ScheduledMovie = {
   movieId: string;
@@ -36,3 +37,4 @@ export type PlannerResult = {
   totalDays: number;
   essentialCount: number;
 };
+
