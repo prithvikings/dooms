@@ -8,7 +8,8 @@ import { Container } from "@/components/ui/Container";
 
 const navigationLinks = [
   { label: "Home", href: "/#home" },
-  { label: "Watch Guide", href: "/#guide" },
+  { label: "Essentials", href: "/#essentials" },
+  { label: "Progress", href: "/#progress" },
   { label: "About", href: "/#about" },
 ];
 
@@ -20,7 +21,6 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur-xl">
       <Container className="flex h-20 items-center justify-between">
-        {/* Brand */}
         <Link
           href="/"
           onClick={closeMenu}
@@ -51,7 +51,7 @@ export function Header() {
             <Link
               key={link.label}
               href={link.href}
-              className="text-sm font-medium text-foreground-secondary transition-colors hover:text-foreground"
+              className="text-sm font-medium text-foreground-secondary transition-colors hover:text-doom-gold"
             >
               {link.label}
             </Link>
@@ -89,7 +89,7 @@ export function Header() {
               key={link.label}
               href={link.href}
               onClick={closeMenu}
-              className="rounded-lg px-3 py-3 text-sm font-medium text-foreground-secondary transition-colors hover:bg-surface hover:text-foreground"
+              className="rounded-lg px-3 py-3 text-sm font-medium text-foreground-secondary transition-colors hover:bg-surface hover:text-doom-gold"
             >
               {link.label}
             </Link>
