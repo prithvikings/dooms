@@ -15,6 +15,7 @@ const navigationLinks = [
   { label: "Planner", href: "/planner" },
   { label: "Progress", href: "/#progress" },
   { label: "About", href: "/#about" },
+{ label: "Countdown", href: "/countdown" },
 ];
 
 export function Header() {
