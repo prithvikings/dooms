@@ -1,5 +1,3 @@
-import type { Movie } from "./movie";
-
 export type PlannerMode = "automatic" | "manual";
 
 export type PlannerOrder = "release" | "chronological";
