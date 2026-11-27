@@ -5,6 +5,7 @@ import { PageShell } from "@/components/layout/PageShell";
 import { Badge } from "@/components/ui/Badge";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { InteractiveTimeline } from "@/components/story/InteractiveTimeline";
 
 export const metadata: Metadata = {
   title: "The Story",
@@ -211,7 +212,7 @@ export default function StoryPage() {
           </div>
         </Container>
       </section>
-
+<InteractiveTimeline />
       {/* Story threads */}
       <section className="border-y border-border bg-background-secondary py-20 sm:py-28">
         <Container>
