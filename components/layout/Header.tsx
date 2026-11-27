@@ -6,12 +6,14 @@ import Link from "next/link";
 
 import { Container } from "@/components/ui/Container";
 
+
 const navigationLinks = [
-  { label: "Home", href: "/#home" },
-  { label: "Essentials", href: "/#essentials" },
+  { label: "Home", href: "/" },
+  { label: "Essentials", href: "/essentials" },
   { label: "Progress", href: "/#progress" },
   { label: "About", href: "/#about" },
 ];
+
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
