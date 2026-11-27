@@ -1,6 +1,5 @@
 
 import { PageShell } from "@/components/layout/PageShell";
-import { WatchProgressProvider } from "@/components/providers/WatchProgressProvider";
 import { HomePageContent } from "@/components/home/HomePageContent";
 
 import {
@@ -14,15 +13,11 @@ export default function Home() {
 
   return (
     <PageShell>
-      <WatchProgressProvider
-        validMovieIds={movies.map((movie) => movie.id)}
-      >
-        <HomePageContent
-          essentials={essentials}
-          totalMovies={movies.length}
-          totalExtras={extraMovies.length}
-        />
-      </WatchProgressProvider>
+      <HomePageContent
+        essentials={essentials}
+        totalMovies={movies.length}
+        totalExtras={extraMovies.length}
+      />
     </PageShell>
   );
 }

@@ -2,6 +2,9 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 
+import { WatchProgressProvider } from "@/components/providers/WatchProgressProvider";
+import { movies } from "@/data/movies";
+
 import "./globals.css";
 
 const geistSans = Geist({
@@ -34,7 +37,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={geistSans.variable}>
       <body className="min-h-screen bg-background font-sans text-foreground antialiased">
-        {children}
+        <WatchProgressProvider
+          validMovieIds={movies.map((movie) => movie.id)}
+        >
+          {children}
+        </WatchProgressProvider>
       </body>
     </html>
   );
