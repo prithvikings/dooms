@@ -1,36 +1,28 @@
 
 import { PageShell } from "@/components/layout/PageShell";
+import { WatchProgressProvider } from "@/components/providers/WatchProgressProvider";
+import { HomePageContent } from "@/components/home/HomePageContent";
 
-import { Badge } from "@/components/ui/Badge";
-import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import {
+  movies,
+  extraMovies,
+  getEssentials,
+} from "@/data/movies";
 
 export default function Home() {
+  const essentials = getEssentials();
+
   return (
     <PageShell>
-      <section
-        id="guide"
-        className="flex min-h-[65vh] items-center py-20 sm:py-28"
+      <WatchProgressProvider
+        validMovieIds={movies.map((movie) => movie.id)}
       >
-        <Container>
-          <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
-            <Badge variant="neutral">
-              THE MARVEL WATCH GUIDE
-            </Badge>
-
-            <SectionHeading
-              align="center"
-              eyebrow="THE ROAD TO DOOMSDAY"
-              title="Your journey starts here."
-              description="A curated collection of essential stories, multiverse connections and Marvel moments worth watching before Avengers: Doomsday."
-            />
-
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-foreground-muted">
-              More coming soon
-            </p>
-          </div>
-        </Container>
-      </section>
+        <HomePageContent
+          essentials={essentials}
+          totalMovies={movies.length}
+          totalExtras={extraMovies.length}
+        />
+      </WatchProgressProvider>
     </PageShell>
   );
 }

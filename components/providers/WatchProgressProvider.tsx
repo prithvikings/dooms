@@ -5,9 +5,8 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
-  useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 
@@ -31,6 +30,49 @@ type WatchProgressProviderProps = {
 
 const WatchProgressContext =
   createContext<WatchProgressContextValue | null>(null);
+
+const PROGRESS_EVENT = "watch-progress-change";
+
+function getSnapshot(): string {
+  try {
+    return (
+      window.localStorage.getItem(STORAGE_KEYS.WATCH_PROGRESS) ?? ""
+    );
+  } catch {
+    return "";
+  }
+}
+
+function getServerSnapshot(): null {
+  return null;
+}
+
+function subscribe(callback: () => void) {
+  const handleStorageChange = (event: StorageEvent) => {
+    if (
+      event.key !== STORAGE_KEYS.WATCH_PROGRESS &&
+      event.key !== null
+    ) {
+      return;
+    }
+
+    callback();
+  };
+
+  const handleProgressChange = () => callback();
+
+  window.addEventListener("storage", handleStorageChange);
+  window.addEventListener(PROGRESS_EVENT, handleProgressChange);
+
+  return () => {
+    window.removeEventListener("storage", handleStorageChange);
+    window.removeEventListener(PROGRESS_EVENT, handleProgressChange);
+  };
+}
+
+function notifyProgressChange() {
+  window.dispatchEvent(new Event(PROGRESS_EVENT));
+}
 
 function parseProgress(
   raw: string | null,
@@ -60,76 +102,23 @@ export function WatchProgressProvider({
   children,
   validMovieIds,
 }: WatchProgressProviderProps) {
-  const [watchedMovieIds, setWatchedMovieIds] = useState<string[]>([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const storedProgress = useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot
+  );
 
   const validMovieIdSet = useMemo(
     () => new Set(validMovieIds),
     [validMovieIds]
   );
 
-  useEffect(() => {
-    const storedProgress = window.localStorage.getItem(
-      STORAGE_KEYS.WATCH_PROGRESS
-    );
+  const isLoaded = storedProgress !== null;
 
-    setWatchedMovieIds(
-      parseProgress(storedProgress, validMovieIdSet)
-    );
-
-    setIsLoaded(true);
-
-    const handleStorageChange = (event: StorageEvent) => {
-      if (
-        event.key !== STORAGE_KEYS.WATCH_PROGRESS &&
-        event.key !== null
-      ) {
-        return;
-      }
-
-      setWatchedMovieIds(
-        parseProgress(event.newValue, validMovieIdSet)
-      );
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, [validMovieIdSet]);
-
-  const toggleWatched = useCallback(
-    (movieId: string) => {
-      if (!validMovieIdSet.has(movieId)) return;
-
-      const nextProgress = watchedMovieIds.includes(movieId)
-        ? watchedMovieIds.filter((id) => id !== movieId)
-        : [...watchedMovieIds, movieId];
-
-      setWatchedMovieIds(nextProgress);
-
-      try {
-        window.localStorage.setItem(
-          STORAGE_KEYS.WATCH_PROGRESS,
-          JSON.stringify(nextProgress)
-        );
-      } catch {
-        // Progress remains available in memory if storage is unavailable.
-      }
-    },
-    [watchedMovieIds, validMovieIdSet]
+  const watchedMovieIds = useMemo(
+    () => parseProgress(storedProgress, validMovieIdSet),
+    [storedProgress, validMovieIdSet]
   );
-
-  const clearProgress = useCallback(() => {
-    setWatchedMovieIds([]);
-
-    try {
-      window.localStorage.removeItem(STORAGE_KEYS.WATCH_PROGRESS);
-    } catch {
-      // Keep the in-memory state cleared.
-    }
-  }, []);
 
   const watchedSet = useMemo(
     () => new Set(watchedMovieIds),
@@ -140,6 +129,37 @@ export function WatchProgressProvider({
     (movieId: string) => watchedSet.has(movieId),
     [watchedSet]
   );
+
+  const toggleWatched = useCallback(
+    (movieId: string) => {
+      if (!validMovieIdSet.has(movieId)) return;
+
+      const nextProgress = watchedSet.has(movieId)
+        ? watchedMovieIds.filter((id) => id !== movieId)
+        : [...watchedMovieIds, movieId];
+
+      try {
+        window.localStorage.setItem(
+          STORAGE_KEYS.WATCH_PROGRESS,
+          JSON.stringify(nextProgress)
+        );
+
+        notifyProgressChange();
+      } catch {
+        // Storage may be unavailable in restricted browser contexts.
+      }
+    },
+    [validMovieIdSet, watchedSet, watchedMovieIds]
+  );
+
+  const clearProgress = useCallback(() => {
+    try {
+      window.localStorage.removeItem(STORAGE_KEYS.WATCH_PROGRESS);
+      notifyProgressChange();
+    } catch {
+      // Storage may be unavailable in restricted browser contexts.
+    }
+  }, []);
 
   const totalCount = validMovieIdSet.size;
   const watchedCount = watchedMovieIds.length;
