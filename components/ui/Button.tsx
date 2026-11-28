@@ -12,7 +12,7 @@ interface ButtonProps
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    "bg-doom-red text-white hover:bg-doom-red-light",
+    "bg-accent-green text-[#071006] hover:bg-accent-green-light",
 
   secondary:
     "border border-border-strong bg-surface text-foreground hover:bg-surface-hover",
@@ -44,7 +44,7 @@ export function Button({
         "transition-colors duration-200",
         "disabled:pointer-events-none disabled:opacity-50",
         "focus-visible:outline-2 focus-visible:outline-offset-4",
-        "focus-visible:outline-doom-gold",
+        "focus-visible:outline-accent-green",
         variants[variant],
         sizes[size],
         className,
