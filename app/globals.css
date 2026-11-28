@@ -9,14 +9,14 @@
   color-scheme: dark;
 
   /* Backgrounds */
-  --background: #090a0d;
-  --background-secondary: #111319;
-  --background-tertiary: #191c23;
+  --background: #080c09;
+  --background-secondary: #0e140f;
+  --background-tertiary: #151d16;
 
   /* Surfaces */
-  --surface: #17191f;
-  --surface-hover: #22252d;
-  --surface-elevated: #20232b;
+  --surface: #121914;
+  --surface-hover: #1b251d;
+  --surface-elevated: #1a241b;
 
   /* Brand */
   --accent-green: #7cff62;
@@ -33,7 +33,7 @@
   --border-strong: rgba(255, 255, 255, 0.15);
 
   /* Effects */
-  --shadow-glow: 0 0 40px rgba(134, 31, 41, 0.18);
+  --shadow-glow: 0 0 40px rgba(124, 255, 98, 0.14);
 }
 
 /* ============================================
@@ -118,7 +118,7 @@ svg {
 
 ::selection {
   background: var(--accent-green); color: #071006;
-  color: white;
+  color: #071006;
 }
 
 /* ============================================
@@ -136,7 +136,7 @@ svg {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: #34363e var(--background);
+  scrollbar-color: #344436 var(--background);
 }
 
 *::-webkit-scrollbar {
@@ -149,12 +149,12 @@ svg {
 }
 
 *::-webkit-scrollbar-thumb {
-  background: #34363e;
+  background: #344436;
   border-radius: 999px;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: #50525c;
+  background: #4e6650;
 }
 
 /* ============================================
