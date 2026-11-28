@@ -12,7 +12,6 @@ const navigationLinks = [
   { label: "Extras", href: "/extras" },
   { label: "Story", href: "/story" },
   { label: "Progress", href: "/#progress" },
-  { label: "About", href: "/#about" },
 ];
 
 export function Header() {
