@@ -109,19 +109,24 @@ export function HomePageContent({
             <label className="sr-only" htmlFor="release-region">
               Change release region
             </label>
-            <select
-              id="release-region"
-              value={selectedRegionId}
-              disabled={!isRegionLoaded}
-              onChange={(event) => handleRegionChange(event.target.value)}
-              className="cursor-pointer border-0 border-b border-[#7cff62] bg-transparent px-1 py-1 font-semibold text-[#7cff62] outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-[#7cff62]"
-            >
-              {RELEASE_DATES.map((region) => (
-                <option key={region.id} value={region.id} className="bg-[#111510] text-white">
-                  Change · {region.name}
-                </option>
-              ))}
-            </select>
+            <label className="relative inline-flex items-center">
+              <span className="sr-only">Change release region</span>
+              <select
+                id="release-region"
+                aria-label="Change release region"
+                value={selectedRegionId}
+                disabled={!isRegionLoaded}
+                onChange={(event) => handleRegionChange(event.target.value)}
+                className="cursor-pointer appearance-none border-0 border-b border-[#7cff62] bg-transparent py-1 pl-1 pr-5 font-semibold text-[#7cff62] outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-[#7cff62]"
+              >
+                {RELEASE_DATES.map((region) => (
+                  <option key={region.id} value={region.id} className="bg-[#111510] text-white">
+                    {region.name}
+                  </option>
+                ))}
+              </select>
+              <span aria-hidden="true" className="pointer-events-none absolute right-1 text-[#7cff62]">⌄</span>
+            </label>
           </div>
 
           {saveError && (
@@ -133,7 +138,7 @@ export function HomePageContent({
           <div className="mt-9 flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row">
             <Link
               href="/catalogue"
-              className="inline-flex min-h-14 items-center justify-center bg-[#7cff62] px-8 py-4 text-sm font-bold text-[#071006] shadow-[0_8px_35px_rgba(112,255,83,0.2)] transition-colors hover:bg-[#a0ff8a]"
+              className="inline-flex min-h-14 items-center justify-center bg-[#7cff62] px-8 py-4 text-sm font-bold text-black shadow-[0_8px_35px_rgba(112,255,83,0.2)] transition-colors hover:bg-[#a0ff8a]"
             >
               See the catalogue
             </Link>
