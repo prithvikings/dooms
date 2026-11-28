@@ -70,18 +70,8 @@ export function HomePageContent({
         id="guide"
         className="relative isolate flex min-h-svh items-center overflow-hidden border-b border-white/10 bg-[#050706] text-white"
       >
-        <div className="pointer-events-none absolute inset-0 -z-20 overflow-hidden bg-black">
-          <iframe
-            title="Avengers: Doomsday trailer background"
-            src="https://www.youtube-nocookie.com/embed/Wb8Tq_HD4E8?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&iv_load_policy=3&loop=1&playlist=Wb8Tq_HD4E8&playsinline=1&rel=0&modestbranding=1"
-            allow="autoplay; encrypted-media"
-            referrerPolicy="strict-origin-when-cross-origin"
-            className="pointer-events-none absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-[177.78vh] min-w-full -translate-x-1/2 -translate-y-1/2 scale-110 opacity-65"
-          />
-        </div>
-
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(0,0,0,0.58)_0%,rgba(0,0,0,0.28)_34%,rgba(0,0,0,0.62)_66%,#030504_100%)]" />
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_50%_42%,rgba(42,91,62,0.28),transparent_62%)]" />
+        <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(ellipse_at_50%_38%,rgba(42,91,62,0.24),transparent_58%),linear-gradient(135deg,#101710_0%,#080c09_48%,#030504_100%)]" />
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(0,0,0,0.28)_0%,rgba(0,0,0,0.12)_34%,rgba(0,0,0,0.5)_70%,#030504_100%)]" />
 
         <Container className="relative z-10 flex w-full flex-col items-center py-16 text-center sm:py-20 lg:py-24">
           <p className="text-xs font-semibold uppercase tracking-[0.55em] text-white/85 sm:text-sm">
