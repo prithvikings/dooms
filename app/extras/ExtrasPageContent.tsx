@@ -69,17 +69,19 @@ export function ExtrasPageContent({
 
         <Container className="py-20 sm:py-28">
           <div className="max-w-3xl">
-            <Link
-              href="/"
-              className="mb-8 inline-flex items-center gap-2 text-sm text-foreground-muted transition-colors hover:text-accent-green"
-            >
-              <span aria-hidden="true">←</span>
-              Back to home
-            </Link>
+            <div className="mb-8 flex flex-wrap items-center gap-3">
+              <Link
+                href="/"
+                className="inline-flex min-h-9 items-center gap-2 rounded-lg border border-border bg-surface/70 px-3.5 text-sm font-medium text-foreground-secondary transition-colors hover:border-accent-green/40 hover:bg-surface hover:text-accent-green"
+              >
+                <span aria-hidden="true">←</span>
+                Back to home
+              </Link>
 
-            <Badge variant="neutral">
-              BEYOND THE ESSENTIALS
-            </Badge>
+              <Badge variant="neutral">
+                BEYOND THE ESSENTIALS
+              </Badge>
+            </div>
 
             <p className="mt-7 text-xs font-semibold uppercase tracking-[0.28em] text-accent-green">
               EXPLORE THE WIDER MULTIVERSE
@@ -128,48 +130,76 @@ export function ExtrasPageContent({
             </div>
 
             {/* Extras watch progress */}
-            <div className="mt-8 rounded-xl border border-border bg-surface/80 p-5">
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <p className="text-sm font-semibold text-foreground">
-                    Your extras progress
+            <div className="mt-8 overflow-hidden rounded-xl border border-border bg-surface/80 p-5 sm:p-6">
+              <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+                <div className="max-w-md">
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-green">
+                    YOUR EXPLORATION
                   </p>
-                  <p className="mt-1 text-xs text-foreground-muted">
+                  <p className="mt-2 text-lg font-semibold text-foreground">
+                    {isExtraLoaded && extraWatchedCount === extraTotalCount
+                      ? "You’ve explored every collection."
+                      : isExtraLoaded && extraWatchedCount > 0
+                        ? "Your multiverse journey is underway."
+                        : "Every universe has a story worth exploring."}
+                  </p>
+                  <p className="mt-1.5 text-sm leading-6 text-foreground-secondary">
                     {isExtraLoaded
-                      ? `${extraWatchedCount} of ${extraTotalCount} titles completed`
-                      : "Loading your progress..."}
+                      ? extraWatchedCount === extraTotalCount
+                        ? "All additional titles are marked as watched. You can revisit any collection whenever you like."
+                        : `${extraTotalCount - extraWatchedCount} titles left to explore across the collections below. Take them at your own pace.`
+                      : "Your watched titles and completion progress will appear here."}
                   </p>
                 </div>
 
-                <span className="text-sm font-semibold tabular-nums text-accent-green">
-                  {isExtraLoaded
-                    ? `${extraProgressPercentage}%`
-                    : "—"}
-                </span>
+                <div className="grid grid-cols-2 gap-3 sm:min-w-52">
+                  <div className="rounded-lg border border-border bg-background-secondary px-4 py-3">
+                    <p className="text-2xl font-semibold tabular-nums text-foreground">
+                      {isExtraLoaded ? extraWatchedCount : "—"}
+                    </p>
+                    <p className="mt-1 text-[11px] uppercase tracking-wider text-foreground-muted">
+                      Completed
+                    </p>
+                  </div>
+                  <div className="rounded-lg border border-border bg-background-secondary px-4 py-3">
+                    <p className="text-2xl font-semibold tabular-nums text-foreground">
+                      {isExtraLoaded ? extraTotalCount - extraWatchedCount : "—"}
+                    </p>
+                    <p className="mt-1 text-[11px] uppercase tracking-wider text-foreground-muted">
+                      Remaining
+                    </p>
+                  </div>
+                </div>
               </div>
 
-              <div
-                className="mt-4 h-2 overflow-hidden rounded-full bg-background-tertiary"
-                role="progressbar"
-                aria-label="Extras watch progress"
-                aria-valuenow={
-                  isExtraLoaded ? extraProgressPercentage : 0
-                }
-                aria-valuemin={0}
-                aria-valuemax={100}
-              >
+              <div className="mt-5">
+                <div className="mb-2 flex items-center justify-between text-xs">
+                  <span className="font-medium text-foreground-secondary">
+                    Collection progress
+                  </span>
+                  <span className="font-semibold tabular-nums text-accent-green">
+                    {isExtraLoaded ? `${extraProgressPercentage}%` : "—"}
+                  </span>
+                </div>
                 <div
-                  className="h-full rounded-full bg-accent-green transition-all duration-500"
-                  style={{
-                    width: `${
-                      isExtraLoaded ? extraProgressPercentage : 0
-                    }%`,
-                  }}
-                />
+                  className="h-2 overflow-hidden rounded-full bg-background-tertiary"
+                  role="progressbar"
+                  aria-label="Extras watch progress"
+                  aria-valuenow={isExtraLoaded ? extraProgressPercentage : 0}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                >
+                  <div
+                    className="h-full rounded-full bg-accent-green transition-all duration-500"
+                    style={{
+                      width: `${isExtraLoaded ? extraProgressPercentage : 0}%`,
+                    }}
+                  />
+                </div>
               </div>
 
               {isExtraLoaded && extraWatchedCount > 0 && (
-                <div className="mt-4 flex justify-end">
+                <div className="mt-3 flex justify-end border-t border-border pt-3">
                   <Button
                     variant="ghost"
                     size="sm"
