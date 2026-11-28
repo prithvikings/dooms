@@ -39,7 +39,7 @@ export function ExtraMovieCard({ movie }: ExtraMovieCardProps) {
       ].join(" ")}
     >
       <Link href={`/movies/${movie.id}`} className="block" aria-label={`View details for ${movie.title}`}>
-        <div className="relative aspect-[2/3] overflow-hidden" style={{ background: posterBackgrounds[backgroundIndex] }}>
+        <div className="relative aspect-[3/4] overflow-hidden" style={{ background: posterBackgrounds[backgroundIndex] }}>
           <Image
             src={movie.poster}
             alt={`${movie.title} poster`}
@@ -55,7 +55,7 @@ export function ExtraMovieCard({ movie }: ExtraMovieCardProps) {
           )}
         </div>
 
-        <div className="flex min-h-[218px] flex-col gap-3 p-4">
+        <div className="flex min-h-[190px] flex-col gap-2.5 p-3">
           <div className="flex items-center justify-between gap-2">
             <Badge variant="neutral" className="px-2.5 py-1 text-[10px] uppercase">{movie.universe}</Badge>
             <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-foreground-muted">
@@ -67,7 +67,7 @@ export function ExtraMovieCard({ movie }: ExtraMovieCardProps) {
             <h3 className="line-clamp-2 text-[15px] font-semibold leading-5 text-foreground transition-colors group-hover:text-white">
               {movie.title}
             </h3>
-            <p className="mt-2 line-clamp-3 text-xs leading-[1.55rem] text-foreground-secondary">
+            <p className="mt-2 line-clamp-2 text-xs leading-5 text-foreground-secondary">
               {movie.synopsis}
             </p>
           </div>
@@ -78,7 +78,7 @@ export function ExtraMovieCard({ movie }: ExtraMovieCardProps) {
         </div>
       </Link>
 
-      <div className="mt-auto px-4 pb-4">
+      <div className="mt-auto px-3 pb-3">
         <Button
           variant="secondary"
           size="sm"
