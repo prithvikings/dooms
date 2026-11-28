@@ -14,17 +14,24 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { useWatchProgress } from "@/components/providers/WatchProgressProvider";
 import type { Movie } from "@/types/movie";
 import { MovieCard } from "@/components/movies/MovieCard";
+import { PlannerPageContent } from "@/app/planner/PlannerPageContent";
 
 type HomePageContentProps = {
   essentials: Movie[];
   totalMovies: number;
   totalExtras: number;
+  movies: Movie[];
+  essentialsMovieIds: string[];
+  defaultTargetDate: string;
 };
 
 export function HomePageContent({
   essentials,
   totalMovies,
   totalExtras,
+  movies,
+  essentialsMovieIds,
+  defaultTargetDate,
 }: HomePageContentProps) {
   const {
     watchedCount,
@@ -162,7 +169,7 @@ export function HomePageContent({
             </Link>
 
             <Link
-              href="/planner"
+              href="#planner"
               className="inline-flex min-h-14 items-center justify-center border border-white/35 bg-black/25 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm transition-colors hover:border-white/70 hover:bg-white/10"
             >
               Make me a watch plan
@@ -341,7 +348,12 @@ export function HomePageContent({
         </Container>
       </section>
 
-
+      {/* Watch planner */}
+      <PlannerPageContent
+        movies={movies}
+        essentialsMovieIds={essentialsMovieIds}
+        defaultTargetDate={defaultTargetDate}
+      />
     </>
   );
 }
