@@ -13,6 +13,10 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://doomsday-six-blond.vercel.app"),
+  alternates: {
+    canonical: "/",
+  },
   title: {
     default: "Doomsday — Marvel Watch Guide",
     template: "%s | Doomsday",
@@ -20,6 +24,22 @@ export const metadata: Metadata = {
   description:
     "Your curated Marvel watch guide for Avengers: Doomsday. Discover essential movies, recommended titles, multiverse stories and more.",
   applicationName: "Doomsday",
+  openGraph: {
+    type: "website",
+    url: "https://doomsday-six-blond.vercel.app",
+    siteName: "Doomsday",
+    title: "Doomsday — Marvel Watch Guide",
+    description:
+      "A curated, fan-made Marvel watch guide. Explore essential stories, multiverse connections, timelines and a personalised watch plan.",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Doomsday — a curated Marvel watch guide" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Doomsday — Marvel Watch Guide",
+    description:
+      "A curated, fan-made Marvel watch guide for Avengers: Doomsday.",
+    images: ["/opengraph-image"],
+  },
   keywords: [
     "Avengers Doomsday",
     "Marvel",

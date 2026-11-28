@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { LoadingImage } from "@/components/ui/LoadingImage";
 import Link from "next/link";
 import type { Movie } from "@/types/movie";
 import { formatRuntime } from "@/lib/format-runtime";
@@ -106,7 +106,7 @@ export function PlannerSchedule({
                   return (
                     <article key={movie.id} className="flex items-center gap-3 px-3 py-3 sm:gap-4 sm:px-4">
                       <Link href={`/movies/${movie.id}`} className="relative h-[76px] w-[54px] shrink-0 overflow-hidden rounded-md bg-background-tertiary" aria-label={`View ${movie.title} details`}>
-                        <Image src={movie.poster} alt="" fill sizes="54px" className="object-cover" />
+                        <LoadingImage src={movie.poster} alt="" sizes="54px" className="object-cover" />
                       </Link>
                       <div className="min-w-0 flex-1">
                         <Link href={`/movies/${movie.id}`} className="line-clamp-2 text-sm font-semibold text-foreground transition-colors hover:text-accent-green">

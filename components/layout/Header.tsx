@@ -76,6 +76,7 @@ export function Header() {
               <Link
                 key={link.label}
                 href={link.href}
+                aria-current={pathname === link.href ? "page" : undefined}
                 className={[
                   "text-sm font-medium transition-colors hover:text-accent-green",
                   isHomePage ? "text-white/85 hover:text-white" : "text-foreground-secondary",
@@ -137,11 +138,13 @@ export function Header() {
           menuOpen ? "block" : "hidden",
         ].join(" ")}
       >
+        <nav aria-label="Mobile navigation">
         <Container className="flex flex-col gap-1 py-3">
           {navigationLinks.map((link) => (
             <Link
               key={link.label}
               href={link.href}
+              aria-current={pathname === link.href ? "page" : undefined}
               onClick={closeMenu}
               className={[
                 "rounded-lg px-3 py-3 text-sm font-medium transition-colors hover:text-accent-green",
@@ -172,6 +175,7 @@ export function Header() {
             GitHub
           </a>
         </Container>
+        </nav>
       </div>
     </header>
   );

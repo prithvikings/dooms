@@ -8,6 +8,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { InteractiveTimeline } from "@/components/story/InteractiveTimeline";
 import { StoryConnections } from "@/components/story/StoryConnections";
 export const metadata: Metadata = {
+  alternates: { canonical: "/story" },
   title: "The Story",
   description:
     "Understand the major Marvel storylines, universes and characters leading into Avengers: Doomsday.",

@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { LoadingImage } from "@/components/ui/LoadingImage";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -29,10 +29,9 @@ function RelatedTitleCard({ movie }: { movie: CatalogueTitle }) {
       className="group overflow-hidden rounded-xl border border-border bg-surface transition-colors hover:border-accent-green/50"
     >
       <div className="relative aspect-[2/3] overflow-hidden bg-background-secondary">
-        <Image
+        <LoadingImage
           src={movie.poster}
           alt={`${movie.title} poster`}
-          fill
           sizes="(max-width: 640px) 42vw, (max-width: 1024px) 24vw, 180px"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
@@ -109,10 +108,9 @@ export function MovieDetailContent({
           <div className="grid gap-9 md:grid-cols-[220px_minmax(0,1fr)] md:items-start lg:grid-cols-[280px_minmax(0,1fr)] lg:gap-14">
             <div className="mx-auto w-full max-w-[220px] md:max-w-none">
               <div className="relative aspect-[2/3] overflow-hidden rounded-2xl border border-border shadow-2xl shadow-black/40">
-                <Image
+                <LoadingImage
                   src={movie.poster}
                   alt={`${movie.title} poster`}
-                  fill
                   priority
                   sizes="(max-width: 767px) 220px, 280px"
                   className="object-cover"

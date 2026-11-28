@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { LoadingImage } from "@/components/ui/LoadingImage";
 import Link from "next/link";
 
 import { useWatchProgress } from "@/components/providers/WatchProgressProvider";
@@ -40,10 +40,9 @@ export function ExtraMovieCard({ movie }: ExtraMovieCardProps) {
     >
       <Link href={`/movies/${movie.id}`} className="block" aria-label={`View details for ${movie.title}`}>
         <div className="relative aspect-[3/4] overflow-hidden" style={{ background: posterBackgrounds[backgroundIndex] }}>
-          <Image
+          <LoadingImage
             src={movie.poster}
             alt={`${movie.title} poster`}
-            fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 240px"
             className="object-cover transition-transform duration-500 group-hover:scale-[1.025]"
           />
