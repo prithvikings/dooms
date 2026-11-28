@@ -12,6 +12,7 @@ type PlannerScheduleProps = {
   isLoaded: boolean;
   isWatched: (movieId: string) => boolean;
   onToggleWatched: (movieId: string) => void;
+  showWatched: boolean;
 };
 
 function addDays(dateString: string, days: number) {
@@ -72,7 +73,6 @@ export function PlannerSchedule({
         </div>
         <div className="flex items-center gap-4">
           <span className="text-xs text-foreground-muted">{days.reduce((total, [, items]) => total + items.length, 0)} titles · {days.length} days</span>
-
         </div>
       </div>
 
