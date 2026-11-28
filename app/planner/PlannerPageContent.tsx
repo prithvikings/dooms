@@ -297,7 +297,7 @@ export function PlannerPageContent({
   ];
 
   return (
-    <>
+    <section id="planner" className="scroll-mt-24 border-t border-border">
       {/* Planner introduction */}
       <section className="relative isolate overflow-hidden border-b border-border">
         <div className="pointer-events-none absolute inset-0 -z-10">
