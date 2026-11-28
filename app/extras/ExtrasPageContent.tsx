@@ -260,37 +260,7 @@ export function ExtrasPageContent({
         </Container>
       </section>
 
-      {/* Closing CTA */}
-      <section className="border-t border-border bg-background-secondary py-16 sm:py-20">
-        <Container>
-          <div className="relative overflow-hidden rounded-2xl border border-accent-green/20 bg-gradient-to-br from-[#142116] to-background-secondary px-6 py-12 text-center sm:px-12 sm:py-16">
-            <div className="pointer-events-none absolute -right-20 -top-32 size-80 rounded-full bg-accent-green/15 blur-[100px]" />
 
-            <div className="relative mx-auto max-w-2xl space-y-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-accent-green">
-                BACK TO THE MAIN JOURNEY
-              </p>
-
-              <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-                Start with what matters.
-              </h2>
-
-              <p className="text-sm leading-7 text-foreground-secondary">
-                The extras are here when you want to explore
-                further. The essential watchlist remains the
-                best place to begin.
-              </p>
-
-              <Link
-                href="/essentials"
-                className="inline-flex items-center justify-center rounded-lg bg-accent-green px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-green-light"
-              >
-                Explore the essentials →
-              </Link>
-            </div>
-          </div>
-        </Container>
-      </section>
     </>
   );
 }
