@@ -337,69 +337,11 @@ export function HomePageContent({
             ))}
           </div>
 
-          <div className="mt-14 rounded-2xl border border-border bg-surface p-8 text-center">
-            {isLoaded && essentialWatchedCount === essentials.length ? (
-              <>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-green">
-                  COLLECTION COMPLETED
-                </p>
-                <h2 className="mt-3 text-2xl font-semibold text-foreground">
-                  You&apos;ve completed the essentials.
-                </h2>
-                <p className="mt-3 text-sm leading-7 text-foreground-secondary">
-                  You&apos;ve covered all {essentials.length} curated stories on the road to Doomsday.
-                </p>
-              </>
-            ) : (
-              <>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-green">
-                  KEEP GOING
-                </p>
-                <h2 className="mt-3 text-2xl font-semibold text-foreground">
-                  Every story brings you closer.
-                </h2>
-                <p className="mt-3 text-sm leading-7 text-foreground-secondary">
-                  {isLoaded
-                    ? `${essentials.length - essentialWatchedCount} titles left in your essentials watchlist.`
-                    : "Your watch progress is loading."}
-                </p>
-              </>
-            )}
-          </div>
+
         </Container>
       </section>
 
-      {/* Closing CTA */}
-      <section className="py-20">
-        <Container>
-          <div className="relative overflow-hidden rounded-2xl border border-accent-green/20 bg-gradient-to-br from-[#142116] to-background-secondary px-6 py-12 text-center sm:px-12 sm:py-16">
-            <div className="pointer-events-none absolute -right-20 -top-32 size-80 rounded-full bg-accent-green/15 blur-[100px]" />
 
-            <div className="relative mx-auto max-w-2xl space-y-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-accent-green">
-                THE MULTIVERSE AWAITS
-              </p>
-
-              <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-                Ready for what comes next?
-              </h2>
-
-              <p className="text-sm leading-7 text-foreground-secondary">
-                Start with the essentials, keep track of what
-                you have watched and explore the stories
-                connected to Doomsday.
-              </p>
-
-              <Link
-                href="#essentials"
-                className="inline-flex items-center justify-center rounded-lg bg-accent-green px-6 py-3 text-sm font-semibold text-[#071006] transition-colors hover:bg-accent-green-light"
-              >
-                Continue your journey →
-              </Link>
-            </div>
-          </div>
-        </Container>
-      </section>
     </>
   );
 }
