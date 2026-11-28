@@ -92,10 +92,6 @@ export function MovieCard({ movie, variant = "detailed" }: MovieCardProps) {
               </>
             )}
           </div>
-
-          <p className="inline-flex items-center gap-1 text-xs font-semibold text-accent-green">
-            View details <span aria-hidden="true">↗</span>
-          </p>
         </div>
       </Link>
 
