@@ -233,7 +233,7 @@ export function PlannerPageContent({ movies, essentialsMovieIds, defaultTargetDa
               </div>
             </div>
 
-            <aside className="flex flex-col justify-between rounded-xl border border-border bg-surface p-5">
+            <aside className="flex flex-col rounded-xl border border-border bg-surface p-5">
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent-green">YOUR PLAN</p>
               <p className="mt-3 text-3xl font-semibold tabular-nums text-foreground">{orderedMovies.length}</p>
               <p className="text-xs text-foreground-muted">titles to watch</p>
@@ -243,6 +243,27 @@ export function PlannerPageContent({ movies, essentialsMovieIds, defaultTargetDa
                 <span className="font-semibold text-foreground">{today ? availableDays : "—"}</span>
               </div>
               <p className="mt-4 text-[11px] leading-5 text-foreground-muted">Your plan updates automatically when you change your watchlist, date or watch order.</p>
+              <div className="mt-auto border-t border-border pt-4">
+                <button
+                  type="button"
+                  aria-pressed={showWatched}
+                  onClick={() => setShowWatched((current) => !current)}
+                  className="group flex w-full items-center justify-between gap-3 rounded-lg text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-green focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+                >
+                  <span>
+                    <span className="block text-xs font-semibold text-foreground">Show watched titles</span>
+                    <span className="mt-1 block text-[11px] text-foreground-muted">Include completed movies in your plan</span>
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full border transition-colors duration-200 ${showWatched ? "border-accent-green bg-accent-green" : "border-border-strong bg-background-tertiary"}`}
+                  >
+                    <span
+                      className={`pointer-events-none absolute left-0.5 size-4 rounded-full bg-white shadow-sm transition-transform duration-200 ${showWatched ? "translate-x-5" : "translate-x-0"}`}
+                    />
+                  </span>
+                </button>
+              </div>
             </aside>
           </div>
 
