@@ -114,7 +114,7 @@ export function HomePageContent({
               value={selectedRegionId}
               disabled={!isRegionLoaded}
               onChange={(event) => handleRegionChange(event.target.value)}
-              className="cursor-pointer border-0 border-b border-doom-green bg-transparent px-1 py-1 font-semibold text-doom-green outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-doom-green"
+              className="cursor-pointer border-0 border-b border-[#7cff62] bg-transparent px-1 py-1 font-semibold text-[#7cff62] outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-doom-green"
             >
               {RELEASE_DATES.map((region) => (
                 <option key={region.id} value={region.id} className="bg-[#111510] text-white">
@@ -133,7 +133,7 @@ export function HomePageContent({
           <div className="mt-9 flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row">
             <Link
               href="/catalogue"
-              className="inline-flex min-h-14 items-center justify-center bg-doom-green px-8 py-4 text-sm font-bold text-[#071006] shadow-[0_8px_35px_rgba(112,255,83,0.2)] transition-colors hover:bg-[#a0ff8a]"
+              className="inline-flex min-h-14 items-center justify-center bg-[#7cff62] px-8 py-4 text-sm font-bold text-[#071006] shadow-[0_8px_35px_rgba(112,255,83,0.2)] transition-colors hover:bg-[#a0ff8a]"
             >
               See the catalogue
             </Link>
