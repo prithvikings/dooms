@@ -26,7 +26,7 @@ function RelatedTitleCard({ movie }: { movie: CatalogueTitle }) {
   return (
     <Link
       href={`/movies/${movie.id}`}
-      className="group overflow-hidden rounded-xl border border-border bg-surface transition-colors hover:border-doom-gold/50"
+      className="group overflow-hidden rounded-xl border border-border bg-surface transition-colors hover:border-accent-green/50"
     >
       <div className="relative aspect-[2/3] overflow-hidden bg-background-secondary">
         <Image
@@ -44,7 +44,7 @@ function RelatedTitleCard({ movie }: { movie: CatalogueTitle }) {
         <p className="mt-1 text-xs text-foreground-muted">
           {movie.year} · {movie.universe}
         </p>
-        <span className="mt-3 inline-flex text-xs font-semibold text-doom-gold">
+        <span className="mt-3 inline-flex text-xs font-semibold text-accent-green">
           Explore title <span aria-hidden="true" className="ml-1">↗</span>
         </span>
       </div>
@@ -92,15 +92,15 @@ export function MovieDetailContent({
     <>
       <section className="relative isolate overflow-hidden border-b border-border">
         <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-          <div className="absolute -right-40 -top-48 size-[560px] rounded-full bg-doom-red/15 blur-[130px]" />
-          <div className="absolute -bottom-56 left-0 size-[520px] rounded-full bg-doom-gold/10 blur-[140px]" />
+          <div className="absolute -right-40 -top-48 size-[560px] rounded-full bg-accent-green/15 blur-[130px]" />
+          <div className="absolute -bottom-56 left-0 size-[520px] rounded-full bg-accent-green/10 blur-[140px]" />
           <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.045)_1px,transparent_1px)] [background-size:28px_28px] opacity-40" />
         </div>
 
         <Container className="py-10 sm:py-14 lg:py-20">
           <Link
             href={isExtraMovie ? "/extras" : "/catalogue"}
-            className="mb-8 inline-flex items-center gap-2 text-sm text-foreground-muted transition-colors hover:text-doom-gold"
+            className="mb-8 inline-flex items-center gap-2 text-sm text-foreground-muted transition-colors hover:text-accent-green"
           >
             <span aria-hidden="true">←</span>
             {isExtraMovie ? "Back to extras" : "Back to catalogue"}
@@ -143,12 +143,12 @@ export function MovieDetailContent({
                 )}
               </div>
 
-              <p className="mt-6 text-xs font-semibold uppercase tracking-[0.28em] text-doom-gold">
+              <p className="mt-6 text-xs font-semibold uppercase tracking-[0.28em] text-accent-green">
                 {mainMovie ? `WATCH GUIDE · #${mainMovie.watchOrder}` : "THE WIDER MARVEL MULTIVERSE"}
               </p>
               <h1 className="mt-3 text-4xl font-semibold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl">
                 {movie.title}
-                <span className="text-doom-red-light">.</span>
+                <span className="text-accent-green-light">.</span>
               </h1>
               <p className="mt-4 text-sm text-foreground-muted">
                 {movie.year} <span className="px-2 text-border-strong">·</span> {runtime}
@@ -211,7 +211,7 @@ export function MovieDetailContent({
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
             <div className="space-y-8">
               <section className="rounded-2xl border border-border bg-surface p-6 sm:p-8">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-doom-gold">WHY IT MATTERS</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-accent-green">WHY IT MATTERS</p>
                 <h2 className="mt-3 text-2xl font-semibold text-foreground">Connection to Doomsday</h2>
                 <p className="mt-4 text-sm leading-7 text-foreground-secondary">{movie.doomsdayRelevance}</p>
               </section>
@@ -219,7 +219,7 @@ export function MovieDetailContent({
               {guideNote && (
                 <section className="space-y-5">
                   <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-doom-gold">THE STORY BEHIND THE STORY</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-accent-green">THE STORY BEHIND THE STORY</p>
                     <h2 className="mt-3 text-2xl font-semibold text-foreground sm:text-3xl">A little deeper</h2>
                     <p className="mt-2 max-w-2xl text-sm leading-6 text-foreground-secondary">More context than a synopsis: what the story is exploring, what is worth noticing, and why it matters in the wider Marvel timeline.</p>
                   </div>
@@ -232,8 +232,8 @@ export function MovieDetailContent({
                       <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground-muted">02 · WHAT TO NOTICE</p>
                       <p className="mt-3 text-sm leading-7 text-foreground-secondary">{guideNote.whatToNotice}</p>
                     </article>
-                    <article className="rounded-2xl border border-doom-gold/20 bg-doom-gold/5 p-6 sm:col-span-2 sm:p-7">
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-doom-gold">03 · THE BIGGER PICTURE</p>
+                    <article className="rounded-2xl border border-accent-green/20 bg-accent-green/5 p-6 sm:col-span-2 sm:p-7">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent-green">03 · THE BIGGER PICTURE</p>
                       <p className="mt-3 text-sm leading-7 text-foreground-secondary">{guideNote.biggerPicture}</p>
                     </article>
                   </div>
@@ -241,10 +241,10 @@ export function MovieDetailContent({
               )}
 
               {spoilerSummary && (
-                <section className="overflow-hidden rounded-2xl border border-doom-red/30 bg-surface">
+                <section className="overflow-hidden rounded-2xl border border-accent-green/30 bg-surface">
                   <div className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
                     <div>
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-doom-red-light">SPOILER ZONE</p>
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-accent-green-light">SPOILER ZONE</p>
                       <h2 className="mt-2 text-xl font-semibold text-foreground">Major story reveals</h2>
                       <p className="mt-2 text-sm text-foreground-muted">The following section discusses important plot events and the ending.</p>
                     </div>
@@ -258,7 +258,7 @@ export function MovieDetailContent({
                     </Button>
                   </div>
                   {spoilersRevealed && (
-                    <div className="border-t border-doom-red/20 bg-doom-red/5 px-6 py-6 sm:px-8">
+                    <div className="border-t border-accent-green/20 bg-accent-green/5 px-6 py-6 sm:px-8">
                       <p className="text-sm leading-7 text-foreground-secondary">{spoilerSummary}</p>
                     </div>
                   )}
@@ -309,7 +309,7 @@ export function MovieDetailContent({
         <section className="border-t border-border bg-background-secondary py-14 sm:py-16">
           <Container>
             <div className="mb-8 max-w-2xl">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-doom-gold">STORY CONNECTIONS</p>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-accent-green">STORY CONNECTIONS</p>
               <h2 className="mt-3 text-2xl font-semibold text-foreground sm:text-3xl">If this caught your attention...</h2>
               <p className="mt-3 text-sm leading-6 text-foreground-secondary">Explore titles connected by characters, story arcs or multiverse events. These are curated links, not a claim that every title is required viewing.</p>
             </div>
