@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { formatRuntime } from "@/lib/format-runtime";
+import type { MovieGuideNote } from "@/data/movies/movie-guide";
 import type { ExtraMovie, Movie } from "@/types/movie";
 
 type CatalogueTitle = Movie | ExtraMovie;
@@ -18,6 +19,7 @@ type MovieDetailContentProps = {
   relatedMovies: CatalogueTitle[];
   isExtraMovie: boolean;
   spoilerSummary?: string;
+  guideNote?: MovieGuideNote;
 };
 
 function RelatedTitleCard({ movie }: { movie: CatalogueTitle }) {
@@ -55,6 +57,7 @@ export function MovieDetailContent({
   relatedMovies,
   isExtraMovie,
   spoilerSummary,
+  guideNote,
 }: MovieDetailContentProps) {
   const {
     isLoaded,
@@ -212,6 +215,30 @@ export function MovieDetailContent({
                 <h2 className="mt-3 text-2xl font-semibold text-foreground">Connection to Doomsday</h2>
                 <p className="mt-4 text-sm leading-7 text-foreground-secondary">{movie.doomsdayRelevance}</p>
               </section>
+
+              {guideNote && (
+                <section className="space-y-5">
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-doom-gold">THE STORY BEHIND THE STORY</p>
+                    <h2 className="mt-3 text-2xl font-semibold text-foreground sm:text-3xl">A little deeper</h2>
+                    <p className="mt-2 max-w-2xl text-sm leading-6 text-foreground-secondary">More context than a synopsis: what the story is exploring, what is worth noticing, and why it matters in the wider Marvel timeline.</p>
+                  </div>
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <article className="rounded-2xl border border-border bg-surface p-6 sm:p-7">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground-muted">01 · STORY CONTEXT</p>
+                      <p className="mt-3 text-sm leading-7 text-foreground-secondary">{guideNote.storyContext}</p>
+                    </article>
+                    <article className="rounded-2xl border border-border bg-surface p-6 sm:p-7">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground-muted">02 · WHAT TO NOTICE</p>
+                      <p className="mt-3 text-sm leading-7 text-foreground-secondary">{guideNote.whatToNotice}</p>
+                    </article>
+                    <article className="rounded-2xl border border-doom-gold/20 bg-doom-gold/5 p-6 sm:col-span-2 sm:p-7">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-doom-gold">03 · THE BIGGER PICTURE</p>
+                      <p className="mt-3 text-sm leading-7 text-foreground-secondary">{guideNote.biggerPicture}</p>
+                    </article>
+                  </div>
+                </section>
+              )}
 
               {spoilerSummary && (
                 <section className="overflow-hidden rounded-2xl border border-doom-red/30 bg-surface">
