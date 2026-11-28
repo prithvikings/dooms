@@ -126,7 +126,7 @@ export function InteractiveTimeline() {
                 className={[
                   "rounded-lg border px-4 py-2.5 text-sm font-medium transition-colors",
                   active
-                    ? "border-doom-red bg-doom-red text-white"
+                    ? "border-accent-green bg-accent-green text-white"
                     : "border-border bg-surface text-foreground-secondary hover:border-border-strong hover:text-foreground",
                 ].join(" ")}
               >
@@ -151,7 +151,7 @@ export function InteractiveTimeline() {
               </p>
             </div>
 
-            <p className="text-2xl font-semibold tabular-nums text-doom-gold">
+            <p className="text-2xl font-semibold tabular-nums text-accent-green">
               {isLoaded ? `${progressPercentage}%` : "—"}
             </p>
           </div>
@@ -165,7 +165,7 @@ export function InteractiveTimeline() {
             aria-valuenow={isLoaded ? progressPercentage : 0}
           >
             <div
-              className="h-full rounded-full bg-doom-gold transition-all duration-500"
+              className="h-full rounded-full bg-accent-green transition-all duration-500"
               style={{
                 width: `${isLoaded ? progressPercentage : 0}%`,
               }}
@@ -215,7 +215,7 @@ export function InteractiveTimeline() {
                         className={[
                           "absolute -left-[33px] top-6 size-3 rounded-full border-2 border-background-secondary sm:-left-[41px]",
                           watched
-                            ? "bg-doom-gold"
+                            ? "bg-accent-green"
                             : "bg-foreground-muted",
                         ].join(" ")}
                         aria-hidden="true"
@@ -224,7 +224,7 @@ export function InteractiveTimeline() {
                       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-center gap-2">
-                            <span className="text-xs font-semibold tabular-nums text-doom-gold">
+                            <span className="text-xs font-semibold tabular-nums text-accent-green">
                               #{String(movie.storyOrder).padStart(2, "0")}
                             </span>
 
@@ -271,8 +271,8 @@ export function InteractiveTimeline() {
                           className={[
                             "shrink-0 rounded-lg border px-4 py-2.5 text-xs font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50",
                             watched
-                              ? "border-doom-gold/40 bg-doom-gold/10 text-doom-gold hover:bg-doom-gold/15"
-                              : "border-border-strong bg-background text-foreground-secondary hover:border-doom-gold/50 hover:text-doom-gold",
+                              ? "border-accent-green/40 bg-accent-green/10 text-accent-green hover:bg-accent-green/15"
+                              : "border-border-strong bg-background text-foreground-secondary hover:border-accent-green/50 hover:text-accent-green",
                           ].join(" ")}
                         >
                           {watched ? "Watched ✓" : "Mark as watched"}
