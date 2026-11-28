@@ -74,7 +74,7 @@ export function Header() {
           </nav>
 
           <a
-            href="https://github.com/prithvikings/"
+            href="https://github.com/prithvikings/dooms"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Open GitHub profile for prithvikings"
@@ -142,7 +142,7 @@ export function Header() {
           ))}
 
           <a
-            href="https://github.com/prithvikings/"
+            href="https://github.com/prithvikings/dooms"
             target="_blank"
             rel="noopener noreferrer"
             onClick={closeMenu}
