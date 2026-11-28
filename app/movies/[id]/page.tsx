@@ -10,6 +10,7 @@ import {
   movies,
 } from "@/data/movies";
 import { getMovieSpoilerNote } from "@/data/movies/movie-details";
+import { getMovieGuideNote } from "@/data/movies/movie-guide";
 
 type MoviePageProps = {
   params: Promise<{ id: string }>;
@@ -54,6 +55,7 @@ export default async function MovieDetailPage({
   const isExtraMovie = !("watchOrder" in movie);
   const relatedMovies = getRelatedTitles(movie.id);
   const spoilerSummary = getMovieSpoilerNote(movie.id);
+  const guideNote = getMovieGuideNote(movie.id);
 
   return (
     <PageShell>
@@ -62,6 +64,7 @@ export default async function MovieDetailPage({
         relatedMovies={relatedMovies}
         isExtraMovie={isExtraMovie}
         spoilerSummary={spoilerSummary}
+        guideNote={guideNote}
       />
     </PageShell>
   );
