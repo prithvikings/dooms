@@ -61,7 +61,7 @@ export function HomePageContent({
       {/* Cinematic Doomsday countdown hero */}
       <section
         id="guide"
-        className="relative isolate flex min-h-[calc(100svh-5rem)] items-center overflow-hidden border-b border-white/10 bg-[#050706] text-white"
+        className="relative isolate flex min-h-svh items-center overflow-hidden border-b border-white/10 bg-[#050706] text-white"
       >
         <div className="pointer-events-none absolute inset-0 -z-20 overflow-hidden bg-black">
           <iframe
