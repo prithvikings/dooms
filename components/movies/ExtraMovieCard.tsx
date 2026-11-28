@@ -39,13 +39,13 @@ export function ExtraMovieCard({ movie }: ExtraMovieCardProps) {
       ].join(" ")}
     >
       <Link href={`/movies/${movie.id}`} className="block" aria-label={`View details for ${movie.title}`}>
-        <div className="relative aspect-[3/4] overflow-hidden" style={{ background: posterBackgrounds[backgroundIndex] }}>
+        <div className="relative aspect-[2/3] overflow-hidden" style={{ background: posterBackgrounds[backgroundIndex] }}>
           <Image
             src={movie.poster}
             alt={`${movie.title} poster`}
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 240px"
-            className="object-contain transition-transform duration-500 group-hover:scale-[1.015]"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.025]"
           />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/45 to-transparent" />
           {watched && (
