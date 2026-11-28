@@ -47,11 +47,9 @@ export function PlannerPageContent({ movies, essentialsMovieIds, defaultTargetDa
   }, [defaultConfig, movies]);
 
   const updateConfig = (updater: (current: PlannerConfig) => PlannerConfig) => {
-    setConfig((current) => {
-      const next = updater(current);
-      savePlannerConfig(next);
-      return next;
-    });
+    const next = updater(config);
+    setConfig(next);
+    savePlannerConfig(next);
   };
 
   const orderedMovies = useMemo(() => {
