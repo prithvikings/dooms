@@ -14,7 +14,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { useWatchProgress } from "@/components/providers/WatchProgressProvider";
 import type { Movie } from "@/types/movie";
 import { MovieCard } from "@/components/movies/MovieCard";
-import { PlannerPageContent } from "@/app/planner/PlannerPageContent";
+import { PlannerPageContent } from "@/components/planner/PlannerPageContent";
 
 type HomePageContentProps = {
   essentials: Movie[];
