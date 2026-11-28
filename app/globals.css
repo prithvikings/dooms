@@ -19,9 +19,9 @@
   --surface-elevated: #20232b;
 
   /* Brand */
-  --doom-red: #861f29;
-  --doom-red-light: #b8323d;
-  --doom-gold: #c49a58;
+  --accent-green: #7cff62;
+  --accent-green-light: #a0ff8a;
+  --accent-green-muted: #63df4b;
 
   /* Text */
   --foreground: #f5f0e8;
@@ -49,9 +49,9 @@
   --color-surface-hover: var(--surface-hover);
   --color-surface-elevated: var(--surface-elevated);
 
-  --color-doom-red: var(--doom-red);
-  --color-doom-red-light: var(--doom-red-light);
-  --color-doom-gold: var(--doom-gold);
+  --color-accent-green: var(--accent-green);
+  --color-accent-green-light: var(--accent-green-light);
+  --color-accent-green-muted: var(--accent-green-muted);
 
   --color-foreground: var(--foreground);
   --color-foreground-secondary: var(--foreground-secondary);
@@ -117,7 +117,7 @@ svg {
 }
 
 ::selection {
-  background: var(--doom-red);
+  background: var(--accent-green); color: #071006;
   color: white;
 }
 
@@ -126,7 +126,7 @@ svg {
 ============================================ */
 
 :focus-visible {
-  outline: 2px solid var(--doom-gold);
+  outline: 2px solid var(--accent-green);
   outline-offset: 4px;
 }
 
