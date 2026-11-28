@@ -9,13 +9,10 @@ import { Container } from "@/components/ui/Container";
 const navigationLinks = [
   { label: "Home", href: "/" },
   { label: "Essentials", href: "/essentials" },
-  { label: "Catalogue", href: "/catalogue" },
   { label: "Extras", href: "/extras" },
   { label: "Story", href: "/story" },
-  { label: "Planner", href: "/planner" },
   { label: "Progress", href: "/#progress" },
   { label: "About", href: "/#about" },
-{ label: "Countdown", href: "/countdown" },
 ];
 
 export function Header() {
