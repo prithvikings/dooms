@@ -71,10 +71,6 @@ export function ExtraMovieCard({ movie }: ExtraMovieCardProps) {
               {movie.synopsis}
             </p>
           </div>
-
-          <p className="inline-flex items-center gap-1 text-xs font-semibold text-accent-green">
-            View details <span aria-hidden="true">↗</span>
-          </p>
         </div>
       </Link>
 
