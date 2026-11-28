@@ -384,38 +384,7 @@ export default function StoryPage() {
         </Container>
       </section>
 
-      {/* Closing CTA */}
-      <section className="py-20 sm:py-28">
-        <Container>
-          <div className="relative overflow-hidden rounded-2xl border border-accent-green/30 bg-gradient-to-br from-[#142116] to-background-secondary px-6 py-14 text-center sm:px-12 sm:py-20">
-            <div className="pointer-events-none absolute -right-20 -top-32 size-80 rounded-full bg-accent-green/15 blur-[100px]" />
 
-            <div className="relative mx-auto max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-accent-green">
-                YOUR JOURNEY STARTS HERE
-              </p>
-
-              <h2 className="mt-5 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-                Now connect the stories.
-              </h2>
-
-              <p className="mt-5 text-sm leading-7 text-foreground-secondary">
-                You understand the bigger picture.
-                Now follow the curated watchlist and
-                explore the titles that build towards
-                Avengers: Doomsday.
-              </p>
-
-              <a
-                href="/essentials"
-                className="mt-8 inline-flex items-center justify-center rounded-lg bg-accent-green px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-green-light"
-              >
-                Explore the essentials →
-              </a>
-            </div>
-          </div>
-        </Container>
-      </section>
     </PageShell>
   );
 }
