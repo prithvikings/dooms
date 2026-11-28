@@ -178,7 +178,7 @@ export function HomePageContent({
             <div className="rounded-2xl border border-border bg-surface p-6 sm:p-8 lg:col-span-7">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-doom-gold">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-green">
                     YOUR JOURNEY
                   </p>
 
@@ -219,7 +219,7 @@ export function HomePageContent({
                   aria-valuenow={isLoaded ? progressPercentage : 0}
                 >
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-doom-red to-doom-red-light transition-[width] duration-500"
+                    className="h-full rounded-full bg-gradient-to-r from-accent-green to-accent-green-light transition-[width] duration-500"
                     style={{
                       width: `${isLoaded ? progressPercentage : 0}%`,
                     }}
@@ -334,11 +334,11 @@ export function HomePageContent({
       {/* Closing CTA */}
       <section className="py-20">
         <Container>
-          <div className="relative overflow-hidden rounded-2xl border border-doom-red/20 bg-gradient-to-br from-[#241519] to-background-secondary px-6 py-12 text-center sm:px-12 sm:py-16">
-            <div className="pointer-events-none absolute -right-20 -top-32 size-80 rounded-full bg-doom-red/15 blur-[100px]" />
+          <div className="relative overflow-hidden rounded-2xl border border-accent-green/20 bg-gradient-to-br from-[#142116] to-background-secondary px-6 py-12 text-center sm:px-12 sm:py-16">
+            <div className="pointer-events-none absolute -right-20 -top-32 size-80 rounded-full bg-accent-green/15 blur-[100px]" />
 
             <div className="relative mx-auto max-w-2xl space-y-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-doom-gold">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-accent-green">
                 THE MULTIVERSE AWAITS
               </p>
 
@@ -354,7 +354,7 @@ export function HomePageContent({
 
               <Link
                 href="#essentials"
-                className="inline-flex items-center justify-center rounded-lg bg-doom-red px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-doom-red-light"
+                className="inline-flex items-center justify-center rounded-lg bg-accent-green px-6 py-3 text-sm font-semibold text-[#071006] transition-colors hover:bg-accent-green-light"
               >
                 Continue your journey →
               </Link>
