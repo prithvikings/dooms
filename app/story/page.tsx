@@ -115,7 +115,7 @@ export default function StoryPage() {
             <div className="mt-10 flex flex-wrap gap-3">
               <a
                 href="#bigger-picture"
-                className="inline-flex items-center justify-center rounded-lg bg-accent-green px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-green-light"
+                className="inline-flex items-center justify-center rounded-lg border border-white/35 bg-black/25 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-colors hover:border-white/70 hover:bg-white/10"
               >
                 Explore the story
                 <span className="ml-2" aria-hidden="true">
