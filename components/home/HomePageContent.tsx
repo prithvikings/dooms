@@ -46,8 +46,12 @@ export function HomePageContent({
   const [isRegionMenuOpen, setIsRegionMenuOpen] = useState(false);
 
   useEffect(() => {
-    setSelectedRegionId(readReleaseRegion());
-    setIsRegionLoaded(true);
+    const frameId = window.requestAnimationFrame(() => {
+      setSelectedRegionId(readReleaseRegion());
+      setIsRegionLoaded(true);
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
   }, []);
 
   const selectedRegion = RELEASE_DATES.find(
