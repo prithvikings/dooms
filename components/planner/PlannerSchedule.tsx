@@ -12,8 +12,6 @@ type PlannerScheduleProps = {
   isLoaded: boolean;
   isWatched: (movieId: string) => boolean;
   onToggleWatched: (movieId: string) => void;
-  showWatched: boolean;
-  onToggleShowWatched: (show: boolean) => void;
 };
 
 function addDays(dateString: string, days: number) {
@@ -39,7 +37,6 @@ export function PlannerSchedule({
   isWatched,
   onToggleWatched,
   showWatched,
-  onToggleShowWatched,
 }: PlannerScheduleProps) {
   if (!isLoaded || !isProgressLoaded || !today) {
     return (
@@ -57,18 +54,6 @@ export function PlannerSchedule({
             <h3 className="text-lg font-semibold text-foreground">Your day-by-day plan</h3>
             <p className="mt-1 text-xs text-foreground-muted">Your watched titles are automatically left out.</p>
           </div>
-          <button
-            type="button"
-            role="switch"
-            aria-checked={showWatched}
-            onClick={() => onToggleShowWatched(!showWatched)}
-            className="inline-flex items-center gap-2 text-xs font-medium text-foreground-secondary"
-          >
-            Show watched
-            <span className={`relative h-5 w-9 rounded-full transition-colors ${showWatched ? "bg-accent-green" : "bg-background-tertiary"}`}>
-              <span className={`absolute top-0.5 size-4 rounded-full bg-white shadow-sm transition-transform ${showWatched ? "translate-x-4" : "translate-x-0.5"}`} />
-            </span>
-          </button>
         </div>
         <div className="rounded-xl border border-border bg-surface px-5 py-10 text-center">
           <p className="text-sm font-semibold text-foreground">{showWatched ? "No titles in this watchlist" : "You’re all caught up"}</p>
@@ -87,18 +72,7 @@ export function PlannerSchedule({
         </div>
         <div className="flex items-center gap-4">
           <span className="text-xs text-foreground-muted">{days.reduce((total, [, items]) => total + items.length, 0)} titles · {days.length} days</span>
-          <button
-            type="button"
-            role="switch"
-            aria-checked={showWatched}
-            onClick={() => onToggleShowWatched(!showWatched)}
-            className="inline-flex items-center gap-2 text-xs font-medium text-foreground-secondary transition-colors hover:text-foreground"
-          >
-            Show watched
-            <span className={`relative h-5 w-9 rounded-full transition-colors ${showWatched ? "bg-accent-green" : "bg-background-tertiary"}`}>
-              <span className={`absolute top-0.5 size-4 rounded-full bg-white shadow-sm transition-transform ${showWatched ? "translate-x-4" : "translate-x-0.5"}`} />
-            </span>
-          </button>
+
         </div>
       </div>
 
