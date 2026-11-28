@@ -1,28 +1,13 @@
-
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
-
 import { useWatchProgress } from "@/components/providers/WatchProgressProvider";
 import { PlannerSchedule } from "@/components/planner/PlannerSchedule";
-import { Badge } from "@/components/ui/Badge";
 import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-
-import {
-  generateWatchSchedule,
-  getLocalDateString,
-} from "@/lib/planner";
-
-import {
-  createDefaultPlannerConfig,
-  readPlannerConfig,
-  savePlannerConfig,
-} from "@/lib/planner-storage";
-
-import type { PlannerConfig } from "@/types/planner";
+import { createDefaultPlannerConfig, readPlannerConfig, savePlannerConfig } from "@/lib/planner-storage";
+import { getLocalDateString } from "@/lib/planner";
 import type { Movie } from "@/types/movie";
+import type { PlannerConfig, PlannerOrder } from "@/types/planner";
 
 type PlannerPageContentProps = {
   movies: Movie[];
@@ -30,723 +15,240 @@ type PlannerPageContentProps = {
   defaultTargetDate: string;
 };
 
-const budgetOptions = [
-  { value: 30, label: "30 minutes" },
-  { value: 45, label: "45 minutes" },
-  { value: 60, label: "1 hour" },
-  { value: 90, label: "1.5 hours" },
-  { value: 120, label: "2 hours" },
-  { value: 150, label: "2.5 hours" },
-  { value: 180, label: "3 hours" },
-  { value: 240, label: "4 hours" },
-];
+const inputClassName = "w-full rounded-lg border border-border bg-background-secondary px-3.5 py-2.5 text-sm text-foreground outline-none transition-colors focus:border-accent-green";
 
-const inputClassName =
-  "w-full rounded-xl border border-border bg-background-secondary px-4 py-3 text-sm text-foreground outline-none transition-colors focus:border-accent-green";
+function getAvailableDays(start: string, end: string) {
+  const startDate = new Date(`${start}T00:00:00.000Z`);
+  const endDate = new Date(`${end}T00:00:00.000Z`);
+  if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) return 1;
+  return Math.max(1, Math.floor((endDate.getTime() - startDate.getTime()) / 86400000) + 1);
+}
 
-export function PlannerPageContent({
-  movies,
-  essentialsMovieIds,
-  defaultTargetDate,
-}: PlannerPageContentProps) {
-  const {
-    isLoaded: isProgressLoaded,
-    isWatched,
-    watchedMovieIds,
-    toggleWatched,
-  } = useWatchProgress();
-
+export function PlannerPageContent({ movies, essentialsMovieIds, defaultTargetDate }: PlannerPageContentProps) {
+  const { isLoaded: isProgressLoaded, isWatched, watchedMovieIds, toggleWatched } = useWatchProgress();
   const defaultConfig = useMemo(
-    () =>
-      createDefaultPlannerConfig(
-        essentialsMovieIds,
-        defaultTargetDate
-      ),
+    () => createDefaultPlannerConfig(essentialsMovieIds, defaultTargetDate),
     [essentialsMovieIds, defaultTargetDate]
   );
-
-  const orderedMovies = useMemo(
-    () =>
-      [...movies].sort(
-        (a, b) => a.watchOrder - b.watchOrder
-      ),
-    [movies]
-  );
-
-  // Component state
-  const [config, setConfig] =
-    useState<PlannerConfig>(defaultConfig);
-
+  const [config, setConfig] = useState<PlannerConfig>(defaultConfig);
   const [isLoaded, setIsLoaded] = useState(false);
-
-  const [saveStatus, setSaveStatus] = useState<
-    "loading" | "saved" | "error"
-  >("loading");
-
+  const [today, setToday] = useState("");
+  const [sortOrder, setSortOrder] = useState<PlannerOrder>("release");
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Today's date is populated after the component mounts.
-  // This avoids reading the current time during prerendering.
-  const [today, setToday] = useState("");
-
-  // Load the saved planner configuration.
   useEffect(() => {
-  const savedConfig = readPlannerConfig(
-    defaultConfig,
-    movies.map((movie) => movie.id)
-  );
-
-  const frameId = window.requestAnimationFrame(() => {
-    setConfig(savedConfig);
-    setIsLoaded(true);
-    setSaveStatus("saved");
-    setToday(getLocalDateString());
-  });
-
-  return () => {
-    window.cancelAnimationFrame(frameId);
-  };
-}, [defaultConfig, movies]);
-
-  // Update and persist planner configuration.
-  const updateConfig = (
-    updater: (current: PlannerConfig) => PlannerConfig
-  ) => {
-    const nextConfig = updater(config);
-
-    setConfig(nextConfig);
-
-    setSaveStatus(
-      savePlannerConfig(nextConfig)
-        ? "saved"
-        : "error"
-    );
-  };
-
-  // Selected movie IDs.
-  const selectedMovieSet = useMemo(
-    () => new Set(config.selectedMovieIds),
-    [config.selectedMovieIds]
-  );
-
-  const selectedMovies = useMemo(
-    () =>
-      orderedMovies.filter((movie) =>
-        selectedMovieSet.has(movie.id)
-      ),
-    [orderedMovies, selectedMovieSet]
-  );
-
-  // Generate the schedule once configuration and progress are loaded.
-  const scheduleResult = useMemo(() => {
-    if (!isLoaded || !isProgressLoaded || !today) {
-      return null;
-    }
-
-    return generateWatchSchedule({
-      movies,
-      selectedMovieIds: config.selectedMovieIds,
-      watchedMovieIds,
-      dailyBudgetMinutes: config.dailyBudgetMinutes,
-      targetDate: config.targetDate,
-      today,
-      includeWatched: config.includeWatched,
+    const saved = readPlannerConfig(defaultConfig, movies.map((movie) => movie.id));
+    const frameId = window.requestAnimationFrame(() => {
+      setConfig(saved);
+      setToday(getLocalDateString());
+      setIsLoaded(true);
     });
-  }, [
-    movies,
-    config,
-    watchedMovieIds,
-    today,
-    isLoaded,
-    isProgressLoaded,
-  ]);
+    return () => window.cancelAnimationFrame(frameId);
+  }, [defaultConfig, movies]);
 
-  const watchedSelectedCount = selectedMovies.filter(
-    (movie) => isWatched(movie.id)
-  ).length;
-
-  // Search and filter movies.
-  const filteredMovies = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase();
-
-    if (!query) return orderedMovies;
-
-    return orderedMovies.filter((movie) =>
-      movie.title.toLowerCase().includes(query)
-    );
-  }, [orderedMovies, searchQuery]);
-
-  // Collection selection.
-  const handleCollectionChange = (
-    collection: "essentials" | "catalogue" | "custom"
-  ) => {
-    updateConfig((current) => {
-      let selectedMovieIds = current.selectedMovieIds;
-
-      if (collection === "essentials") {
-        selectedMovieIds = essentialsMovieIds;
-      }
-
-      if (collection === "catalogue") {
-        selectedMovieIds = orderedMovies.map(
-          (movie) => movie.id
-        );
-      }
-
-      if (
-        collection === "custom" &&
-        current.collection !== "custom"
-      ) {
-        selectedMovieIds = essentialsMovieIds;
-      }
-
-      return {
-        ...current,
-        collection,
-        selectedMovieIds: [...selectedMovieIds],
-      };
+  const updateConfig = (updater: (current: PlannerConfig) => PlannerConfig) => {
+    setConfig((current) => {
+      const next = updater(current);
+      savePlannerConfig(next);
+      return next;
     });
   };
 
-  // Toggle an individual movie in the custom watchlist.
+  const orderedMovies = useMemo(() => {
+    const selected = new Set(config.selectedMovieIds);
+    return movies
+      .filter((movie) => selected.has(movie.id))
+      .filter((movie) => !watchedMovieIds.includes(movie.id))
+      .sort((a, b) =>
+        sortOrder === "release"
+          ? a.watchOrder - b.watchOrder
+          : a.storyOrder - b.storyOrder
+      );
+  }, [movies, config.selectedMovieIds, watchedMovieIds, sortOrder]);
+
+  const availableDays = today ? getAvailableDays(today, config.targetDate) : 1;
+  const moviesPerDay = Math.max(1, Math.ceil(orderedMovies.length / availableDays));
+  const planDays = useMemo(() => {
+    const groups = new Map<number, Movie[]>();
+    orderedMovies.forEach((movie, index) => {
+      const day = Math.floor(index / moviesPerDay) + 1;
+      const group = groups.get(day) ?? [];
+      group.push(movie);
+      groups.set(day, group);
+    });
+    return [...groups.entries()];
+  }, [orderedMovies, moviesPerDay]);
+
+  const filteredMovies = movies.filter((movie) =>
+    movie.title.toLowerCase().includes(searchQuery.trim().toLowerCase())
+  );
+
+  const chooseCollection = (collection: "essentials" | "catalogue" | "custom") => {
+    updateConfig((current) => ({
+      ...current,
+      collection,
+      selectedMovieIds:
+        collection === "essentials"
+          ? [...essentialsMovieIds]
+          : collection === "catalogue"
+            ? movies.map((movie) => movie.id)
+            : current.collection === "custom"
+              ? current.selectedMovieIds
+              : [...essentialsMovieIds],
+    }));
+  };
+
   const toggleMovie = (movieId: string) => {
-    updateConfig((current) => {
-      const exists =
-        current.selectedMovieIds.includes(movieId);
-
-      const selectedMovieIds = exists
-        ? current.selectedMovieIds.filter(
-            (id) => id !== movieId
-          )
-        : [...current.selectedMovieIds, movieId];
-
-      return {
-        ...current,
-        selectedMovieIds,
-      };
-    });
-  };
-
-  const selectAllMovies = () => {
     updateConfig((current) => ({
       ...current,
-      selectedMovieIds: orderedMovies.map(
-        (movie) => movie.id
-      ),
-    }));
-  };
-
-  const clearAllMovies = () => {
-    updateConfig((current) => ({
-      ...current,
-      selectedMovieIds: [],
-    }));
-  };
-
-  // Daily viewing budget.
-  const handleBudgetChange = (value: string) => {
-    updateConfig((current) => ({
-      ...current,
-      dailyBudgetMinutes: Number(value),
-    }));
-  };
-
-  // Target completion date.
-  const handleTargetDateChange = (value: string) => {
-    updateConfig((current) => ({
-      ...current,
-      targetDate: value,
-    }));
-  };
-
-  // Include or exclude already watched titles.
-  const handleIncludeWatchedChange = (
-    checked: boolean
-  ) => {
-    updateConfig((current) => ({
-      ...current,
-      includeWatched: checked,
+      selectedMovieIds: current.selectedMovieIds.includes(movieId)
+        ? current.selectedMovieIds.filter((id) => id !== movieId)
+        : [...current.selectedMovieIds, movieId],
     }));
   };
 
   const collections = [
-    {
-      id: "essentials" as const,
-      title: "Essentials",
-      count: essentialsMovieIds.length,
-      description:
-        "The curated selection covering the major stories.",
-      recommended: true,
-    },
-    {
-      id: "catalogue" as const,
-      title: "Full catalogue",
-      count: movies.length,
-      description:
-        "Every title in the main Doomsday watch catalogue.",
-      recommended: false,
-    },
-    {
-      id: "custom" as const,
-      title: "Custom selection",
-      count: null,
-      description:
-        "Build your own watchlist by selecting individual titles.",
-      recommended: false,
-    },
+    { id: "essentials" as const, label: "Essentials", count: essentialsMovieIds.length },
+    { id: "catalogue" as const, label: "Full catalogue", count: movies.length },
+    { id: "custom" as const, label: "Custom", count: null },
   ];
 
   return (
-    <section id="planner" className="scroll-mt-24 border-t border-border">
-      {/* Planner introduction */}
-      <section className="relative isolate overflow-hidden border-b border-border">
-        <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute -right-40 -top-40 size-[500px] rounded-full bg-accent-green/15 blur-[130px]" />
-          <div className="absolute -bottom-40 left-0 size-[350px] rounded-full bg-accent-green/5 blur-[120px]" />
-        </div>
-        <Container className="py-14 sm:py-16">
-          <div className="max-w-3xl">
-            <Badge variant="neutral">YOUR PERSONAL WATCH PLAN</Badge>
-            <p className="mt-5 text-xs font-semibold uppercase tracking-[0.28em] text-accent-green">
-              THE ROAD TO DOOMSDAY
-            </p>
-            <h2 className="mt-3 text-3xl font-semibold leading-tight tracking-tight text-foreground sm:text-4xl">
-              Your time. Your watchlist.
-              <span className="text-accent-green-light">{" "}Your plan.</span>
-            </h2>
-            <p className="mt-4 max-w-2xl text-sm leading-7 text-foreground-secondary sm:text-base">
-              Build a realistic viewing plan around your schedule. Choose what you want to watch, how much time you have each day, and when you want to finish.
+    <section id="planner" className="scroll-mt-24 border-t border-border py-14 sm:py-16">
+      <Container>
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-8 max-w-2xl">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-accent-green">WATCH PLANNER</p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">Your watch plan, made simple.</h2>
+            <p className="mt-2 text-sm leading-6 text-foreground-secondary">
+              Pick what you want to watch, choose when you want to finish, and we’ll arrange the titles into a simple day-by-day plan.
             </p>
           </div>
-        </Container>
-      </section>
 
-      {/* Planner Setup */}
-      <section className="py-16 sm:py-20">
-        <Container>
-          <div className="grid gap-10 lg:grid-cols-[1fr_340px] lg:items-start">
-            <div className="space-y-12">
-              {/* Collection */}
-              <div>
-                <SectionHeading
-                  eyebrow="STEP 01"
-                  title="Choose your watchlist"
-                  description="Start with a curated selection or create your own."
-                />
-
-                <div className="mt-7 grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px]">
+            <div className="space-y-5">
+              <div className="rounded-xl border border-border bg-surface p-4 sm:p-5">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <h3 className="text-sm font-semibold text-foreground">What do you want to watch?</h3>
+                  <span className="text-xs text-foreground-muted">{isLoaded ? `${config.selectedMovieIds.length} selected` : "Loading…"}</span>
+                </div>
+                <div className="mt-4 flex flex-wrap gap-2">
                   {collections.map((collection) => {
-                    const active =
-                      config.collection === collection.id;
-
+                    const active = config.collection === collection.id;
                     return (
                       <button
                         key={collection.id}
                         type="button"
                         disabled={!isLoaded}
                         aria-pressed={active}
-                        onClick={() =>
-                          handleCollectionChange(
-                            collection.id
-                          )
-                        }
+                        onClick={() => chooseCollection(collection.id)}
                         className={[
-                          "relative rounded-2xl border p-5 text-left transition-colors disabled:opacity-50",
-                          active
-                            ? "border-accent-green/60 bg-accent-green/5"
-                            : "border-border bg-surface hover:border-border-strong",
+                          "rounded-lg border px-3.5 py-2 text-xs font-semibold transition-colors disabled:opacity-50",
+                          active ? "border-accent-green/50 bg-accent-green/10 text-accent-green" : "border-border text-foreground-secondary hover:border-border-strong hover:text-foreground",
                         ].join(" ")}
                       >
-                        {collection.recommended && (
-                          <span className="absolute right-4 top-4">
-                            <Badge variant="recommended">
-                              Recommended
-                            </Badge>
-                          </span>
-                        )}
-
-                        <span className="block pr-2 text-base font-semibold text-foreground">
-                          {collection.title}
-                        </span>
-
-                        <span className="mt-2 block text-xs leading-6 text-foreground-secondary">
-                          {collection.description}
-                        </span>
-
-                        <span className="mt-5 block text-xs font-medium text-accent-green">
-                          {collection.count !== null
-                            ? `${collection.count} titles`
-                            : "Choose your titles"}
-                        </span>
-
-                        <span className="mt-4 block text-xs font-semibold">
-                          {active ? (
-                            <span className="text-accent-green">
-                              Selected ✓
-                            </span>
-                          ) : (
-                            <span className="text-foreground-muted">
-                              Select collection →
-                            </span>
-                          )}
-                        </span>
+                        {collection.label}{collection.count !== null ? ` · ${collection.count}` : ""}
                       </button>
                     );
                   })}
                 </div>
-              </div>
 
-              {/* Custom selection */}
-              {config.collection === "custom" && (
-                <div>
-                  <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-                    <SectionHeading
-                      eyebrow="CUSTOM WATCHLIST"
-                      title="Select your titles"
-                      description="Choose exactly what you want included in your plan."
-                    />
-
-                    <div className="flex gap-3">
-                      <button
-                        type="button"
-                        disabled={!isLoaded}
-                        onClick={selectAllMovies}
-                        className="text-xs font-semibold text-accent-green hover:text-accent-green-light disabled:opacity-50"
-                      >
-                        Select all
-                      </button>
-
-                      <button
-                        type="button"
-                        disabled={!isLoaded}
-                        onClick={clearAllMovies}
-                        className="text-xs font-semibold text-foreground-muted hover:text-foreground disabled:opacity-50"
-                      >
-                        Clear all
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="mt-6">
+                {config.collection === "custom" && (
+                  <div className="mt-4 border-t border-border pt-4">
                     <input
                       type="search"
                       value={searchQuery}
-                      onChange={(event) =>
-                        setSearchQuery(event.target.value)
-                      }
-                      placeholder="Search movies and series..."
+                      onChange={(event) => setSearchQuery(event.target.value)}
+                      placeholder="Find a movie or series…"
+                      aria-label="Search titles"
                       className={inputClassName}
                     />
-                  </div>
-
-                  <div className="mt-4 max-h-[520px] overflow-y-auto rounded-2xl border border-border bg-surface p-3">
-                    {filteredMovies.map((movie) => {
-                      const selected =
-                        selectedMovieSet.has(movie.id);
-
-                      const watched =
-                        isProgressLoaded &&
-                        isWatched(movie.id);
-
-                      return (
-                        <label
-                          key={movie.id}
-                          className="flex cursor-pointer items-start gap-3 rounded-xl p-3 transition-colors hover:bg-background-secondary"
-                        >
+                    <div className="mt-3 max-h-64 overflow-y-auto divide-y divide-border">
+                      {filteredMovies.map((movie) => (
+                        <label key={movie.id} className="flex cursor-pointer items-center gap-3 py-2.5 text-sm">
                           <input
                             type="checkbox"
-                            checked={selected}
+                            checked={config.selectedMovieIds.includes(movie.id)}
                             disabled={!isLoaded}
-                            onChange={() =>
-                              toggleMovie(movie.id)
-                            }
-                            className="mt-1 size-4 shrink-0 accent-[#7cff62]"
+                            onChange={() => toggleMovie(movie.id)}
+                            className="size-4 accent-[#7cff62]"
                           />
-
-                          <span className="min-w-0 flex-1">
-                            <span className="block text-sm font-medium text-foreground">
-                              {movie.title}
-                            </span>
-
-                            <span className="mt-1 block text-xs text-foreground-muted">
-                              {movie.year} · {movie.universe}
-                              {movie.type === "series"
-                                ? " · Series"
-                                : ""}
-                            </span>
-                          </span>
-
-                          {watched && (
-                            <span className="shrink-0 text-[10px] font-semibold text-accent-green">
-                              Watched
-                            </span>
-                          )}
+                          <span className="min-w-0 flex-1 text-foreground">{movie.title}</span>
+                          <span className="text-xs text-foreground-muted">{movie.year}</span>
                         </label>
-                      );
-                    })}
-
-                    {filteredMovies.length === 0 && (
-                      <p className="p-6 text-center text-sm text-foreground-muted">
-                        No titles match your search.
-                      </p>
-                    )}
+                      ))}
+                    </div>
                   </div>
-
-                  <p className="mt-3 text-xs text-foreground-muted">
-                    {selectedMovies.length} of {movies.length} titles selected
-                  </p>
-                </div>
-              )}
-
-              {/* Daily budget */}
-              <div>
-                <SectionHeading
-                  eyebrow="STEP 02"
-                  title="Set your daily viewing time"
-                  description="Choose how much time you can realistically spend watching each day."
-                />
-
-                <div className="mt-7 max-w-xl">
-                  <label
-                    htmlFor="daily-budget"
-                    className="mb-3 block text-sm font-medium text-foreground"
-                  >
-                    Daily viewing budget
-                  </label>
-
-                  <select
-                    id="daily-budget"
-                    value={config.dailyBudgetMinutes}
-                    disabled={!isLoaded}
-                    onChange={(event) =>
-                      handleBudgetChange(event.target.value)
-                    }
-                    className={inputClassName}
-                  >
-                    {budgetOptions.map((option) => (
-                      <option
-                        key={option.value}
-                        value={option.value}
-                      >
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-
-                  <p className="mt-3 text-xs leading-6 text-foreground-muted">
-                    This is your daily target. A title longer
-                    than your budget will stay intact and
-                    occupy its own day.
-                  </p>
-                </div>
+                )}
               </div>
 
-              {/* Target date */}
-              <div>
-                <SectionHeading
-                  eyebrow="STEP 03"
-                  title="Choose your finish date"
-                  description="Set the date by which you want to complete your watchlist."
-                />
-
-                <div className="mt-7 max-w-xl">
-                  <label
-                    htmlFor="target-date"
-                    className="mb-3 block text-sm font-medium text-foreground"
-                  >
-                    Target completion date
-                  </label>
-
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="rounded-xl border border-border bg-surface p-4">
+                  <label htmlFor="planner-target-date" className="block text-xs font-semibold text-foreground">Finish by</label>
                   <input
-                    id="target-date"
+                    id="planner-target-date"
                     type="date"
+                    min={today || undefined}
                     value={config.targetDate}
                     disabled={!isLoaded}
-                    onChange={(event) =>
-                      handleTargetDateChange(event.target.value)
-                    }
-                    className={inputClassName}
+                    onChange={(event) => updateConfig((current) => ({ ...current, targetDate: event.target.value }))}
+                    className={`${inputClassName} mt-2`}
                   />
-
-                  <p className="mt-3 text-xs leading-6 text-foreground-muted">
-                    The default date is based on your configured
-                    release region. You can change it at any time.
-                  </p>
+                  <p className="mt-2 text-[11px] text-foreground-muted">Default is the configured Doomsday release date.</p>
                 </div>
-              </div>
 
-              {/* Watched titles */}
-              <div>
-                <SectionHeading
-                  eyebrow="STEP 04"
-                  title="Already watched something?"
-                  description="Decide how the planner should handle titles you have completed."
-                />
-
-                <label className="mt-7 flex cursor-pointer items-start gap-4 rounded-2xl border border-border bg-surface p-5">
-                  <input
-                    type="checkbox"
-                    checked={config.includeWatched}
-                    disabled={!isLoaded}
-                    onChange={(event) =>
-                      handleIncludeWatchedChange(
-                        event.target.checked
-                      )
-                    }
-                    className="mt-1 size-4 shrink-0 accent-[#7cff62]"
-                  />
-
-                  <span>
-                    <span className="block text-sm font-semibold text-foreground">
-                      Include already watched titles
-                    </span>
-
-                    <span className="mt-2 block text-xs leading-6 text-foreground-secondary">
-                      When disabled, completed titles will
-                      be excluded from the generated schedule.
-                      Your original watch history will not
-                      be changed.
-                    </span>
-                  </span>
-                </label>
+                <div className="rounded-xl border border-border bg-surface p-4">
+                  <p className="block text-xs font-semibold text-foreground">Watch order</p>
+                  <div className="mt-2 grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      aria-pressed={sortOrder === "release"}
+                      onClick={() => setSortOrder("release")}
+                      className={`rounded-lg border px-3 py-2.5 text-xs font-semibold transition-colors ${sortOrder === "release" ? "border-accent-green/50 bg-accent-green/10 text-accent-green" : "border-border text-foreground-secondary hover:text-foreground"}`}
+                    >Release order</button>
+                    <button
+                      type="button"
+                      aria-pressed={sortOrder === "chronological"}
+                      onClick={() => setSortOrder("chronological")}
+                      className={`rounded-lg border px-3 py-2.5 text-xs font-semibold transition-colors ${sortOrder === "chronological" ? "border-accent-green/50 bg-accent-green/10 text-accent-green" : "border-border text-foreground-secondary hover:text-foreground"}`}
+                    >Story order</button>
+                  </div>
+                  <p className="mt-2 text-[11px] text-foreground-muted">Watched titles are skipped automatically.</p>
+                </div>
               </div>
             </div>
 
-            {/* Summary */}
-            <aside className="lg:sticky lg:top-28">
-              <div className="rounded-2xl border border-border bg-surface p-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-green">
-                  YOUR PLANNER SETUP
-                </p>
-
-                <h2 className="mt-4 text-xl font-semibold text-foreground">
-                  Almost ready.
-                </h2>
-
-                <p className="mt-2 text-sm leading-6 text-foreground-secondary">
-                  Here&apos;s what your schedule will be based on.
-                </p>
-
-                <div className="my-6 space-y-5">
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="text-xs text-foreground-muted">
-                      Collection
-                    </span>
-                    <span className="text-sm font-medium text-foreground">
-                      {config.collection === "essentials"
-                        ? "Essentials"
-                        : config.collection === "catalogue"
-                          ? "Full catalogue"
-                          : "Custom"}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="text-xs text-foreground-muted">
-                      Selected titles
-                    </span>
-                    <span className="text-sm font-semibold tabular-nums text-foreground">
-                      {selectedMovies.length}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="text-xs text-foreground-muted">
-                      Daily budget
-                    </span>
-                    <span className="text-sm font-medium text-foreground">
-                      {config.dailyBudgetMinutes} min
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="text-xs text-foreground-muted">
-                      Include watched
-                    </span>
-                    <span className="text-sm font-medium text-foreground">
-                      {config.includeWatched ? "Yes" : "No"}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="text-xs text-foreground-muted">
-                      Already completed
-                    </span>
-                    <span className="text-sm font-medium text-foreground">
-                      {isProgressLoaded
-                        ? `${watchedSelectedCount} titles`
-                        : "Loading..."}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="border-t border-border pt-5">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-foreground-muted">
-                      Setup status
-                    </span>
-
-                    <span
-                      className={[
-                        "text-xs font-semibold",
-                        saveStatus === "saved"
-                          ? "text-accent-green"
-                          : saveStatus === "error"
-                            ? "text-red-400"
-                            : "text-foreground-muted",
-                      ].join(" ")}
-                    >
-                      {saveStatus === "saved"
-                        ? "Saved on device"
-                        : saveStatus === "error"
-                          ? "Save failed"
-                          : "Loading..."}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="mt-6 rounded-xl border border-accent-green/20 bg-accent-green/5 p-4">
-                  <p className="text-sm font-semibold text-foreground">
-                    Your schedule updates automatically
-                  </p>
-
-                  <p className="mt-2 text-xs leading-6 text-foreground-secondary">
-                    Change your watchlist, viewing budget,
-                    deadline, or watched status. Your day-by-day
-                    plan will recalculate using your latest settings.
-                  </p>
-                </div>
-
-                {selectedMovies.length === 0 && (
-                  <p className="mt-4 text-xs font-medium text-red-400">
-                    Select at least one title before generating
-                    a schedule.
-                  </p>
-                )}
-
-                <Link
-                  href="/#essentials"
-                  className="mt-6 block text-center text-xs font-semibold text-foreground-muted transition-colors hover:text-accent-green"
-                >
-                  Browse your watchlist →
-                </Link>
+            <aside className="h-fit rounded-xl border border-border bg-surface p-5 lg:sticky lg:top-24">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent-green">YOUR PLAN</p>
+              <p className="mt-3 text-3xl font-semibold tabular-nums text-foreground">{orderedMovies.length}</p>
+              <p className="text-xs text-foreground-muted">titles to watch</p>
+              <div className="my-4 border-t border-border" />
+              <div className="flex items-center justify-between gap-3 text-xs">
+                <span className="text-foreground-muted">Days available</span>
+                <span className="font-semibold text-foreground">{today ? availableDays : "—"}</span>
               </div>
+              <div className="mt-3 flex items-center justify-between gap-3 text-xs">
+                <span className="text-foreground-muted">Estimated watch time</span>
+                <span className="font-semibold text-foreground">
+                  {orderedMovies.every((movie) => movie.runtimeMinutes !== null)
+                    ? `${Math.floor(orderedMovies.reduce((sum, movie) => sum + (movie.runtimeMinutes ?? 0), 0) / 60)}h ${orderedMovies.reduce((sum, movie) => sum + (movie.runtimeMinutes ?? 0), 0) % 60}m`
+                    : "Varies"}
+                </span>
+              </div>
+              <p className="mt-4 text-[11px] leading-5 text-foreground-muted">Your plan updates automatically when you change your watchlist, date or watch order.</p>
             </aside>
           </div>
-        </Container>
-      </section>
 
-      {/* Generated Schedule */}
-      {scheduleResult && (
-        <PlannerSchedule
-          result={scheduleResult}
-          movies={movies}
-          today={today}
-          watchedMovieIds={watchedMovieIds}
-          isProgressLoaded={isProgressLoaded}
-          onToggleWatched={toggleWatched}
-        />
-      )}
+          <PlannerSchedule
+            days={planDays}
+            today={today}
+            isProgressLoaded={isProgressLoaded}
+            isLoaded={isLoaded}
+            isWatched={isWatched}
+            onToggleWatched={toggleWatched}
+          />
+        </div>
+      </Container>
     </section>
   );
 }
