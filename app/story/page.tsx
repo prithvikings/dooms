@@ -118,7 +118,7 @@ export default function StoryPage() {
                 className="inline-flex items-center justify-center rounded-lg bg-accent-green px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-accent-green-light"
               >
                 <span style={{ color: "#000000" }}>Explore the story</span>
-                <span className="ml-2" aria-hidden="true">
+                <span style={{ color: "#000000" }} className="ml-2" aria-hidden="true">
                   ↓
                 </span>
               </a>
