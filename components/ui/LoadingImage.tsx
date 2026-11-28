@@ -49,8 +49,7 @@ export function LoadingImage({
         />
       ) : (
         <span
-          role="img"
-          aria-label={alt || "Image unavailable"}
+          {...(alt ? { role: "img", "aria-label": `${alt} — image unavailable` } : { "aria-hidden": true })}
           className="absolute inset-0 flex items-center justify-center bg-[#171d19] text-xs text-white/50"
         >
           Image unavailable
