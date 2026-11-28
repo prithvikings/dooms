@@ -155,7 +155,7 @@ export function HomePageContent({
 
           <div className="mt-9 flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row">
             <Link
-              href="/essentials"
+              href="/#essentials"
               className="inline-flex min-h-14 items-center justify-center bg-[#7cff62] px-8 py-4 text-sm font-bold shadow-[0_8px_35px_rgba(112,255,83,0.2)] transition-colors hover:bg-[#a0ff8a]"
             >
               <span style={{ color: "#000000" }}>See the essentials</span>
@@ -287,46 +287,84 @@ export function HomePageContent({
         </Container>
       </section>
 
-      {/* Essentials */}
+      {/* Essentials watchlist */}
       <section
         id="essentials"
-        className="border-t border-border bg-background-secondary py-20 sm:py-24"
+        className="border-t border-border bg-background-secondary py-16 sm:py-20"
       >
         <Container>
-          <div className="flex flex-col gap-8">
-            <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
-              <SectionHeading
-                eyebrow="WHERE TO BEGIN"
-                title="The essentials."
-                description="Sixteen carefully selected stories that cover the major characters, multiverse connections and events leading into Doomsday."
+          <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+            <SectionHeading
+              eyebrow="YOUR WATCHLIST"
+              title="The essentials."
+              description="Sixteen carefully selected stories that cover the major characters, multiverse connections and events leading into Doomsday. Mark each title as you complete it and your progress will stay synced with the rest of the guide."
+            />
+
+            <Badge variant="neutral">
+              {isLoaded
+                ? `${essentialWatchedCount} of ${essentials.length} completed`
+                : "Loading progress"}
+            </Badge>
+          </div>
+
+          <div
+            className="mb-10 h-2 overflow-hidden rounded-full bg-background-tertiary"
+            role="progressbar"
+            aria-label="Essentials completion"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={isLoaded
+              ? Math.round((essentialWatchedCount / Math.max(essentials.length, 1)) * 100)
+              : 0}
+          >
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-accent-green to-accent-green-light transition-[width] duration-500"
+              style={{
+                width: `${isLoaded
+                  ? Math.round((essentialWatchedCount / Math.max(essentials.length, 1)) * 100)
+                  : 0}%`,
+              }}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {essentials.map((movie) => (
+              <MovieCard
+                key={movie.id}
+                movie={movie}
+                variant="detailed"
               />
+            ))}
+          </div>
 
-              <Badge variant="essential">
-                {essentials.length} essential titles
-              </Badge>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-              {essentials.map((movie) => (
-  <MovieCard
-    key={movie.id}
-    movie={movie}
-    variant="compact"
-  />
-))}
-            </div>
-
-            <div className="flex flex-col items-center gap-3 border-t border-border pt-8 text-center">
-              <p className="text-sm text-foreground-secondary">
-                {isLoaded
-                  ? `${essentialWatchedCount} of ${essentials.length} essentials completed`
-                  : "Loading watch progress"}
-              </p>
-
-              <p className="text-xs text-foreground-muted">
-                Your journey is just getting started.
-              </p>
-            </div>
+          <div className="mt-14 rounded-2xl border border-border bg-surface p-8 text-center">
+            {isLoaded && essentialWatchedCount === essentials.length ? (
+              <>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-green">
+                  COLLECTION COMPLETED
+                </p>
+                <h2 className="mt-3 text-2xl font-semibold text-foreground">
+                  You&apos;ve completed the essentials.
+                </h2>
+                <p className="mt-3 text-sm leading-7 text-foreground-secondary">
+                  You&apos;ve covered all {essentials.length} curated stories on the road to Doomsday.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-green">
+                  KEEP GOING
+                </p>
+                <h2 className="mt-3 text-2xl font-semibold text-foreground">
+                  Every story brings you closer.
+                </h2>
+                <p className="mt-3 text-sm leading-7 text-foreground-secondary">
+                  {isLoaded
+                    ? `${essentials.length - essentialWatchedCount} titles left in your essentials watchlist.`
+                    : "Your watch progress is loading."}
+                </p>
+              </>
+            )}
           </div>
         </Container>
       </section>
