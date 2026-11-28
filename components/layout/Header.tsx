@@ -36,8 +36,8 @@ export function Header() {
           ? [
               "-mb-20 text-white",
               isScrolled || menuOpen
-                ? "bg-black/25 backdrop-blur-lg"
-                : "bg-black/10 backdrop-blur-[2px]",
+                ? "bg-black/80 backdrop-blur-xl"
+                : "bg-transparent",
             ].join(" ")
           : "border-b border-border bg-background/85 backdrop-blur-xl",
       ].join(" ")}
