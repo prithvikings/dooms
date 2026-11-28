@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 
 import { Container } from "@/components/ui/Container";
@@ -15,11 +14,8 @@ export function Footer() {
           <div className="space-y-2">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-sm font-bold tracking-[0.18em] text-foreground"
+              className="inline-flex items-center text-sm font-bold tracking-[0.18em] text-foreground"
             >
-              <span className="flex size-7 items-center justify-center rounded-md bg-accent-green text-xs font-bold text-[#071006]">
-                D
-              </span>
               DOOMSDAY
             </Link>
 

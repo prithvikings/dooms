@@ -424,7 +424,7 @@ const hasActiveFilters =
 
           {/* Movie grid */}
           {filteredMovies.length > 0 ? (
-            <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
               {filteredMovies.map((movie) => (
                 <MovieCard
                   key={movie.id}

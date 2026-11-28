@@ -126,7 +126,7 @@ export function InteractiveTimeline() {
                 className={[
                   "rounded-lg border px-4 py-2.5 text-sm font-medium transition-colors",
                   active
-                    ? "border-accent-green bg-accent-green text-white"
+                    ? "border-accent-green bg-accent-green text-black"
                     : "border-border bg-surface text-foreground-secondary hover:border-border-strong hover:text-foreground",
                 ].join(" ")}
               >
