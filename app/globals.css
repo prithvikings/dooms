@@ -221,3 +221,38 @@ select option {
   color: var(--foreground);
 }
 
+
+
+/* ============================================
+   IMAGE LOADING PLACEHOLDER
+============================================ */
+
+.image-shimmer::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  transform: translateX(-100%);
+  background: linear-gradient(
+    105deg,
+    transparent 25%,
+    rgba(255, 255, 255, 0.07) 45%,
+    rgba(124, 255, 98, 0.12) 50%,
+    rgba(255, 255, 255, 0.07) 55%,
+    transparent 75%
+  );
+  animation: image-shimmer 1.6s ease-in-out infinite;
+}
+
+@keyframes image-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image-shimmer::after {
+    animation: none;
+    transform: none;
+    background: rgba(255, 255, 255, 0.035);
+  }
+}
