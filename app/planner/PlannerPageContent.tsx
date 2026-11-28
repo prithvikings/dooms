@@ -298,37 +298,24 @@ export function PlannerPageContent({
 
   return (
     <>
-      {/* Hero */}
+      {/* Planner introduction */}
       <section className="relative isolate overflow-hidden border-b border-border">
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute -right-40 -top-40 size-[500px] rounded-full bg-accent-green/15 blur-[130px]" />
           <div className="absolute -bottom-40 left-0 size-[350px] rounded-full bg-accent-green/5 blur-[120px]" />
         </div>
-
-        <Container className="py-20 sm:py-28">
+        <Container className="py-14 sm:py-16">
           <div className="max-w-3xl">
-            <Badge variant="neutral">
-              YOUR PERSONAL WATCH PLAN
-            </Badge>
-
-            <p className="mt-7 text-xs font-semibold uppercase tracking-[0.28em] text-accent-green">
+            <Badge variant="neutral">YOUR PERSONAL WATCH PLAN</Badge>
+            <p className="mt-5 text-xs font-semibold uppercase tracking-[0.28em] text-accent-green">
               THE ROAD TO DOOMSDAY
             </p>
-
-            <h1 className="mt-4 text-4xl font-semibold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-              Your time.
-              <br />
-              Your watchlist.
-              <span className="text-accent-green-light">
-                {" "}Your plan.
-              </span>
-            </h1>
-
-            <p className="mt-6 max-w-2xl text-base leading-8 text-foreground-secondary">
-              Build a realistic viewing plan around
-              your schedule. Choose what you want to
-              watch, how much time you have each day,
-              and when you want to finish.
+            <h2 className="mt-3 text-3xl font-semibold leading-tight tracking-tight text-foreground sm:text-4xl">
+              Your time. Your watchlist.
+              <span className="text-accent-green-light">{" "}Your plan.</span>
+            </h2>
+            <p className="mt-4 max-w-2xl text-sm leading-7 text-foreground-secondary sm:text-base">
+              Build a realistic viewing plan around your schedule. Choose what you want to watch, how much time you have each day, and when you want to finish.
             </p>
           </div>
         </Container>
@@ -738,7 +725,7 @@ export function PlannerPageContent({
                 )}
 
                 <Link
-                  href="/essentials"
+                  href="/#essentials"
                   className="mt-6 block text-center text-xs font-semibold text-foreground-muted transition-colors hover:text-accent-green"
                 >
                   Browse your watchlist →
@@ -760,6 +747,6 @@ export function PlannerPageContent({
           onToggleWatched={toggleWatched}
         />
       )}
-    </>
+    </section>
   );
 }
