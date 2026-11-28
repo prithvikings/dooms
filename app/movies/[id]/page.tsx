@@ -36,10 +36,11 @@ export async function generateMetadata({
   return {
     title: movie.title,
     description: movie.synopsis,
+    alternates: { canonical: `/movies/${movie.id}` },
     openGraph: {
       title: `${movie.title} — Doomsday`,
       description: movie.doomsdayRelevance,
-      images: [{ url: movie.poster }],
+      images: [{ url: movie.poster.startsWith("http") ? movie.poster : `https://doomsday-six-blond.vercel.app${movie.poster}` }],
     },
   };
 }
