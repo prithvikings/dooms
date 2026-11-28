@@ -225,14 +225,6 @@ export function PlannerPageContent({ movies, essentialsMovieIds, defaultTargetDa
                 <span className="text-foreground-muted">Days available</span>
                 <span className="font-semibold text-foreground">{today ? availableDays : "—"}</span>
               </div>
-              <div className="mt-3 flex items-center justify-between gap-3 text-xs">
-                <span className="text-foreground-muted">Estimated watch time</span>
-                <span className="font-semibold text-foreground">
-                  {orderedMovies.every((movie) => movie.runtimeMinutes !== null)
-                    ? `${Math.floor(orderedMovies.reduce((sum, movie) => sum + (movie.runtimeMinutes ?? 0), 0) / 60)}h ${orderedMovies.reduce((sum, movie) => sum + (movie.runtimeMinutes ?? 0), 0) % 60}m`
-                    : "Varies"}
-                </span>
-              </div>
               <p className="mt-4 text-[11px] leading-5 text-foreground-muted">Your plan updates automatically when you change your watchlist, date or watch order.</p>
             </aside>
           </div>
