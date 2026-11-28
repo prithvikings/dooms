@@ -36,6 +36,7 @@ export function HomePageContent({
   const [selectedRegionId, setSelectedRegionId] = useState(RELEASE_DATES[0].id);
   const [isRegionLoaded, setIsRegionLoaded] = useState(false);
   const [saveError, setSaveError] = useState(false);
+  const [isRegionMenuOpen, setIsRegionMenuOpen] = useState(false);
 
   useEffect(() => {
     setSelectedRegionId(readReleaseRegion());
@@ -65,10 +66,10 @@ export function HomePageContent({
         <div className="pointer-events-none absolute inset-0 -z-20 overflow-hidden bg-black">
           <iframe
             title="Avengers: Doomsday trailer background"
-            src="https://www.youtube-nocookie.com/embed/Wb8Tq_HD4E8?autoplay=1&mute=1&controls=0&loop=1&playlist=Wb8Tq_HD4E8&playsinline=1&rel=0&modestbranding=1"
-            allow="autoplay; encrypted-media; picture-in-picture"
+            src="https://www.youtube-nocookie.com/embed/Wb8Tq_HD4E8?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&iv_load_policy=3&loop=1&playlist=Wb8Tq_HD4E8&playsinline=1&rel=0&modestbranding=1"
+            allow="autoplay; encrypted-media"
             referrerPolicy="strict-origin-when-cross-origin"
-            className="absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-[177.78vh] min-w-full -translate-x-1/2 -translate-y-1/2 scale-110 opacity-65"
+            className="pointer-events-none absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-[177.78vh] min-w-full -translate-x-1/2 -translate-y-1/2 scale-110 opacity-65"
           />
         </div>
 
@@ -106,27 +107,44 @@ export function HomePageContent({
                 : "Loading release date"}
             </span>
             <span aria-hidden="true">·</span>
-            <label className="sr-only" htmlFor="release-region">
-              Change release region
-            </label>
-            <label className="relative inline-flex items-center">
-              <span className="sr-only">Change release region</span>
-              <select
-                id="release-region"
-                aria-label="Change release region"
-                value={selectedRegionId}
+            <div className="relative">
+              <button
+                type="button"
+                aria-haspopup="listbox"
+                aria-expanded={isRegionMenuOpen}
+                aria-controls="release-region-options"
                 disabled={!isRegionLoaded}
-                onChange={(event) => handleRegionChange(event.target.value)}
-                className="cursor-pointer appearance-none border-0 border-b border-[#7cff62] bg-transparent py-1 pl-1 pr-5 font-semibold text-[#7cff62] outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-[#7cff62]"
+                onClick={() => setIsRegionMenuOpen((open) => !open)}
+                className="cursor-pointer border-0 border-b border-[#7cff62] bg-transparent px-1 py-1 font-semibold text-[#7cff62] transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7cff62] disabled:cursor-wait disabled:opacity-60"
               >
-                {RELEASE_DATES.map((region) => (
-                  <option key={region.id} value={region.id} className="bg-[#111510] text-white">
-                    {region.name}
-                  </option>
-                ))}
-              </select>
-              <span aria-hidden="true" className="pointer-events-none absolute right-1 text-[#7cff62]">⌄</span>
-            </label>
+                Change
+              </button>
+
+              {isRegionMenuOpen && (
+                <div
+                  id="release-region-options"
+                  role="listbox"
+                  aria-label="Choose release region"
+                  className="absolute left-1/2 top-full z-30 mt-2 min-w-44 -translate-x-1/2 overflow-hidden border border-white/15 bg-[#10130f] py-1 text-left shadow-2xl"
+                >
+                  {RELEASE_DATES.map((region) => (
+                    <button
+                      key={region.id}
+                      type="button"
+                      role="option"
+                      aria-selected={selectedRegionId === region.id}
+                      onClick={() => {
+                        handleRegionChange(region.id);
+                        setIsRegionMenuOpen(false);
+                      }}
+                      className="block w-full px-4 py-2.5 text-left text-sm text-white transition-colors hover:bg-white/10 aria-selected:bg-white/10"
+                    >
+                      {region.name}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           {saveError && (
@@ -138,9 +156,9 @@ export function HomePageContent({
           <div className="mt-9 flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row">
             <Link
               href="/catalogue"
-              className="inline-flex min-h-14 items-center justify-center bg-[#7cff62] px-8 py-4 text-sm font-bold text-black shadow-[0_8px_35px_rgba(112,255,83,0.2)] transition-colors hover:bg-[#a0ff8a]"
+              className="inline-flex min-h-14 items-center justify-center bg-[#7cff62] px-8 py-4 text-sm font-bold shadow-[0_8px_35px_rgba(112,255,83,0.2)] transition-colors hover:bg-[#a0ff8a]"
             >
-              See the catalogue
+              <span style={{ color: "#000000" }}>See the catalogue</span>
             </Link>
 
             <Link
