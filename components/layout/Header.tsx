@@ -138,6 +138,7 @@ export function Header() {
           menuOpen ? "block" : "hidden",
         ].join(" ")}
       >
+        <nav aria-label="Mobile navigation">
         <Container className="flex flex-col gap-1 py-3">
           {navigationLinks.map((link) => (
             <Link
@@ -174,6 +175,7 @@ export function Header() {
             GitHub
           </a>
         </Container>
+        </nav>
       </div>
     </header>
   );
