@@ -1,428 +1,125 @@
-
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import type { Movie } from "@/types/movie";
-import type { PlannerResult } from "@/types/planner";
+import { formatRuntime } from "@/lib/format-runtime";
 
 type PlannerScheduleProps = {
-  result: PlannerResult;
-  movies: Movie[];
+  days: [number, Movie[]][];
   today: string;
-  watchedMovieIds: string[];
   isProgressLoaded: boolean;
+  isLoaded: boolean;
+  isWatched: (movieId: string) => boolean;
   onToggleWatched: (movieId: string) => void;
 };
 
-function addDays(dateString: string, days: number): string {
+function addDays(dateString: string, days: number) {
   const date = new Date(`${dateString}T00:00:00.000Z`);
   date.setUTCDate(date.getUTCDate() + days);
   return date.toISOString().slice(0, 10);
 }
 
-function formatDate(dateString: string): string {
-  const date = new Date(`${dateString}T00:00:00.000Z`);
-
+function formatDate(dateString: string) {
   return new Intl.DateTimeFormat("en-IN", {
-    weekday: "long",
+    weekday: "short",
     day: "numeric",
-    month: "long",
-    year: "numeric",
+    month: "short",
     timeZone: "UTC",
-  }).format(date);
+  }).format(new Date(`${dateString}T00:00:00.000Z`));
 }
-
-function formatRuntime(minutes: number): string {
-  const hours = Math.floor(minutes / 60);
-  const remainingMinutes = minutes % 60;
-
-  if (hours === 0) return `${remainingMinutes} min`;
-  if (remainingMinutes === 0) return `${hours} hr`;
-
-  return `${hours} hr ${remainingMinutes} min`;
-}
-
-const errorMessages = {
-  "invalid-budget": "Your daily viewing budget is invalid. Choose a valid budget to generate a schedule.",
-  "invalid-today": "The current date could not be interpreted. Refresh the page and try again.",
-  "invalid-target-date": "Your target date is invalid. Choose a valid completion date.",
-  "deadline-passed": "Your target date has already passed. Choose today or a future date.",
-};
 
 export function PlannerSchedule({
-  result,
-  movies,
+  days,
   today,
-  watchedMovieIds,
   isProgressLoaded,
+  isLoaded,
+  isWatched,
   onToggleWatched,
 }: PlannerScheduleProps) {
-  const movieById = new Map(
-    movies.map((movie) => [movie.id, movie])
-  );
-
-  const watchedSet = new Set(watchedMovieIds);
-
-  const scheduleByDay = new Map<
-    number,
-    typeof result.schedule
-  >();
-
-  for (const item of result.schedule) {
-    const currentItems = scheduleByDay.get(item.day) ?? [];
-    scheduleByDay.set(item.day, [...currentItems, item]);
+  if (!isLoaded || !isProgressLoaded || !today) {
+    return (
+      <div className="mt-8 rounded-xl border border-border bg-surface px-5 py-8 text-center text-sm text-foreground-muted">
+        Preparing your watch plan…
+      </div>
+    );
   }
 
-  const days = [...scheduleByDay.entries()].sort(
-    ([dayA], [dayB]) => dayA - dayB
-  );
-
-  const scheduledRuntime = result.schedule.reduce(
-    (total, item) => total + item.duration,
-    0
-  );
-
-  const scheduledCount = result.schedule.length;
-
-  const completionPercentage =
-    result.selectedMovieIds.length === 0
-      ? 0
-      : Math.round(
-          (scheduledCount / result.selectedMovieIds.length) * 100
-        );
+  if (days.length === 0) {
+    return (
+      <div className="mt-8 rounded-xl border border-border bg-surface px-5 py-10 text-center">
+        <p className="text-sm font-semibold text-foreground">Your watchlist is empty</p>
+        <p className="mt-1 text-xs text-foreground-muted">Choose a collection or add titles to your custom list.</p>
+      </div>
+    );
+  }
 
   return (
-    <section className="border-t border-border py-16 sm:py-20">
-      <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
-        <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-green">
-            YOUR WATCH PLAN
-          </p>
-
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-            Your schedule.
-          </h2>
-
-          <p className="mt-4 text-sm leading-7 text-foreground-secondary">
-            Your selected titles are arranged in watch order
-            across the days available before your target date.
-          </p>
+    <section className="mt-9">
+      <div className="mb-4 flex flex-wrap items-end justify-between gap-2">
+        <div>
+          <h3 className="text-lg font-semibold text-foreground">Your day-by-day plan</h3>
+          <p className="mt-1 text-xs text-foreground-muted">Your watched titles are automatically left out.</p>
         </div>
+        <span className="text-xs text-foreground-muted">{days.reduce((total, [, items]) => total + items.length, 0)} titles · {days.length} days</span>
+      </div>
 
-        {result.error && (
-          <div
-            role="alert"
-            className="mt-8 rounded-2xl border border-red-500/30 bg-red-500/5 p-5"
-          >
-            <p className="text-sm font-semibold text-red-300">
-              Schedule cannot be generated
-            </p>
-            <p className="mt-2 text-sm leading-6 text-foreground-secondary">
-              {errorMessages[result.error]}
-            </p>
-          </div>
-        )}
-
-        {!result.error && result.selectedMovieIds.length === 0 && (
-          <div className="mt-8 rounded-2xl border border-border bg-surface p-8 text-center">
-            <p className="text-base font-semibold text-foreground">
-              Your watchlist is empty
-            </p>
-            <p className="mt-2 text-sm text-foreground-secondary">
-              Select at least one title above to generate your schedule.
-            </p>
-          </div>
-        )}
-
-        {!result.error && result.selectedMovieIds.length > 0 && (
-          <>
-            {/* Overview */}
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-              <div className="rounded-2xl border border-border bg-surface p-5">
-                <p className="text-xs text-foreground-muted">
-                  Scheduled titles
-                </p>
-                <p className="mt-2 text-2xl font-semibold tabular-nums text-foreground">
-                  {scheduledCount}
-                  <span className="ml-1 text-sm font-normal text-foreground-muted">
-                    / {result.selectedMovieIds.length}
+      <div className="space-y-3">
+        {days.map(([day, items]) => {
+          const date = addDays(today, day - 1);
+          return (
+            <section key={day} className="overflow-hidden rounded-xl border border-border bg-surface">
+              <div className="flex items-center justify-between gap-3 border-b border-border bg-background-secondary/60 px-4 py-3">
+                <div className="flex items-center gap-3">
+                  <span className="flex size-9 items-center justify-center rounded-lg bg-accent-green/10 text-xs font-bold text-accent-green">
+                    {String(day).padStart(2, "0")}
                   </span>
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-border bg-surface p-5">
-                <p className="text-xs text-foreground-muted">
-                  Total watch time
-                </p>
-                <p className="mt-2 text-2xl font-semibold tabular-nums text-foreground">
-                  {formatRuntime(result.totalRuntime)}
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-border bg-surface p-5">
-                <p className="text-xs text-foreground-muted">
-                  Scheduled days
-                </p>
-                <p className="mt-2 text-2xl font-semibold tabular-nums text-foreground">
-                  {result.totalDays}
-                  <span className="ml-1 text-sm font-normal text-foreground-muted">
-                    / {result.availableDays}
-                  </span>
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-border bg-surface p-5">
-                <p className="text-xs text-foreground-muted">
-                  Daily viewing budget
-                </p>
-                <p className="mt-2 text-2xl font-semibold tabular-nums text-foreground">
-                  {result.dailyBudgetMinutes}
-                  <span className="ml-1 text-sm font-normal text-foreground-muted">
-                    min
-                  </span>
-                </p>
-              </div>
-            </div>
-
-            {/* Overall completion */}
-            <div className="mt-6 rounded-2xl border border-border bg-surface p-5">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <p className="text-sm font-semibold text-foreground">
-                  Schedule coverage
-                </p>
-                <p className="text-sm tabular-nums text-foreground-secondary">
-                  {completionPercentage}%
-                </p>
-              </div>
-
-              <div
-                className="mt-3 h-2 overflow-hidden rounded-full bg-background-tertiary"
-                role="progressbar"
-                aria-label="Schedule coverage"
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-valuenow={completionPercentage}
-              >
-                <div
-                  className="h-full rounded-full bg-accent-green transition-all"
-                  style={{ width: `${completionPercentage}%` }}
-                />
-              </div>
-
-              <p className="mt-3 text-xs text-foreground-muted">
-                {result.isComplete
-                  ? "Every eligible title with a known runtime has been scheduled."
-                  : "Some titles still need attention. Review the warnings below."}
-              </p>
-            </div>
-
-            {/* Warnings */}
-            {(result.unscheduledMovieIds.length > 0 ||
-              result.unknownRuntimeMovieIds.length > 0 ||
-              result.overBudgetMovieIds.length > 0) && (
-              <div className="mt-6 space-y-4">
-                {result.unscheduledMovieIds.length > 0 && (
-                  <div className="rounded-2xl border border-red-500/30 bg-red-500/5 p-5">
-                    <p className="text-sm font-semibold text-red-300">
-                      {result.unscheduledMovieIds.length} title(s) could not fit before your deadline
-                    </p>
-                    <ul className="mt-3 space-y-2 text-sm text-foreground-secondary">
-                      {result.unscheduledMovieIds.map((id) => (
-                        <li key={id}>
-                          {movieById.get(id)?.title ?? id}
-                        </li>
-                      ))}
-                    </ul>
+                  <div>
+                    <p className="text-xs font-semibold text-foreground">Day {day}</p>
+                    <p className="mt-0.5 text-[11px] text-foreground-muted">{formatDate(date)}</p>
                   </div>
-                )}
-
-                {result.unknownRuntimeMovieIds.length > 0 && (
-                  <div className="rounded-2xl border border-yellow-500/30 bg-yellow-500/5 p-5">
-                    <p className="text-sm font-semibold text-yellow-200">
-                      {result.unknownRuntimeMovieIds.length} title(s) have no usable runtime
-                    </p>
-                    <p className="mt-2 text-xs leading-6 text-foreground-secondary">
-                      These titles are not automatically scheduled because their viewing time is unknown.
-                    </p>
-                    <ul className="mt-3 space-y-2 text-sm text-foreground-secondary">
-                      {result.unknownRuntimeMovieIds.map((id) => (
-                        <li key={id}>
-                          {movieById.get(id)?.title ?? id}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {result.overBudgetMovieIds.length > 0 && (
-                  <div className="rounded-2xl border border-yellow-500/30 bg-yellow-500/5 p-5">
-                    <p className="text-sm font-semibold text-yellow-200">
-                      {result.overBudgetMovieIds.length} title(s) exceed your daily budget
-                    </p>
-                    <p className="mt-2 text-xs leading-6 text-foreground-secondary">
-                      These titles are kept intact and scheduled alone on their respective days.
-                    </p>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Daily schedule */}
-            <div className="mt-10">
-              <div className="flex flex-wrap items-end justify-between gap-3">
-                <div>
-                  <h3 className="text-xl font-semibold text-foreground">
-                    Day-by-day plan
-                  </h3>
-                  <p className="mt-2 text-sm text-foreground-secondary">
-                    Titles stay in the catalogue&apos;s viewing order.
-                  </p>
                 </div>
-                <p className="text-xs text-foreground-muted">
-                  {formatRuntime(scheduledRuntime)} scheduled
-                </p>
+                <span className="text-[11px] text-foreground-muted">{items.length} {items.length === 1 ? "title" : "titles"}</span>
               </div>
 
-              {days.length === 0 ? (
-                <div className="mt-5 rounded-2xl border border-border bg-surface p-6 text-sm text-foreground-secondary">
-                  No titles could be scheduled with the current settings.
-                </div>
-              ) : (
-                <div className="mt-6 space-y-5">
-                  {days.map(([day, items]) => {
-                    const date = addDays(today, day - 1);
-                    const dayRuntime = items.reduce(
-                      (total, item) => total + item.duration,
-                      0
-                    );
+              <div className="divide-y divide-border">
+                {items.map((movie) => {
+                  const watched = isWatched(movie.id);
+                  const runtime = movie.runtimeMinutes !== null
+                    ? formatRuntime(movie.runtimeMinutes)
+                    : movie.episodeCount
+                      ? `${movie.episodeCount} episodes`
+                      : "Runtime unavailable";
 
-                    const budgetPercentage =
-                      result.dailyBudgetMinutes > 0
-                        ? Math.round(
-                            (dayRuntime / result.dailyBudgetMinutes) * 100
-                          )
-                        : 0;
-
-                    const dayOverBudget =
-                      dayRuntime > result.dailyBudgetMinutes;
-
-                    return (
-                      <div
-                        key={day}
-                        className="overflow-hidden rounded-2xl border border-border bg-surface"
-                      >
-                        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-5 py-4">
-                          <div>
-                            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-accent-green">
-                              DAY {day}
-                            </p>
-                            <h4 className="mt-1 text-sm font-semibold text-foreground">
-                              {formatDate(date)}
-                            </h4>
-                          </div>
-
-                          <div className="text-right">
-                            <p className="text-sm font-semibold tabular-nums text-foreground">
-                              {formatRuntime(dayRuntime)}
-                            </p>
-                            <p
-                              className={[
-                                "mt-1 text-xs",
-                                dayOverBudget
-                                  ? "text-yellow-200"
-                                  : "text-foreground-muted",
-                              ].join(" ")}
-                            >
-                              {budgetPercentage}% of daily budget
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className="px-5 py-3">
-                          <div className="h-1.5 overflow-hidden rounded-full bg-background-tertiary">
-                            <div
-                              className={[
-                                "h-full rounded-full",
-                                dayOverBudget
-                                  ? "bg-yellow-400"
-                                  : "bg-accent-green",
-                              ].join(" ")}
-                              style={{
-                                width: `${Math.min(budgetPercentage, 100)}%`,
-                              }}
-                            />
-                          </div>
-                        </div>
-
-                        <div className="divide-y divide-border">
-                          {items.map((item) => {
-                            const movie = movieById.get(item.movieId);
-
-                            if (!movie) return null;
-
-                            const watched = watchedSet.has(movie.id);
-
-                            return (
-                              <div
-                                key={item.movieId}
-                                className="flex flex-col gap-3 px-5 py-4 sm:flex-row sm:items-center sm:justify-between"
-                              >
-                                <div className="min-w-0">
-                                  <div className="flex flex-wrap items-center gap-2">
-                                    <p className="text-sm font-semibold text-foreground">
-                                      {movie.title}
-                                    </p>
-
-                                    {movie.type === "series" && (
-                                      <span className="rounded-md bg-background-tertiary px-2 py-1 text-[10px] text-foreground-secondary">
-                                        SERIES
-                                      </span>
-                                    )}
-
-                                    {item.overBudget && (
-                                      <span className="rounded-md bg-yellow-400/10 px-2 py-1 text-[10px] font-semibold text-yellow-200">
-                                        OVER BUDGET
-                                      </span>
-                                    )}
-
-                                    {watched && (
-                                      <span className="rounded-md bg-accent-green/10 px-2 py-1 text-[10px] font-semibold text-accent-green">
-                                        WATCHED
-                                      </span>
-                                    )}
-                                  </div>
-
-                                  <p className="mt-1 text-xs text-foreground-muted">
-                                    {movie.year} · {movie.universe} · {formatRuntime(item.duration)}
-                                  </p>
-                                </div>
-
-                                <button
-                                  type="button"
-                                  disabled={!isProgressLoaded}
-                                  onClick={() => onToggleWatched(movie.id)}
-                                  className={[
-                                    "shrink-0 rounded-lg border px-3 py-2 text-xs font-semibold transition-colors disabled:opacity-50",
-                                    watched
-                                      ? "border-accent-green/40 text-accent-green hover:bg-accent-green/10"
-                                      : "border-border-strong text-foreground-secondary hover:border-accent-green/50 hover:text-accent-green",
-                                  ].join(" ")}
-                                >
-                                  {watched
-                                    ? "Mark unwatched"
-                                    : "Mark watched"}
-                                </button>
-                              </div>
-                            );
-                          })}
-                        </div>
+                  return (
+                    <article key={movie.id} className="flex items-center gap-3 px-3 py-3 sm:gap-4 sm:px-4">
+                      <Link href={`/movies/${movie.id}`} className="relative h-[76px] w-[54px] shrink-0 overflow-hidden rounded-md bg-background-tertiary" aria-label={`View ${movie.title} details`}>
+                        <Image src={movie.poster} alt="" fill sizes="54px" className="object-cover" />
+                      </Link>
+                      <div className="min-w-0 flex-1">
+                        <Link href={`/movies/${movie.id}`} className="line-clamp-2 text-sm font-semibold text-foreground transition-colors hover:text-accent-green">
+                          {movie.title}
+                        </Link>
+                        <p className="mt-1 text-[11px] text-foreground-muted">
+                          {movie.year} · {movie.type === "series" ? "Series" : movie.type === "special" ? "Special" : "Film"} · {runtime}
+                        </p>
+                        {watched && <p className="mt-1 text-[10px] font-semibold text-accent-green">Watched</p>}
                       </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          </>
-        )}
+                      <button
+                        type="button"
+                        disabled={!isProgressLoaded}
+                        onClick={() => onToggleWatched(movie.id)}
+                        className="shrink-0 rounded-lg border border-border px-2.5 py-2 text-[11px] font-semibold text-foreground-secondary transition-colors hover:border-accent-green/50 hover:text-accent-green disabled:opacity-50 sm:px-3"
+                      >
+                        {watched ? "Undo" : "Watched"}
+                      </button>
+                    </article>
+                  );
+                })}
+              </div>
+            </section>
+          );
+        })}
       </div>
     </section>
   );
