@@ -35,6 +35,7 @@ export function PlannerPageContent({ movies, essentialsMovieIds, defaultTargetDa
   const [today, setToday] = useState("");
   const [sortOrder, setSortOrder] = useState<PlannerOrder>("release");
   const [searchQuery, setSearchQuery] = useState("");
+  const [showWatched, setShowWatched] = useState(false);
 
   useEffect(() => {
     const currentDate = getLocalDateString();
@@ -62,30 +63,35 @@ export function PlannerPageContent({ movies, essentialsMovieIds, defaultTargetDa
     savePlannerConfig(next);
   };
 
-  const orderedMovies = useMemo(() => {
+  const selectedMovies = useMemo(() => {
     const selected = new Set(config.selectedMovieIds);
     return movies
       .filter((movie) => selected.has(movie.id))
-      .filter((movie) => !watchedMovieIds.includes(movie.id))
       .sort((a, b) =>
         sortOrder === "release"
           ? a.watchOrder - b.watchOrder
           : a.storyOrder - b.storyOrder
       );
-  }, [movies, config.selectedMovieIds, watchedMovieIds, sortOrder]);
+  }, [movies, config.selectedMovieIds, sortOrder]);
+
+  const orderedMovies = useMemo(
+    () => selectedMovies.filter((movie) => !watchedMovieIds.includes(movie.id)),
+    [selectedMovies, watchedMovieIds]
+  );
+  const scheduleMovies = showWatched ? selectedMovies : orderedMovies;
 
   const availableDays = today ? getAvailableDays(today, config.targetDate) : 1;
-  const moviesPerDay = Math.max(1, Math.ceil(orderedMovies.length / availableDays));
+  const moviesPerDay = Math.max(1, Math.ceil(scheduleMovies.length / availableDays));
   const planDays = useMemo(() => {
     const groups = new Map<number, Movie[]>();
-    orderedMovies.forEach((movie, index) => {
+    scheduleMovies.forEach((movie, index) => {
       const day = Math.floor(index / moviesPerDay) + 1;
       const group = groups.get(day) ?? [];
       group.push(movie);
       groups.set(day, group);
     });
     return [...groups.entries()];
-  }, [orderedMovies, moviesPerDay]);
+  }, [scheduleMovies, moviesPerDay]);
 
   const filteredMovies = movies.filter((movie) =>
     movie.title.toLowerCase().includes(searchQuery.trim().toLowerCase())
@@ -227,7 +233,7 @@ export function PlannerPageContent({ movies, essentialsMovieIds, defaultTargetDa
               </div>
             </div>
 
-            <aside className="h-fit rounded-xl border border-border bg-surface p-5 lg:sticky lg:top-24">
+            <aside className="flex flex-col justify-between rounded-xl border border-border bg-surface p-5">
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent-green">YOUR PLAN</p>
               <p className="mt-3 text-3xl font-semibold tabular-nums text-foreground">{orderedMovies.length}</p>
               <p className="text-xs text-foreground-muted">titles to watch</p>
@@ -247,6 +253,8 @@ export function PlannerPageContent({ movies, essentialsMovieIds, defaultTargetDa
             isLoaded={isLoaded}
             isWatched={isWatched}
             onToggleWatched={toggleWatched}
+            showWatched={showWatched}
+            onToggleShowWatched={setShowWatched}
           />
         </div>
       </Container>
