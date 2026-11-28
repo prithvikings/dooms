@@ -10,7 +10,7 @@ interface PageShellProps {
 
 export function PageShell({ children }: PageShellProps) {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div id="home" className="flex min-h-screen flex-col">
       <a
         href="#main-content"
         className="sr-only z-[100] rounded-md bg-accent-green px-4 py-3 font-semibold text-black focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
