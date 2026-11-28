@@ -13,7 +13,7 @@ const storyPaths = [
       "Follow the original team through its defining conflict and into the next generation of Avengers.",
     connection:
       "This path connects the original Avengers era to the teams and leadership emerging after Endgame.",
-    accent: "from-[#49272b] to-[#17191f]",
+    accent: "from-[#24452a] to-[#17191f]",
     movies: [
       {
         id: "the-avengers",
@@ -77,7 +77,7 @@ const storyPaths = [
       "Meet Reed Richards, Sue Storm, Johnny Storm and Ben Grimm in their own reality.",
     connection:
       "The Fantastic Four: First Steps introduces this family and their distinct universe. It is an important introduction, not a complete crossover explanation.",
-    accent: "from-[#4a3825] to-[#17191f]",
+    accent: "from-[#35452b] to-[#17191f]",
     movies: [
       {
         id: "the-fantastic-four-first-steps",
@@ -145,7 +145,7 @@ export function StoryConnections() {
                 <div className="absolute -right-2 -top-8 size-32 rounded-full border border-white/10" />
 
                 <div className="relative">
-                  <p className="text-[10px] font-semibold tracking-[0.24em] text-doom-gold">
+                  <p className="text-[10px] font-semibold tracking-[0.24em] text-accent-green">
                     {path.eyebrow}
                   </p>
 
@@ -167,8 +167,8 @@ export function StoryConnections() {
               </div>
 
               <div className="p-5 sm:p-8">
-                <div className="mb-6 border-l-2 border-doom-gold/60 pl-4">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-doom-gold">
+                <div className="mb-6 border-l-2 border-accent-green/60 pl-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent-green">
                     THE CONNECTION
                   </p>
                   <p className="mt-2 max-w-3xl text-sm leading-7 text-foreground-secondary">
@@ -186,10 +186,10 @@ export function StoryConnections() {
                       <a
                         key={step.id}
                         href={`/story#timeline-${movie.id}`}
-                        className="group flex flex-col gap-3 rounded-xl border border-border bg-background-secondary p-4 transition-colors hover:border-doom-gold/40 sm:flex-row sm:items-center sm:gap-5"
+                        className="group flex flex-col gap-3 rounded-xl border border-border bg-background-secondary p-4 transition-colors hover:border-accent-green/40 sm:flex-row sm:items-center sm:gap-5"
                       >
                         <div className="flex shrink-0 items-center gap-3 sm:w-12 sm:flex-col sm:items-start sm:gap-1">
-                          <span className="text-xs font-semibold tabular-nums text-doom-gold">
+                          <span className="text-xs font-semibold tabular-nums text-accent-green">
                             {String(index + 1).padStart(2, "0")}
                           </span>
                           <span className="text-[10px] text-foreground-muted">
@@ -198,7 +198,7 @@ export function StoryConnections() {
                         </div>
 
                         <div className="min-w-0 flex-1">
-                          <h4 className="text-sm font-semibold text-foreground transition-colors group-hover:text-doom-gold">
+                          <h4 className="text-sm font-semibold text-foreground transition-colors group-hover:text-accent-green">
                             {movie.title}
                           </h4>
                           <p className="mt-1 text-xs leading-5 text-foreground-secondary">
@@ -216,7 +216,7 @@ export function StoryConnections() {
                         </div>
 
                         <span
-                          className="hidden text-foreground-muted transition-transform group-hover:translate-x-1 group-hover:text-doom-gold sm:block"
+                          className="hidden text-foreground-muted transition-transform group-hover:translate-x-1 group-hover:text-accent-green sm:block"
                           aria-hidden="true"
                         >
                           →
