@@ -25,6 +25,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "SONY",
     synopsis: "Peter Parker gains extraordinary abilities and becomes Spider-Man.",
     doomsdayRelevance: "Introduces Tobey Maguire's Peter Parker, who returns in No Way Home.",
+    relatedMovieIds: ["spider-man-2","spider-man-no-way-home"],
   }),
   createExtraMovie({
     id: "spider-man-2",
@@ -35,6 +36,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "SONY",
     synopsis: "Peter Parker struggles to balance his responsibilities as Spider-Man with his personal life.",
     doomsdayRelevance: "Introduces Doctor Octopus, who returns in No Way Home.",
+    relatedMovieIds: ["spider-man-2002","spider-man-3","spider-man-no-way-home"],
   }),
   createExtraMovie({
     id: "spider-man-3",
@@ -45,6 +47,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "SONY",
     synopsis: "Peter faces personal conflicts and new enemies including Sandman and Venom.",
     doomsdayRelevance: "Provides background for Sandman and the original Venom character.",
+    relatedMovieIds: ["spider-man-2","spider-man-no-way-home"],
   }),
   createExtraMovie({
     id: "amazing-spider-man",
@@ -55,6 +58,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "SONY",
     synopsis: "Andrew Garfield's Peter Parker investigates the mystery surrounding his parents.",
     doomsdayRelevance: "Introduces the Peter Parker who later returns in No Way Home.",
+    relatedMovieIds: ["amazing-spider-man-2","spider-man-no-way-home"],
   }),
   createExtraMovie({
     id: "amazing-spider-man-2",
@@ -65,6 +69,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "SONY",
     synopsis: "Peter faces Electro while dealing with the consequences of his relationship with Gwen Stacy.",
     doomsdayRelevance: "Provides important emotional context for Andrew Garfield's return in No Way Home.",
+    relatedMovieIds: ["amazing-spider-man","spider-man-no-way-home"],
   }),
 
   // Sony Spider-Man villain movies
@@ -77,6 +82,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "SONY",
     synopsis: "Journalist Eddie Brock becomes bonded with an alien symbiote.",
     doomsdayRelevance: "Introduces the Venom character and his separate cinematic universe.",
+    relatedMovieIds: ["venom-let-there-be-carnage"],
   }),
   createExtraMovie({
     id: "venom-let-there-be-carnage",
@@ -87,6 +93,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "SONY",
     synopsis: "Eddie Brock and Venom confront a dangerous new symbiote.",
     doomsdayRelevance: "Its post-credits scene connects Venom briefly to the MCU.",
+    relatedMovieIds: ["venom","venom-the-last-dance","spider-man-no-way-home"],
   }),
   createExtraMovie({
     id: "venom-the-last-dance",
@@ -97,6 +104,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "SONY",
     synopsis: "Eddie and Venom face a threat that puts their existence at risk.",
     doomsdayRelevance: "Completes the main Venom trilogy.",
+    relatedMovieIds: ["venom-let-there-be-carnage"],
   }),
   createExtraMovie({
     id: "morbius",
@@ -139,6 +147,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "FOX",
     synopsis: "Young Charles Xavier and Erik Lehnsherr form an alliance while mutantkind faces a global crisis.",
     doomsdayRelevance: "Provides background on the younger versions of Professor X and Magneto.",
+    relatedMovieIds: ["x-men","x2-x-men-united","x-men-apocalypse"],
   }),
 
   createExtraMovie({
@@ -150,6 +159,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "FOX",
     synopsis: "Explores Logan's past and the events that shaped him into Wolverine.",
     doomsdayRelevance: "Provides background on Wolverine and the earlier Fox mutant universe.",
+    relatedMovieIds: ["x-men","the-wolverine","logan"],
   }),
   createExtraMovie({
     id: "the-wolverine",
@@ -160,6 +170,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "FOX",
     synopsis: "Logan travels to Japan and confronts a dangerous chapter from his past.",
     doomsdayRelevance: "Its post-credits scene sets up Days of Future Past.",
+    relatedMovieIds: ["x-men-days-of-future-past","x-men-origins-wolverine","logan"],
   }),
   createExtraMovie({
     id: "x-men-apocalypse",
@@ -170,6 +181,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "FOX",
     synopsis: "The younger X-Men face Apocalypse, an ancient mutant determined to reshape the world.",
     doomsdayRelevance: "Expands the younger Fox X-Men timeline.",
+    relatedMovieIds: ["x-men-first-class","dark-phoenix"],
   }),
   createExtraMovie({
     id: "dark-phoenix",
@@ -180,6 +192,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "FOX",
     synopsis: "Jean Grey struggles to control a powerful cosmic force within herself.",
     doomsdayRelevance: "Concludes the main Fox X-Men film series.",
+    relatedMovieIds: ["x-men-apocalypse","x-men-first-class"],
   }),
   createExtraMovie({
     id: "logan",
@@ -190,6 +203,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "FOX",
     synopsis: "An older Logan attempts to protect a young mutant in a world where mutants are nearly extinct.",
     doomsdayRelevance: "Introduces Laura and provides important context for Wolverine's legacy.",
+    relatedMovieIds: ["x-men-origins-wolverine","deadpool","deadpool-2","deadpool-and-wolverine"],
   }),
   createExtraMovie({
     id: "deadpool",
@@ -200,6 +214,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "FOX",
     synopsis: "Wade Wilson becomes Deadpool following a dangerous experimental treatment.",
     doomsdayRelevance: "Introduces the version of Deadpool who later enters the multiversal story.",
+    relatedMovieIds: ["deadpool-2","deadpool-and-wolverine","logan"],
   }),
   createExtraMovie({
     id: "deadpool-2",
@@ -210,6 +225,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "FOX",
     synopsis: "Deadpool assembles an unconventional team while trying to protect a young mutant.",
     doomsdayRelevance: "Provides character and TVA-related context for Deadpool & Wolverine.",
+    relatedMovieIds: ["deadpool","deadpool-and-wolverine","logan"],
   }),
 
   // Legacy Marvel
@@ -222,6 +238,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "LEGACY",
     synopsis: "A half-human, half-vampire hunter fights against a dangerous vampire society.",
     doomsdayRelevance: "Introduces Wesley Snipes' Blade, who returns in Deadpool & Wolverine.",
+    relatedMovieIds: ["blade-ii","blade-trinity","deadpool-and-wolverine"],
   }),
   createExtraMovie({
     id: "blade-ii",
@@ -232,6 +249,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "LEGACY",
     synopsis: "Blade joins forces with an unlikely group to fight a new vampire threat.",
     doomsdayRelevance: "Continues the original Blade trilogy.",
+    relatedMovieIds: ["blade","blade-trinity"],
   }),
   createExtraMovie({
     id: "blade-trinity",
@@ -242,6 +260,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "LEGACY",
     synopsis: "Blade faces a new generation of vampire enemies led by Dracula.",
     doomsdayRelevance: "Completes the original Blade trilogy.",
+    relatedMovieIds: ["blade","blade-ii"],
   }),
   createExtraMovie({
     id: "fantastic-four-2005",
@@ -252,6 +271,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "LEGACY",
     synopsis: "Four astronauts gain extraordinary abilities after exposure to cosmic radiation.",
     doomsdayRelevance: "Features Chris Evans as Johnny Storm, who makes a memorable appearance in Deadpool & Wolverine.",
+    relatedMovieIds: ["fantastic-four-rise-of-the-silver-surfer","deadpool-and-wolverine"],
   }),
   createExtraMovie({
     id: "fantastic-four-rise-of-the-silver-surfer",
@@ -262,6 +282,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "LEGACY",
     synopsis: "The Fantastic Four face the Silver Surfer and a threat connected to Galactus.",
     doomsdayRelevance: "Provides context for earlier Fantastic Four adaptations.",
+    relatedMovieIds: ["fantastic-four-2005"],
   }),
   createExtraMovie({
     id: "daredevil-2003",
@@ -272,6 +293,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "LEGACY",
     synopsis: "Matt Murdock uses his heightened senses to fight crime as Daredevil.",
     doomsdayRelevance: "Features Ben Affleck's Daredevil and Jennifer Garner's Elektra.",
+    relatedMovieIds: ["elektra","deadpool-and-wolverine"],
   }),
   createExtraMovie({
     id: "elektra",
@@ -282,6 +304,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "LEGACY",
     synopsis: "Elektra becomes involved in a mission protecting a young girl from a dangerous organisation.",
     doomsdayRelevance: "Jennifer Garner's Elektra returns in Deadpool & Wolverine.",
+    relatedMovieIds: ["daredevil-2003","deadpool-and-wolverine"],
   }),
   createExtraMovie({
     id: "ghost-rider",
@@ -292,6 +315,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "LEGACY",
     synopsis: "Johnny Blaze becomes a supernatural bounty hunter after making a deal with the Devil.",
     doomsdayRelevance: "An independent Marvel adaptation with no established direct Doomsday connection.",
+    relatedMovieIds: ["ghost-rider-spirit-of-vengeance"],
   }),
   createExtraMovie({
     id: "ghost-rider-spirit-of-vengeance",
@@ -302,6 +326,7 @@ export const extraMovies: ExtraMovie[] = [
     universe: "LEGACY",
     synopsis: "Johnny Blaze returns to confront a supernatural threat and protect a young boy.",
     doomsdayRelevance: "Continues the original Ghost Rider film universe.",
+    relatedMovieIds: ["ghost-rider"],
   }),
   createExtraMovie({
     id: "the-punisher",
