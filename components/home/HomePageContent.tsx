@@ -114,7 +114,7 @@ export function HomePageContent({
               value={selectedRegionId}
               disabled={!isRegionLoaded}
               onChange={(event) => handleRegionChange(event.target.value)}
-              className="cursor-pointer border-0 border-b border-[#7cff62] bg-transparent px-1 py-1 font-semibold text-[#7cff62] outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-doom-green"
+              className="cursor-pointer border-0 border-b border-[#7cff62] bg-transparent px-1 py-1 font-semibold text-[#7cff62] outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-[#7cff62]"
             >
               {RELEASE_DATES.map((region) => (
                 <option key={region.id} value={region.id} className="bg-[#111510] text-white">
