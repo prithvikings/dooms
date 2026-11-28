@@ -155,10 +155,10 @@ export function HomePageContent({
 
           <div className="mt-9 flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row">
             <Link
-              href="/catalogue"
+              href="/essentials"
               className="inline-flex min-h-14 items-center justify-center bg-[#7cff62] px-8 py-4 text-sm font-bold shadow-[0_8px_35px_rgba(112,255,83,0.2)] transition-colors hover:bg-[#a0ff8a]"
             >
-              <span style={{ color: "#000000" }}>See the catalogue</span>
+              <span style={{ color: "#000000" }}>See the essentials</span>
             </Link>
 
             <Link
