@@ -275,7 +275,6 @@ export function PlannerPageContent({ movies, essentialsMovieIds, defaultTargetDa
             isWatched={isWatched}
             onToggleWatched={toggleWatched}
             showWatched={showWatched}
-            onToggleShowWatched={setShowWatched}
           />
         </div>
       </Container>
