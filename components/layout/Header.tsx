@@ -27,7 +27,7 @@ export function Header() {
       className={[
         "z-50 w-full",
         isHomePage
-          ? "absolute inset-x-0 top-0 border-b border-white/10 bg-black/10 text-white backdrop-blur-[2px]"
+          ? "absolute inset-x-0 top-0 bg-transparent text-white"
           : "sticky top-0 border-b border-border bg-background/85 backdrop-blur-xl",
       ].join(" ")}
     >
