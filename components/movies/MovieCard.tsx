@@ -35,10 +35,14 @@ export function MovieCard({ movie, variant = "detailed" }: MovieCardProps) {
       : null;
 
   return (
-    <article className={[
-      "group overflow-hidden rounded-xl border bg-surface transition-colors",
-      watched ? "border-doom-gold/40" : "border-border hover:border-border-strong",
-    ].join(" ")}>
+    <article
+      className={[
+        "group flex h-full flex-col overflow-hidden rounded-xl border bg-[#15171c]",
+        "shadow-[0_8px_24px_rgba(0,0,0,0.16)] transition-all duration-200",
+        "hover:-translate-y-0.5 hover:border-white/20 hover:shadow-[0_14px_34px_rgba(0,0,0,0.3)]",
+        watched ? "border-doom-gold/35" : "border-white/10",
+      ].join(" ")}
+    >
       <Link href={`/movies/${movie.id}`} className="block" aria-label={`View details for ${movie.title}`}>
         <div className="relative aspect-[2/3] overflow-hidden" style={{ background: posterBackground }}>
           <Image
@@ -46,45 +50,65 @@ export function MovieCard({ movie, variant = "detailed" }: MovieCardProps) {
             alt={`${movie.title} poster`}
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 240px"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.035]"
           />
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-3">
-            <Badge variant={movie.importance}>{movie.importance}</Badge>
-          </div>
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/45 to-transparent" />
           {watched && (
-            <div className="absolute right-3 top-3 rounded-full border border-doom-gold/40 bg-black/70 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-doom-gold">
+            <div className="absolute right-3 top-3 rounded-full border border-doom-gold/45 bg-black/75 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-doom-gold backdrop-blur-sm">
               Watched ✓
             </div>
           )}
         </div>
 
-        <div className={["flex flex-col gap-4 p-4", isDetailed ? "min-h-[230px]" : "min-h-[140px]"].join(" ")}>
-          <div className="flex-1">
-            <h3 className="line-clamp-2 text-sm font-semibold leading-5 text-foreground">{movie.title}</h3>
-            <p className="mt-2 text-xs text-foreground-muted">
+        <div className={["flex flex-col gap-3 p-4", isDetailed ? "min-h-[218px]" : "min-h-[132px]"].join(" ")}>
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <Badge variant={movie.importance} className="px-2.5 py-1 text-[10px] uppercase">
+              {movie.importance}
+            </Badge>
+            <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-foreground-muted">
               {movie.year}{viewingInfo ? ` · ${viewingInfo}` : ""}
-            </p>
+            </span>
+          </div>
+
+          <div className="flex-1">
+            <h3 className="line-clamp-2 text-[15px] font-semibold leading-5 text-foreground transition-colors group-hover:text-white">
+              {movie.title}
+            </h3>
+
             {isDetailed && (
               <>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  <Badge variant="neutral">{movie.universe}</Badge>
-                  <Badge variant="neutral">{movie.type}</Badge>
+                <p className="mt-2 line-clamp-2 text-xs leading-[1.55rem] text-foreground-secondary">
+                  {movie.synopsis}
+                </p>
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  <Badge variant="neutral" className="px-2 py-0.5 text-[10px]">{movie.universe}</Badge>
+                  <Badge variant="neutral" className="px-2 py-0.5 text-[10px]">
+                    {movie.type === "series" ? "Series" : movie.type === "special" ? "Special" : "Movie"}
+                  </Badge>
+                  {movie.genres.slice(0, 1).map((genre) => (
+                    <Badge key={genre} variant="neutral" className="px-2 py-0.5 text-[10px]">{genre}</Badge>
+                  ))}
                 </div>
-                <p className="mt-3 line-clamp-3 text-xs leading-5 text-foreground-secondary">{movie.doomsdayRelevance}</p>
               </>
             )}
           </div>
+
           <p className="inline-flex items-center gap-1 text-xs font-semibold text-doom-gold">
             View details <span aria-hidden="true">↗</span>
           </p>
         </div>
       </Link>
 
-      <div className="px-4 pb-4">
+      <div className="mt-auto px-4 pb-4">
         <Button
-          variant={watched ? "secondary" : "ghost"}
+          variant="secondary"
           size="sm"
-          className="w-full"
+          className={[
+            "w-full rounded-lg border font-semibold shadow-sm transition-all duration-150",
+            watched
+              ? "border-white/10 bg-white/[0.04] text-foreground-secondary hover:border-white/20 hover:bg-white/[0.08]"
+              : "!border-doom-gold/35 !bg-doom-gold/10 !text-doom-gold shadow-[0_3px_12px_rgba(196,154,88,0.08)] hover:!border-doom-gold hover:!bg-doom-gold hover:!text-[#111111] hover:shadow-[0_5px_16px_rgba(196,154,88,0.18)]",
+          ].join(" ")}
           disabled={!isLoaded}
           aria-pressed={watched}
           onClick={() => toggleWatched(movie.id)}
