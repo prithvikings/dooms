@@ -10,6 +10,7 @@ import {
 import { ExtrasPageContent } from "./ExtrasPageContent";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/extras" },
   title: "Extras",
   description:
     "Explore additional Spider-Man, Sony, Fox X-Men and legacy Marvel movies connected to the wider multiverse.",
