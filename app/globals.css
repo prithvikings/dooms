@@ -9,19 +9,19 @@
   color-scheme: dark;
 
   /* Backgrounds */
-  --background: #090a0d;
-  --background-secondary: #111319;
-  --background-tertiary: #191c23;
+  --background: #080c09;
+  --background-secondary: #0e140f;
+  --background-tertiary: #151d16;
 
   /* Surfaces */
-  --surface: #17191f;
-  --surface-hover: #22252d;
-  --surface-elevated: #20232b;
+  --surface: #121914;
+  --surface-hover: #1b251d;
+  --surface-elevated: #1a241b;
 
   /* Brand */
-  --doom-red: #861f29;
-  --doom-red-light: #b8323d;
-  --doom-gold: #c49a58;
+  --accent-green: #7cff62;
+  --accent-green-light: #a0ff8a;
+  --accent-green-muted: #63df4b;
 
   /* Text */
   --foreground: #f5f0e8;
@@ -33,7 +33,7 @@
   --border-strong: rgba(255, 255, 255, 0.15);
 
   /* Effects */
-  --shadow-glow: 0 0 40px rgba(134, 31, 41, 0.18);
+  --shadow-glow: 0 0 40px rgba(124, 255, 98, 0.14);
 }
 
 /* ============================================
@@ -49,9 +49,9 @@
   --color-surface-hover: var(--surface-hover);
   --color-surface-elevated: var(--surface-elevated);
 
-  --color-doom-red: var(--doom-red);
-  --color-doom-red-light: var(--doom-red-light);
-  --color-doom-gold: var(--doom-gold);
+  --color-accent-green: var(--accent-green);
+  --color-accent-green-light: var(--accent-green-light);
+  --color-accent-green-muted: var(--accent-green-muted);
 
   --color-foreground: var(--foreground);
   --color-foreground-secondary: var(--foreground-secondary);
@@ -117,8 +117,8 @@ svg {
 }
 
 ::selection {
-  background: var(--doom-red);
-  color: white;
+  background: var(--accent-green); color: #071006;
+  color: #071006;
 }
 
 /* ============================================
@@ -126,7 +126,7 @@ svg {
 ============================================ */
 
 :focus-visible {
-  outline: 2px solid var(--doom-gold);
+  outline: 2px solid var(--accent-green);
   outline-offset: 4px;
 }
 
@@ -136,7 +136,7 @@ svg {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: #34363e var(--background);
+  scrollbar-color: #344436 var(--background);
 }
 
 *::-webkit-scrollbar {
@@ -149,12 +149,12 @@ svg {
 }
 
 *::-webkit-scrollbar-thumb {
-  background: #34363e;
+  background: #344436;
   border-radius: 999px;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: #50525c;
+  background: #4e6650;
 }
 
 /* ============================================

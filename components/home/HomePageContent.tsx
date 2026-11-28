@@ -1,7 +1,12 @@
 
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
+
+import { RELEASE_DATES } from "@/data/config/release-dates";
+import { readReleaseRegion, saveReleaseRegion } from "@/lib/countdown-storage";
+import { CountdownTimer } from "@/components/countdown/CountdownTimer";
 
 import { Badge } from "@/components/ui/Badge";
 import { Container } from "@/components/ui/Container";
@@ -28,114 +33,140 @@ export function HomePageContent({
     isWatched,
   } = useWatchProgress();
 
+  const [selectedRegionId, setSelectedRegionId] = useState(RELEASE_DATES[0].id);
+  const [isRegionLoaded, setIsRegionLoaded] = useState(false);
+  const [saveError, setSaveError] = useState(false);
+  const [isRegionMenuOpen, setIsRegionMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setSelectedRegionId(readReleaseRegion());
+    setIsRegionLoaded(true);
+  }, []);
+
+  const selectedRegion = RELEASE_DATES.find(
+    (region) => region.id === selectedRegionId
+  );
+
+  function handleRegionChange(regionId: string) {
+    setSelectedRegionId(regionId);
+    setSaveError(!saveReleaseRegion(regionId));
+  }
+
   const essentialWatchedCount = essentials.filter((movie) =>
     isWatched(movie.id)
   ).length;
 
   return (
     <>
-      {/* Hero */}
+      {/* Cinematic Doomsday countdown hero */}
       <section
         id="guide"
-        className="relative isolate overflow-hidden border-b border-border"
+        className="relative isolate flex min-h-svh items-center overflow-hidden border-b border-white/10 bg-[#050706] text-white"
       >
-        <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute -right-40 -top-40 size-[550px] rounded-full bg-doom-red/10 blur-[120px]" />
-          <div className="absolute -bottom-40 left-0 size-[400px] rounded-full bg-doom-gold/5 blur-[120px]" />
-          <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.045)_1px,transparent_1px)] [background-size:28px_28px] opacity-40" />
+        <div className="pointer-events-none absolute inset-0 -z-20 overflow-hidden bg-black">
+          <iframe
+            title="Avengers: Doomsday trailer background"
+            src="https://www.youtube-nocookie.com/embed/Wb8Tq_HD4E8?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&iv_load_policy=3&loop=1&playlist=Wb8Tq_HD4E8&playsinline=1&rel=0&modestbranding=1"
+            allow="autoplay; encrypted-media"
+            referrerPolicy="strict-origin-when-cross-origin"
+            className="pointer-events-none absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-[177.78vh] min-w-full -translate-x-1/2 -translate-y-1/2 scale-110 opacity-65"
+          />
         </div>
 
-        <Container className="grid min-h-[620px] items-center gap-12 py-24 lg:grid-cols-12 lg:py-32">
-          <div className="flex flex-col items-start gap-7 lg:col-span-8">
-            <Badge variant="neutral">
-              THE MARVEL WATCH GUIDE
-            </Badge>
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(0,0,0,0.58)_0%,rgba(0,0,0,0.28)_34%,rgba(0,0,0,0.62)_66%,#030504_100%)]" />
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_50%_42%,rgba(42,91,62,0.28),transparent_62%)]" />
 
-            <div className="space-y-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-doom-gold">
-                THE ROAD TO DOOMSDAY
-              </p>
+        <Container className="relative z-10 flex w-full flex-col items-center py-16 text-center sm:py-20 lg:py-24">
+          <p className="text-xs font-semibold uppercase tracking-[0.55em] text-white/85 sm:text-sm">
+            THE ROAD TO
+          </p>
 
-              <h1 className="max-w-4xl text-5xl font-semibold leading-[1.08] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-                Every story leads to{" "}
-                <span className="text-doom-red-light">
-                  Doomsday.
-                </span>
-              </h1>
+          <h1 className="mt-3 font-serif text-[clamp(3.6rem,12vw,9.5rem)] font-bold leading-[0.88] tracking-[-0.055em] text-white [text-shadow:0_5px_35px_rgba(0,0,0,0.65)]">
+            DOOMSDAY
+          </h1>
 
-              <p className="max-w-xl text-base leading-8 text-foreground-secondary sm:text-lg">
-                The Marvel universe is vast. Your watchlist
-                doesn&apos;t have to be. Follow a curated path
-                through the stories that matter before
-                Avengers: Doomsday.
-              </p>
-            </div>
+          <p className="mt-8 max-w-2xl text-base leading-7 text-white/85 [text-shadow:0_2px_12px_rgba(0,0,0,0.9)] sm:text-lg">
+            Every MCU movie and show you need before Doomsday, in order.
+          </p>
 
-            <div className="flex flex-wrap gap-3">
-              <Link
-                href="#essentials"
-                className="inline-flex items-center justify-center rounded-lg bg-doom-red px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-doom-red-light"
-              >
-                Start with the essentials
-                <span aria-hidden="true" className="ml-2">
-                  →
-                </span>
-              </Link>
-
-              <Link
-                href="#progress"
-                className="inline-flex items-center justify-center rounded-lg border border-border-strong bg-surface px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-surface-hover"
-              >
-                Track your progress
-              </Link>
-            </div>
-
-            <p className="text-xs text-foreground-muted">
-              A curated journey. Not another endless watchlist.
-            </p>
+          <div className="mt-8 w-full max-w-5xl">
+            <CountdownTimer
+              releaseDate={selectedRegion?.releaseDate ?? RELEASE_DATES[0].releaseDate}
+              regionName={selectedRegion?.name ?? "India"}
+            />
           </div>
 
-          {/* Hero visual */}
-          <div className="relative hidden lg:col-span-4 lg:block">
-            <div className="relative mx-auto aspect-[3/4] max-w-[300px] overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#38242a] via-[#17191f] to-[#090a0d] shadow-2xl">
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_35%,rgba(184,50,61,0.32),transparent_65%)]" />
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-2 text-sm text-white/80">
+            <span>
+              {selectedRegion
+                ? `Out ${new Intl.DateTimeFormat("en-IN", {
+                    timeZone: selectedRegion.timezone,
+                    day: "numeric",
+                    month: "short",
+                  }).format(new Date(selectedRegion.releaseDate))} in ${selectedRegion.name}`
+                : "Loading release date"}
+            </span>
+            <span aria-hidden="true">·</span>
+            <div className="relative">
+              <button
+                type="button"
+                aria-haspopup="listbox"
+                aria-expanded={isRegionMenuOpen}
+                aria-controls="release-region-options"
+                disabled={!isRegionLoaded}
+                onClick={() => setIsRegionMenuOpen((open) => !open)}
+                className="cursor-pointer border-0 border-b border-[#7cff62] bg-transparent px-1 py-1 font-semibold text-[#7cff62] transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7cff62] disabled:cursor-wait disabled:opacity-60"
+              >
+                Change
+              </button>
 
-              <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-doom-red/10 to-transparent" />
-
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <div className="mb-5 flex size-24 items-center justify-center rounded-full border border-doom-gold/30 bg-black/20 text-5xl font-bold text-doom-gold shadow-[0_0_60px_rgba(196,154,88,0.12)]">
-                  D
+              {isRegionMenuOpen && (
+                <div
+                  id="release-region-options"
+                  role="listbox"
+                  aria-label="Choose release region"
+                  className="absolute left-1/2 top-full z-30 mt-2 min-w-44 -translate-x-1/2 overflow-hidden border border-white/15 bg-[#10130f] py-1 text-left shadow-2xl"
+                >
+                  {RELEASE_DATES.map((region) => (
+                    <button
+                      key={region.id}
+                      type="button"
+                      role="option"
+                      aria-selected={selectedRegionId === region.id}
+                      onClick={() => {
+                        handleRegionChange(region.id);
+                        setIsRegionMenuOpen(false);
+                      }}
+                      className="block w-full px-4 py-2.5 text-left text-sm text-white transition-colors hover:bg-white/10 aria-selected:bg-white/10"
+                    >
+                      {region.name}
+                    </button>
+                  ))}
                 </div>
-
-                <p className="text-xs font-medium tracking-[0.35em] text-doom-gold">
-                  THE ROAD TO
-                </p>
-
-                <p className="mt-3 text-3xl font-bold tracking-[0.15em] text-foreground">
-                  DOOMSDAY
-                </p>
-
-                <div className="mt-6 h-px w-16 bg-doom-gold/50" />
-
-                <p className="mt-5 text-[10px] tracking-[0.25em] text-foreground-muted">
-                  THE MULTIVERSE AWAITS
-                </p>
-              </div>
-
-              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/60 to-transparent" />
+              )}
             </div>
+          </div>
 
-            <div className="absolute -bottom-5 -left-10 rounded-xl border border-border bg-background-secondary/95 px-5 py-4 shadow-xl">
-              <p className="text-[10px] uppercase tracking-widest text-foreground-muted">
-                Your collection
-              </p>
-              <p className="mt-1 text-2xl font-semibold text-foreground">
-                {totalMovies}
-                <span className="ml-2 text-sm font-normal text-foreground-secondary">
-                  titles
-                </span>
-              </p>
-            </div>
+          {saveError && (
+            <p role="status" className="mt-2 text-xs text-red-200">
+              Region is selected but could not be saved on this device.
+            </p>
+          )}
+
+          <div className="mt-9 flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row">
+            <Link
+              href="/essentials"
+              className="inline-flex min-h-14 items-center justify-center bg-[#7cff62] px-8 py-4 text-sm font-bold shadow-[0_8px_35px_rgba(112,255,83,0.2)] transition-colors hover:bg-[#a0ff8a]"
+            >
+              <span style={{ color: "#000000" }}>See the essentials</span>
+            </Link>
+
+            <Link
+              href="/planner"
+              className="inline-flex min-h-14 items-center justify-center border border-white/35 bg-black/25 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm transition-colors hover:border-white/70 hover:bg-white/10"
+            >
+              Make me a watch plan
+            </Link>
           </div>
         </Container>
       </section>
@@ -147,7 +178,7 @@ export function HomePageContent({
             <div className="rounded-2xl border border-border bg-surface p-6 sm:p-8 lg:col-span-7">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-doom-gold">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-green">
                     YOUR JOURNEY
                   </p>
 
@@ -188,7 +219,7 @@ export function HomePageContent({
                   aria-valuenow={isLoaded ? progressPercentage : 0}
                 >
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-doom-red to-doom-red-light transition-[width] duration-500"
+                    className="h-full rounded-full bg-gradient-to-r from-accent-green to-accent-green-light transition-[width] duration-500"
                     style={{
                       width: `${isLoaded ? progressPercentage : 0}%`,
                     }}
@@ -303,11 +334,11 @@ export function HomePageContent({
       {/* Closing CTA */}
       <section className="py-20">
         <Container>
-          <div className="relative overflow-hidden rounded-2xl border border-doom-red/20 bg-gradient-to-br from-[#241519] to-background-secondary px-6 py-12 text-center sm:px-12 sm:py-16">
-            <div className="pointer-events-none absolute -right-20 -top-32 size-80 rounded-full bg-doom-red/15 blur-[100px]" />
+          <div className="relative overflow-hidden rounded-2xl border border-accent-green/20 bg-gradient-to-br from-[#142116] to-background-secondary px-6 py-12 text-center sm:px-12 sm:py-16">
+            <div className="pointer-events-none absolute -right-20 -top-32 size-80 rounded-full bg-accent-green/15 blur-[100px]" />
 
             <div className="relative mx-auto max-w-2xl space-y-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-doom-gold">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-accent-green">
                 THE MULTIVERSE AWAITS
               </p>
 
@@ -323,7 +354,7 @@ export function HomePageContent({
 
               <Link
                 href="#essentials"
-                className="inline-flex items-center justify-center rounded-lg bg-doom-red px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-doom-red-light"
+                className="inline-flex items-center justify-center rounded-lg bg-accent-green px-6 py-3 text-sm font-semibold text-[#071006] transition-colors hover:bg-accent-green-light"
               >
                 Continue your journey →
               </Link>

@@ -62,8 +62,8 @@ export function ExtrasPageContent({
       {/* Page Hero */}
       <section className="relative isolate overflow-hidden border-b border-border">
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute -right-40 -top-40 size-[500px] rounded-full bg-doom-red/10 blur-[120px]" />
-          <div className="absolute -bottom-40 left-0 size-[350px] rounded-full bg-doom-gold/5 blur-[120px]" />
+          <div className="absolute -right-40 -top-40 size-[500px] rounded-full bg-accent-green/10 blur-[120px]" />
+          <div className="absolute -bottom-40 left-0 size-[350px] rounded-full bg-accent-green/5 blur-[120px]" />
           <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.045)_1px,transparent_1px)] [background-size:28px_28px] opacity-40" />
         </div>
 
@@ -71,7 +71,7 @@ export function ExtrasPageContent({
           <div className="max-w-3xl">
             <Link
               href="/"
-              className="mb-8 inline-flex items-center gap-2 text-sm text-foreground-muted transition-colors hover:text-doom-gold"
+              className="mb-8 inline-flex items-center gap-2 text-sm text-foreground-muted transition-colors hover:text-accent-green"
             >
               <span aria-hidden="true">←</span>
               Back to home
@@ -81,13 +81,13 @@ export function ExtrasPageContent({
               BEYOND THE ESSENTIALS
             </Badge>
 
-            <p className="mt-7 text-xs font-semibold uppercase tracking-[0.28em] text-doom-gold">
+            <p className="mt-7 text-xs font-semibold uppercase tracking-[0.28em] text-accent-green">
               EXPLORE THE WIDER MULTIVERSE
             </p>
 
             <h1 className="mt-4 text-4xl font-semibold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               The extras
-              <span className="text-doom-red-light">.</span>
+              <span className="text-accent-green-light">.</span>
             </h1>
 
             <p className="mt-6 max-w-2xl text-base leading-8 text-foreground-secondary">
@@ -118,7 +118,7 @@ export function ExtrasPageContent({
               </div>
 
               <div className="rounded-xl border border-border bg-surface/80 px-5 py-4">
-                <p className="text-2xl font-semibold text-doom-gold">
+                <p className="text-2xl font-semibold text-accent-green">
                   {isExtraLoaded ? extraWatchedCount : "—"}
                 </p>
                 <p className="mt-1 text-xs text-foreground-muted">
@@ -141,7 +141,7 @@ export function ExtrasPageContent({
                   </p>
                 </div>
 
-                <span className="text-sm font-semibold tabular-nums text-doom-gold">
+                <span className="text-sm font-semibold tabular-nums text-accent-green">
                   {isExtraLoaded
                     ? `${extraProgressPercentage}%`
                     : "—"}
@@ -159,7 +159,7 @@ export function ExtrasPageContent({
                 aria-valuemax={100}
               >
                 <div
-                  className="h-full rounded-full bg-doom-gold transition-all duration-500"
+                  className="h-full rounded-full bg-accent-green transition-all duration-500"
                   style={{
                     width: `${
                       isExtraLoaded ? extraProgressPercentage : 0
@@ -196,7 +196,7 @@ export function ExtrasPageContent({
               <a
                 key={collection.id}
                 href={`#${collection.id}`}
-                className="rounded-lg border border-border bg-surface px-4 py-3 text-sm font-medium text-foreground-secondary transition-colors hover:border-doom-gold/40 hover:text-doom-gold"
+                className="rounded-lg border border-border bg-surface px-4 py-3 text-sm font-medium text-foreground-secondary transition-colors hover:border-accent-green/40 hover:text-accent-green"
               >
                 {collection.title}
                 <span className="ml-2 text-xs text-foreground-muted">
@@ -233,12 +233,12 @@ export function ExtrasPageContent({
                   </Badge>
                 </div>
 
-                <p className="mb-6 text-sm font-medium text-doom-gold">
+                <p className="mb-6 text-sm font-medium text-accent-green">
                   {description.accent}
                 </p>
 
                 {collection.movies.length > 0 ? (
-                  <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+                  <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                     {collection.movies.map((movie) => (
                       <ExtraMovieCard
                         key={movie.id}
@@ -263,11 +263,11 @@ export function ExtrasPageContent({
       {/* Closing CTA */}
       <section className="border-t border-border bg-background-secondary py-16 sm:py-20">
         <Container>
-          <div className="relative overflow-hidden rounded-2xl border border-doom-red/20 bg-gradient-to-br from-[#241519] to-background-secondary px-6 py-12 text-center sm:px-12 sm:py-16">
-            <div className="pointer-events-none absolute -right-20 -top-32 size-80 rounded-full bg-doom-red/15 blur-[100px]" />
+          <div className="relative overflow-hidden rounded-2xl border border-accent-green/20 bg-gradient-to-br from-[#142116] to-background-secondary px-6 py-12 text-center sm:px-12 sm:py-16">
+            <div className="pointer-events-none absolute -right-20 -top-32 size-80 rounded-full bg-accent-green/15 blur-[100px]" />
 
             <div className="relative mx-auto max-w-2xl space-y-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-doom-gold">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-accent-green">
                 BACK TO THE MAIN JOURNEY
               </p>
 
@@ -283,7 +283,7 @@ export function ExtrasPageContent({
 
               <Link
                 href="/essentials"
-                className="inline-flex items-center justify-center rounded-lg bg-doom-red px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-doom-red-light"
+                className="inline-flex items-center justify-center rounded-lg bg-accent-green px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-green-light"
               >
                 Explore the essentials →
               </Link>

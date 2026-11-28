@@ -17,7 +17,7 @@ export function Footer() {
               href="/"
               className="inline-flex items-center gap-2 text-sm font-bold tracking-[0.18em] text-foreground"
             >
-              <span className="flex size-7 items-center justify-center rounded-md bg-doom-red text-xs text-white">
+              <span className="flex size-7 items-center justify-center rounded-md bg-accent-green text-xs font-bold text-[#071006]">
                 D
               </span>
               DOOMSDAY
@@ -30,7 +30,7 @@ export function Footer() {
 
           <Link
             href="#home"
-            className="w-fit text-xs font-medium text-foreground-secondary transition-colors hover:text-doom-gold"
+            className="w-fit text-xs font-medium text-foreground-secondary transition-colors hover:text-accent-green"
           >
             Back to top ↑
           </Link>

@@ -22,7 +22,7 @@ const storyThreads = [
       "From the original Avengers to the teams that emerged after the events of Endgame, Earth's heroes have changed. New leaders, old alliances and unresolved histories shape the current state of the MCU.",
     connection:
       "The history of the Avengers provides the foundation for the next major crossover.",
-    accent: "from-[#49272b] to-[#17191f]",
+    accent: "from-[#24452a] to-[#17191f]",
   },
   {
     number: "02",
@@ -42,7 +42,7 @@ const storyThreads = [
       "Marvel's First Family comes from a distinct reality introduced in The Fantastic Four: First Steps. Reed Richards and his team bring another important corner of Marvel's universe into the wider story.",
     connection:
       "Their presence introduces another major group into the Doomsday crossover.",
-    accent: "from-[#4a3825] to-[#17191f]",
+    accent: "from-[#35452b] to-[#17191f]",
   },
   {
     number: "04",
@@ -80,8 +80,8 @@ export default function StoryPage() {
       {/* Hero */}
       <section className="relative isolate overflow-hidden border-b border-border">
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute -right-40 -top-40 size-[550px] rounded-full bg-doom-red/15 blur-[130px]" />
-          <div className="absolute -bottom-40 left-0 size-[400px] rounded-full bg-doom-gold/5 blur-[120px]" />
+          <div className="absolute -right-40 -top-40 size-[550px] rounded-full bg-accent-green/15 blur-[130px]" />
+          <div className="absolute -bottom-40 left-0 size-[400px] rounded-full bg-accent-green/5 blur-[120px]" />
           <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.045)_1px,transparent_1px)] [background-size:28px_28px] opacity-40" />
         </div>
 
@@ -91,7 +91,7 @@ export default function StoryPage() {
               THE STORY SO FAR
             </Badge>
 
-            <p className="mt-8 text-xs font-semibold uppercase tracking-[0.28em] text-doom-gold">
+            <p className="mt-8 text-xs font-semibold uppercase tracking-[0.28em] text-accent-green">
               UNDERSTANDING THE MULTIVERSE
             </p>
 
@@ -99,7 +99,7 @@ export default function StoryPage() {
               One universe was
               <br />
               never going to be
-              <span className="text-doom-red-light">
+              <span className="text-accent-green-light">
                 {" "}enough.
               </span>
             </h1>
@@ -115,7 +115,7 @@ export default function StoryPage() {
             <div className="mt-10 flex flex-wrap gap-3">
               <a
                 href="#bigger-picture"
-                className="inline-flex items-center justify-center rounded-lg bg-doom-red px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-doom-red-light"
+                className="inline-flex items-center justify-center rounded-lg bg-accent-green px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-green-light"
               >
                 Explore the story
                 <span className="ml-2" aria-hidden="true">
@@ -156,7 +156,7 @@ export default function StoryPage() {
 
             <div className="space-y-6 lg:col-span-7">
               <div className="rounded-2xl border border-border bg-surface p-6 sm:p-8">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-doom-gold">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-green">
                   CHAPTER ONE
                 </p>
 
@@ -174,7 +174,7 @@ export default function StoryPage() {
               </div>
 
               <div className="rounded-2xl border border-border bg-surface p-6 sm:p-8">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-doom-gold">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-green">
                   CHAPTER TWO
                 </p>
 
@@ -191,8 +191,8 @@ export default function StoryPage() {
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-doom-red/30 bg-gradient-to-br from-[#241519] to-background-secondary p-6 sm:p-8">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-doom-gold">
+              <div className="rounded-2xl border border-accent-green/30 bg-gradient-to-br from-[#142116] to-background-secondary p-6 sm:p-8">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-green">
                   THE NEXT CHAPTER
                 </p>
 
@@ -237,7 +237,7 @@ export default function StoryPage() {
 
                   <div className="relative flex w-full items-end justify-between">
                     <div>
-                      <p className="text-[10px] font-semibold tracking-[0.25em] text-doom-gold">
+                      <p className="text-[10px] font-semibold tracking-[0.25em] text-accent-green">
                         {thread.universe}
                       </p>
 
@@ -258,7 +258,7 @@ export default function StoryPage() {
                   </p>
 
                   <div className="border-t border-border pt-4">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-doom-gold">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent-green">
                       WHY IT MATTERS
                     </p>
 
@@ -276,19 +276,19 @@ export default function StoryPage() {
       {/* Doom */}
       <section className="relative isolate overflow-hidden py-24 sm:py-32">
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute right-0 top-0 size-[450px] rounded-full bg-doom-red/10 blur-[130px]" />
+          <div className="absolute right-0 top-0 size-[450px] rounded-full bg-accent-green/10 blur-[130px]" />
         </div>
 
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-12">
             <div className="lg:col-span-7">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-doom-gold">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-accent-green">
                 THE DOOM FACTOR
               </p>
 
               <h2 className="mt-5 text-4xl font-semibold leading-tight tracking-tight text-foreground sm:text-5xl">
                 Meet Victor
-                <span className="text-doom-red-light">
+                <span className="text-accent-green-light">
                   {" "}von Doom.
                 </span>
               </h2>
@@ -317,12 +317,12 @@ export default function StoryPage() {
             </div>
 
             <div className="lg:col-span-5">
-              <div className="relative overflow-hidden rounded-2xl border border-doom-red/30 bg-gradient-to-br from-[#382126] via-[#17191f] to-[#090a0d] p-8 sm:p-10">
-                <div className="absolute -right-16 -top-16 size-64 rounded-full border border-doom-gold/10" />
-                <div className="absolute -right-4 -top-4 size-40 rounded-full border border-doom-gold/10" />
+              <div className="relative overflow-hidden rounded-2xl border border-accent-green/30 bg-gradient-to-br from-[#17271a] via-[#171b18] to-[#090a0d] p-8 sm:p-10">
+                <div className="absolute -right-16 -top-16 size-64 rounded-full border border-accent-green/10" />
+                <div className="absolute -right-4 -top-4 size-40 rounded-full border border-accent-green/10" />
 
                 <div className="relative flex min-h-64 flex-col justify-end">
-                  <p className="text-xs font-semibold tracking-[0.3em] text-doom-gold">
+                  <p className="text-xs font-semibold tracking-[0.3em] text-accent-green">
                     MARVEL STUDIOS
                   </p>
 
@@ -334,7 +334,7 @@ export default function StoryPage() {
                     VICTOR VON DOOM
                   </p>
 
-                  <div className="mt-8 h-px w-full bg-gradient-to-r from-doom-gold/60 to-transparent" />
+                  <div className="mt-8 h-px w-full bg-gradient-to-r from-accent-green/60 to-transparent" />
 
                   <p className="mt-5 text-xs leading-6 text-foreground-muted">
                     A new role. A different character.
@@ -362,7 +362,7 @@ export default function StoryPage() {
                 key={fact.label}
                 className="rounded-xl border border-border bg-surface p-6"
               >
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-doom-gold">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-green">
                   {fact.label}
                 </p>
 
@@ -377,7 +377,7 @@ export default function StoryPage() {
             href="https://movies.disney.com/avengers-doomsday"
             target="_blank"
             rel="noreferrer"
-            className="mt-8 inline-flex text-sm font-medium text-doom-gold transition-colors hover:text-foreground"
+            className="mt-8 inline-flex text-sm font-medium text-accent-green transition-colors hover:text-foreground"
           >
             View official Avengers: Doomsday details →
           </a>
@@ -387,11 +387,11 @@ export default function StoryPage() {
       {/* Closing CTA */}
       <section className="py-20 sm:py-28">
         <Container>
-          <div className="relative overflow-hidden rounded-2xl border border-doom-red/30 bg-gradient-to-br from-[#241519] to-background-secondary px-6 py-14 text-center sm:px-12 sm:py-20">
-            <div className="pointer-events-none absolute -right-20 -top-32 size-80 rounded-full bg-doom-red/15 blur-[100px]" />
+          <div className="relative overflow-hidden rounded-2xl border border-accent-green/30 bg-gradient-to-br from-[#142116] to-background-secondary px-6 py-14 text-center sm:px-12 sm:py-20">
+            <div className="pointer-events-none absolute -right-20 -top-32 size-80 rounded-full bg-accent-green/15 blur-[100px]" />
 
             <div className="relative mx-auto max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-doom-gold">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-accent-green">
                 YOUR JOURNEY STARTS HERE
               </p>
 
@@ -408,7 +408,7 @@ export default function StoryPage() {
 
               <a
                 href="/essentials"
-                className="mt-8 inline-flex items-center justify-center rounded-lg bg-doom-red px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-doom-red-light"
+                className="mt-8 inline-flex items-center justify-center rounded-lg bg-accent-green px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-green-light"
               >
                 Explore the essentials →
               </a>

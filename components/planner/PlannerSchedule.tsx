@@ -94,7 +94,7 @@ export function PlannerSchedule({
     <section className="border-t border-border py-16 sm:py-20">
       <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-doom-gold">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-green">
             YOUR WATCH PLAN
           </p>
 
@@ -203,7 +203,7 @@ export function PlannerSchedule({
                 aria-valuenow={completionPercentage}
               >
                 <div
-                  className="h-full rounded-full bg-doom-gold transition-all"
+                  className="h-full rounded-full bg-accent-green transition-all"
                   style={{ width: `${completionPercentage}%` }}
                 />
               </div>
@@ -312,7 +312,7 @@ export function PlannerSchedule({
                       >
                         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-5 py-4">
                           <div>
-                            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-doom-gold">
+                            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-accent-green">
                               DAY {day}
                             </p>
                             <h4 className="mt-1 text-sm font-semibold text-foreground">
@@ -344,7 +344,7 @@ export function PlannerSchedule({
                                 "h-full rounded-full",
                                 dayOverBudget
                                   ? "bg-yellow-400"
-                                  : "bg-doom-gold",
+                                  : "bg-accent-green",
                               ].join(" ")}
                               style={{
                                 width: `${Math.min(budgetPercentage, 100)}%`,
@@ -385,7 +385,7 @@ export function PlannerSchedule({
                                     )}
 
                                     {watched && (
-                                      <span className="rounded-md bg-doom-gold/10 px-2 py-1 text-[10px] font-semibold text-doom-gold">
+                                      <span className="rounded-md bg-accent-green/10 px-2 py-1 text-[10px] font-semibold text-accent-green">
                                         WATCHED
                                       </span>
                                     )}
@@ -403,8 +403,8 @@ export function PlannerSchedule({
                                   className={[
                                     "shrink-0 rounded-lg border px-3 py-2 text-xs font-semibold transition-colors disabled:opacity-50",
                                     watched
-                                      ? "border-doom-gold/40 text-doom-gold hover:bg-doom-gold/10"
-                                      : "border-border-strong text-foreground-secondary hover:border-doom-gold/50 hover:text-doom-gold",
+                                      ? "border-accent-green/40 text-accent-green hover:bg-accent-green/10"
+                                      : "border-border-strong text-foreground-secondary hover:border-accent-green/50 hover:text-accent-green",
                                   ].join(" ")}
                                 >
                                   {watched

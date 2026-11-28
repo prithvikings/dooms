@@ -42,7 +42,7 @@ const budgetOptions = [
 ];
 
 const inputClassName =
-  "w-full rounded-xl border border-border bg-background-secondary px-4 py-3 text-sm text-foreground outline-none transition-colors focus:border-doom-gold";
+  "w-full rounded-xl border border-border bg-background-secondary px-4 py-3 text-sm text-foreground outline-none transition-colors focus:border-accent-green";
 
 export function PlannerPageContent({
   movies,
@@ -301,8 +301,8 @@ export function PlannerPageContent({
       {/* Hero */}
       <section className="relative isolate overflow-hidden border-b border-border">
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute -right-40 -top-40 size-[500px] rounded-full bg-doom-red/15 blur-[130px]" />
-          <div className="absolute -bottom-40 left-0 size-[350px] rounded-full bg-doom-gold/5 blur-[120px]" />
+          <div className="absolute -right-40 -top-40 size-[500px] rounded-full bg-accent-green/15 blur-[130px]" />
+          <div className="absolute -bottom-40 left-0 size-[350px] rounded-full bg-accent-green/5 blur-[120px]" />
         </div>
 
         <Container className="py-20 sm:py-28">
@@ -311,7 +311,7 @@ export function PlannerPageContent({
               YOUR PERSONAL WATCH PLAN
             </Badge>
 
-            <p className="mt-7 text-xs font-semibold uppercase tracking-[0.28em] text-doom-gold">
+            <p className="mt-7 text-xs font-semibold uppercase tracking-[0.28em] text-accent-green">
               THE ROAD TO DOOMSDAY
             </p>
 
@@ -319,7 +319,7 @@ export function PlannerPageContent({
               Your time.
               <br />
               Your watchlist.
-              <span className="text-doom-red-light">
+              <span className="text-accent-green-light">
                 {" "}Your plan.
               </span>
             </h1>
@@ -366,7 +366,7 @@ export function PlannerPageContent({
                         className={[
                           "relative rounded-2xl border p-5 text-left transition-colors disabled:opacity-50",
                           active
-                            ? "border-doom-gold/60 bg-doom-gold/5"
+                            ? "border-accent-green/60 bg-accent-green/5"
                             : "border-border bg-surface hover:border-border-strong",
                         ].join(" ")}
                       >
@@ -386,7 +386,7 @@ export function PlannerPageContent({
                           {collection.description}
                         </span>
 
-                        <span className="mt-5 block text-xs font-medium text-doom-gold">
+                        <span className="mt-5 block text-xs font-medium text-accent-green">
                           {collection.count !== null
                             ? `${collection.count} titles`
                             : "Choose your titles"}
@@ -394,7 +394,7 @@ export function PlannerPageContent({
 
                         <span className="mt-4 block text-xs font-semibold">
                           {active ? (
-                            <span className="text-doom-gold">
+                            <span className="text-accent-green">
                               Selected ✓
                             </span>
                           ) : (
@@ -424,7 +424,7 @@ export function PlannerPageContent({
                         type="button"
                         disabled={!isLoaded}
                         onClick={selectAllMovies}
-                        className="text-xs font-semibold text-doom-gold hover:text-doom-red-light disabled:opacity-50"
+                        className="text-xs font-semibold text-accent-green hover:text-accent-green-light disabled:opacity-50"
                       >
                         Select all
                       </button>
@@ -473,7 +473,7 @@ export function PlannerPageContent({
                             onChange={() =>
                               toggleMovie(movie.id)
                             }
-                            className="mt-1 size-4 shrink-0 accent-[#c49a58]"
+                            className="mt-1 size-4 shrink-0 accent-[#7cff62]"
                           />
 
                           <span className="min-w-0 flex-1">
@@ -490,7 +490,7 @@ export function PlannerPageContent({
                           </span>
 
                           {watched && (
-                            <span className="shrink-0 text-[10px] font-semibold text-doom-gold">
+                            <span className="shrink-0 text-[10px] font-semibold text-accent-green">
                               Watched
                             </span>
                           )}
@@ -606,7 +606,7 @@ export function PlannerPageContent({
                         event.target.checked
                       )
                     }
-                    className="mt-1 size-4 shrink-0 accent-[#c49a58]"
+                    className="mt-1 size-4 shrink-0 accent-[#7cff62]"
                   />
 
                   <span>
@@ -628,7 +628,7 @@ export function PlannerPageContent({
             {/* Summary */}
             <aside className="lg:sticky lg:top-28">
               <div className="rounded-2xl border border-border bg-surface p-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-doom-gold">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-green">
                   YOUR PLANNER SETUP
                 </p>
 
@@ -703,7 +703,7 @@ export function PlannerPageContent({
                       className={[
                         "text-xs font-semibold",
                         saveStatus === "saved"
-                          ? "text-doom-gold"
+                          ? "text-accent-green"
                           : saveStatus === "error"
                             ? "text-red-400"
                             : "text-foreground-muted",
@@ -718,7 +718,7 @@ export function PlannerPageContent({
                   </div>
                 </div>
 
-                <div className="mt-6 rounded-xl border border-doom-gold/20 bg-doom-gold/5 p-4">
+                <div className="mt-6 rounded-xl border border-accent-green/20 bg-accent-green/5 p-4">
                   <p className="text-sm font-semibold text-foreground">
                     Your schedule updates automatically
                   </p>
@@ -739,7 +739,7 @@ export function PlannerPageContent({
 
                 <Link
                   href="/essentials"
-                  className="mt-6 block text-center text-xs font-semibold text-foreground-muted transition-colors hover:text-doom-gold"
+                  className="mt-6 block text-center text-xs font-semibold text-foreground-muted transition-colors hover:text-accent-green"
                 >
                   Browse your watchlist →
                 </Link>

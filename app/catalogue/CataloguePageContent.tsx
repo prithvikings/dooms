@@ -27,7 +27,7 @@ type SortOption =
   | "title";
 
 const selectClassName =
-  "w-full rounded-lg border border-border bg-background-secondary px-3 py-3 text-sm text-foreground outline-none transition-colors focus:border-doom-gold";
+  "w-full rounded-lg border border-border bg-background-secondary px-3 py-3 text-sm text-foreground outline-none transition-colors focus:border-accent-green";
 
 export function CataloguePageContent({
   movies,
@@ -156,8 +156,8 @@ const hasActiveFilters =
       {/* Page Hero */}
       <section className="relative isolate overflow-hidden border-b border-border">
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute -right-40 -top-40 size-[500px] rounded-full bg-doom-red/10 blur-[120px]" />
-          <div className="absolute -bottom-40 left-0 size-[350px] rounded-full bg-doom-gold/5 blur-[120px]" />
+          <div className="absolute -right-40 -top-40 size-[500px] rounded-full bg-accent-green/10 blur-[120px]" />
+          <div className="absolute -bottom-40 left-0 size-[350px] rounded-full bg-accent-green/5 blur-[120px]" />
           <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.045)_1px,transparent_1px)] [background-size:28px_28px] opacity-40" />
         </div>
 
@@ -167,13 +167,13 @@ const hasActiveFilters =
               THE COMPLETE COLLECTION
             </Badge>
 
-            <p className="mt-7 text-xs font-semibold uppercase tracking-[0.28em] text-doom-gold">
+            <p className="mt-7 text-xs font-semibold uppercase tracking-[0.28em] text-accent-green">
               EXPLORE THE MULTIVERSE
             </p>
 
             <h1 className="mt-4 text-4xl font-semibold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               The full catalogue
-              <span className="text-doom-red-light">.</span>
+              <span className="text-accent-green-light">.</span>
             </h1>
 
             <p className="mt-6 max-w-2xl text-base leading-8 text-foreground-secondary">
@@ -260,7 +260,7 @@ const hasActiveFilters =
                 <button
                   type="button"
                   onClick={clearFilters}
-                  className="text-xs font-medium text-doom-gold transition-colors hover:text-doom-gold-light"
+                  className="text-xs font-medium text-accent-green transition-colors hover:text-accent-green-light"
                 >
                   Clear all filters
                 </button>
@@ -424,7 +424,7 @@ const hasActiveFilters =
 
           {/* Movie grid */}
           {filteredMovies.length > 0 ? (
-            <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {filteredMovies.map((movie) => (
                 <MovieCard
                   key={movie.id}
@@ -435,7 +435,7 @@ const hasActiveFilters =
             </div>
           ) : (
             <div className="mt-8 rounded-2xl border border-border bg-surface px-6 py-16 text-center">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-doom-gold">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-green">
                 NO MATCHES FOUND
               </p>
 
@@ -451,7 +451,7 @@ const hasActiveFilters =
               <button
                 type="button"
                 onClick={clearFilters}
-                className="mt-6 rounded-lg bg-doom-red px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-doom-red-light"
+                className="mt-6 rounded-lg bg-accent-green px-5 py-3 text-sm font-semibold text-[#071006] transition-colors hover:bg-accent-green-light"
               >
                 Clear filters
               </button>
