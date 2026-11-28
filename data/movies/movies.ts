@@ -4,7 +4,7 @@ import type {
   TimelineTag,
 } from "@/types/movie";
 
-const poster = (slug: string) => `/images/posters/${slug}.webp`;
+const poster = (slug: string) => `/images/posters/${slug}.jpg`;
 const backdrop = (slug: string) => `/images/backdrops/${slug}.webp`;
 const STORY_ORDER: Record<string, number> = {
   // MCU — curated story order (1–55)

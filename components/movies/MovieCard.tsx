@@ -1,6 +1,7 @@
 
 "use client";
 
+import Image from "next/image";
 import { useWatchProgress } from "@/components/providers/WatchProgressProvider";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -54,14 +55,16 @@ export function MovieCard({
     >
       {/* Poster */}
       <div
-        className="relative flex aspect-[3/4] items-center justify-center overflow-hidden"
+        className="relative aspect-[2/3] overflow-hidden"
         style={{ background: posterBackground }}
       >
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_35%,rgba(255,255,255,0.08),transparent_65%)]" />
-
-        <div className="relative flex size-16 items-center justify-center rounded-full border border-white/15 bg-black/15 text-2xl font-semibold text-white/70 transition-transform duration-300 group-hover:scale-110">
-          {String(movie.watchOrder).padStart(2, "0")}
-        </div>
+        <Image
+          src={movie.poster}
+          alt={`${movie.title} poster`}
+          fill
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 240px"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+        />
 
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-3">
           <Badge variant={movie.importance}>

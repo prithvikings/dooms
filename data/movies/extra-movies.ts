@@ -10,7 +10,7 @@ const createExtraMovie = (
   movie: ExtraMovieInput
 ): ExtraMovie => ({
   ...movie,
-  poster: `/images/posters/${movie.id}.webp`,
+  poster: `/images/posters/${movie.id}.jpg`,
   backdrop: `/images/backdrops/${movie.id}.webp`,
 });
 
