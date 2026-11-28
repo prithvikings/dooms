@@ -12,6 +12,8 @@ type PlannerScheduleProps = {
   isLoaded: boolean;
   isWatched: (movieId: string) => boolean;
   onToggleWatched: (movieId: string) => void;
+  showWatched: boolean;
+  onToggleShowWatched: (show: boolean) => void;
 };
 
 function addDays(dateString: string, days: number) {
@@ -36,6 +38,8 @@ export function PlannerSchedule({
   isLoaded,
   isWatched,
   onToggleWatched,
+  showWatched,
+  onToggleShowWatched,
 }: PlannerScheduleProps) {
   if (!isLoaded || !isProgressLoaded || !today) {
     return (
@@ -47,21 +51,55 @@ export function PlannerSchedule({
 
   if (days.length === 0) {
     return (
-      <div className="mt-8 rounded-xl border border-border bg-surface px-5 py-10 text-center">
-        <p className="text-sm font-semibold text-foreground">Your watchlist is empty</p>
-        <p className="mt-1 text-xs text-foreground-muted">Choose a collection or add titles to your custom list.</p>
-      </div>
+      <section className="mt-9">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h3 className="text-lg font-semibold text-foreground">Your day-by-day plan</h3>
+            <p className="mt-1 text-xs text-foreground-muted">Your watched titles are automatically left out.</p>
+          </div>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={showWatched}
+            onClick={() => onToggleShowWatched(!showWatched)}
+            className="inline-flex items-center gap-2 text-xs font-medium text-foreground-secondary"
+          >
+            Show watched
+            <span className={`relative h-5 w-9 rounded-full transition-colors ${showWatched ? "bg-accent-green" : "bg-background-tertiary"}`}>
+              <span className={`absolute top-0.5 size-4 rounded-full bg-white shadow-sm transition-transform ${showWatched ? "translate-x-4" : "translate-x-0.5"}`} />
+            </span>
+          </button>
+        </div>
+        <div className="rounded-xl border border-border bg-surface px-5 py-10 text-center">
+          <p className="text-sm font-semibold text-foreground">{showWatched ? "No titles in this watchlist" : "You’re all caught up"}</p>
+          <p className="mt-1 text-xs text-foreground-muted">{showWatched ? "Choose a collection or add titles to your custom list." : "Turn on “Show watched” to see your completed titles."}</p>
+        </div>
+      </section>
     );
   }
 
   return (
     <section className="mt-9">
-      <div className="mb-4 flex flex-wrap items-end justify-between gap-2">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div>
           <h3 className="text-lg font-semibold text-foreground">Your day-by-day plan</h3>
-          <p className="mt-1 text-xs text-foreground-muted">Your watched titles are automatically left out.</p>
+          <p className="mt-1 text-xs text-foreground-muted">{showWatched ? "Showing completed and upcoming titles." : "Your watched titles are automatically left out."}</p>
         </div>
-        <span className="text-xs text-foreground-muted">{days.reduce((total, [, items]) => total + items.length, 0)} titles · {days.length} days</span>
+        <div className="flex items-center gap-4">
+          <span className="text-xs text-foreground-muted">{days.reduce((total, [, items]) => total + items.length, 0)} titles · {days.length} days</span>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={showWatched}
+            onClick={() => onToggleShowWatched(!showWatched)}
+            className="inline-flex items-center gap-2 text-xs font-medium text-foreground-secondary transition-colors hover:text-foreground"
+          >
+            Show watched
+            <span className={`relative h-5 w-9 rounded-full transition-colors ${showWatched ? "bg-accent-green" : "bg-background-tertiary"}`}>
+              <span className={`absolute top-0.5 size-4 rounded-full bg-white shadow-sm transition-transform ${showWatched ? "translate-x-4" : "translate-x-0.5"}`} />
+            </span>
+          </button>
+        </div>
       </div>
 
       <div className="space-y-3">
