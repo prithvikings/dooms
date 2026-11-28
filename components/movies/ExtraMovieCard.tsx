@@ -35,7 +35,7 @@ export function ExtraMovieCard({ movie }: ExtraMovieCardProps) {
         "group flex h-full flex-col overflow-hidden rounded-xl border bg-[#15171c]",
         "shadow-[0_8px_24px_rgba(0,0,0,0.16)] transition-all duration-200",
         "hover:-translate-y-0.5 hover:border-white/20 hover:shadow-[0_14px_34px_rgba(0,0,0,0.3)]",
-        watched ? "border-doom-gold/35" : "border-white/10",
+        watched ? "border-accent-green/35" : "border-white/10",
       ].join(" ")}
     >
       <Link href={`/movies/${movie.id}`} className="block" aria-label={`View details for ${movie.title}`}>
@@ -49,7 +49,7 @@ export function ExtraMovieCard({ movie }: ExtraMovieCardProps) {
           />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/45 to-transparent" />
           {watched && (
-            <div className="absolute right-3 top-3 rounded-full border border-doom-gold/45 bg-black/75 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-doom-gold backdrop-blur-sm">
+            <div className="absolute right-3 top-3 rounded-full border border-accent-green/45 bg-black/75 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-accent-green backdrop-blur-sm">
               Watched ✓
             </div>
           )}
@@ -72,7 +72,7 @@ export function ExtraMovieCard({ movie }: ExtraMovieCardProps) {
             </p>
           </div>
 
-          <p className="inline-flex items-center gap-1 text-xs font-semibold text-doom-gold">
+          <p className="inline-flex items-center gap-1 text-xs font-semibold text-accent-green">
             View details <span aria-hidden="true">↗</span>
           </p>
         </div>
@@ -86,7 +86,7 @@ export function ExtraMovieCard({ movie }: ExtraMovieCardProps) {
             "w-full rounded-lg border font-semibold shadow-sm transition-all duration-150",
             watched
               ? "border-white/10 bg-white/[0.04] text-foreground-secondary hover:border-white/20 hover:bg-white/[0.08]"
-              : "!border-doom-gold/35 !bg-doom-gold/10 !text-doom-gold shadow-[0_3px_12px_rgba(196,154,88,0.08)] hover:!border-doom-gold hover:!bg-doom-gold hover:!text-[#111111] hover:shadow-[0_5px_16px_rgba(196,154,88,0.18)]",
+              : "!border-accent-green/35 !bg-accent-green/10 !text-accent-green shadow-[0_3px_12px_rgba(196,154,88,0.08)] hover:!border-accent-green hover:!bg-accent-green hover:!text-[#111111] hover:shadow-[0_5px_16px_rgba(196,154,88,0.18)]",
           ].join(" ")}
           disabled={!isExtraLoaded}
           aria-pressed={watched}
