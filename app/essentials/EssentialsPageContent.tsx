@@ -36,8 +36,8 @@ export function EssentialsPageContent({
       {/* Page Hero */}
       <section className="relative isolate overflow-hidden border-b border-border">
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute -right-40 -top-40 size-[500px] rounded-full bg-doom-red/10 blur-[120px]" />
-          <div className="absolute -bottom-40 left-0 size-[350px] rounded-full bg-doom-gold/5 blur-[120px]" />
+          <div className="absolute -right-40 -top-40 size-[500px] rounded-full bg-accent-green/10 blur-[120px]" />
+          <div className="absolute -bottom-40 left-0 size-[350px] rounded-full bg-accent-green/5 blur-[120px]" />
           <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.045)_1px,transparent_1px)] [background-size:28px_28px] opacity-40" />
         </div>
 
@@ -45,7 +45,7 @@ export function EssentialsPageContent({
           <div className="max-w-3xl">
             <Link
               href="/"
-              className="mb-8 inline-flex items-center gap-2 text-sm text-foreground-muted transition-colors hover:text-doom-gold"
+              className="mb-8 inline-flex items-center gap-2 text-sm text-foreground-muted transition-colors hover:text-accent-green"
             >
               <span aria-hidden="true">←</span>
               Back to home
@@ -55,12 +55,12 @@ export function EssentialsPageContent({
               THE CURATED WATCHLIST
             </Badge>
 
-            <p className="mt-7 text-xs font-semibold uppercase tracking-[0.28em] text-doom-gold">
+            <p className="mt-7 text-xs font-semibold uppercase tracking-[0.28em] text-accent-green">
               THE ROAD TO DOOMSDAY
             </p>
 
             <h1 className="mt-4 text-4xl font-semibold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-              The essentials<span className="text-doom-red-light">.</span>
+              The essentials<span className="text-accent-green-light">.</span>
             </h1>
 
             <p className="mt-6 max-w-2xl text-base leading-8 text-foreground-secondary">
@@ -128,7 +128,7 @@ export function EssentialsPageContent({
             aria-valuenow={isLoaded ? progressPercentage : 0}
           >
             <div
-              className="h-full rounded-full bg-gradient-to-r from-doom-red to-doom-red-light transition-[width] duration-500"
+              className="h-full rounded-full bg-gradient-to-r from-accent-green to-accent-green-light transition-[width] duration-500"
               style={{
                 width: `${isLoaded ? progressPercentage : 0}%`,
               }}
@@ -149,7 +149,7 @@ export function EssentialsPageContent({
           <div className="mt-14 rounded-2xl border border-border bg-surface p-8 text-center">
             {isLoaded && watchedCount === movies.length ? (
               <>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-doom-gold">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-green">
                   COLLECTION COMPLETED
                 </p>
 
@@ -164,7 +164,7 @@ export function EssentialsPageContent({
               </>
             ) : (
               <>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-doom-gold">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-green">
                   KEEP GOING
                 </p>
 
