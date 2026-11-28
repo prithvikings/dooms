@@ -37,10 +37,20 @@ export function PlannerPageContent({ movies, essentialsMovieIds, defaultTargetDa
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
+    const currentDate = getLocalDateString();
     const saved = readPlannerConfig(defaultConfig, movies.map((movie) => movie.id));
+    const safeTargetDate =
+      saved.targetDate >= currentDate
+        ? saved.targetDate
+        : defaultConfig.targetDate >= currentDate
+          ? defaultConfig.targetDate
+          : currentDate;
+    const initialConfig = { ...saved, targetDate: safeTargetDate };
+    if (safeTargetDate !== saved.targetDate) savePlannerConfig(initialConfig);
+
     const frameId = window.requestAnimationFrame(() => {
-      setConfig(saved);
-      setToday(getLocalDateString());
+      setConfig(initialConfig);
+      setToday(currentDate);
       setIsLoaded(true);
     });
     return () => window.cancelAnimationFrame(frameId);
@@ -186,6 +196,7 @@ export function PlannerPageContent({ movies, essentialsMovieIds, defaultTargetDa
                   <input
                     id="planner-target-date"
                     type="date"
+                    required
                     min={today || undefined}
                     value={config.targetDate}
                     disabled={!isLoaded}
