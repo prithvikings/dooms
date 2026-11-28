@@ -44,7 +44,7 @@ export function MovieCard({ movie, variant = "detailed" }: MovieCardProps) {
       ].join(" ")}
     >
       <Link href={`/movies/${movie.id}`} className="block" aria-label={`View details for ${movie.title}`}>
-        <div className="relative aspect-[2/3] overflow-hidden" style={{ background: posterBackground }}>
+        <div className="relative aspect-[3/4] overflow-hidden" style={{ background: posterBackground }}>
           <Image
             src={movie.poster}
             alt={`${movie.title} poster`}
@@ -60,7 +60,7 @@ export function MovieCard({ movie, variant = "detailed" }: MovieCardProps) {
           )}
         </div>
 
-        <div className={["flex flex-col gap-3 p-4", isDetailed ? "min-h-[218px]" : "min-h-[132px]"].join(" ")}>
+        <div className={["flex flex-col gap-2.5 p-3", isDetailed ? "min-h-[190px]" : "min-h-[116px]"].join(" ")}>
           <div className="flex flex-wrap items-center justify-between gap-2">
             <Badge variant={movie.importance} className="px-2.5 py-1 text-[10px] uppercase">
               {movie.importance}
@@ -77,10 +77,10 @@ export function MovieCard({ movie, variant = "detailed" }: MovieCardProps) {
 
             {isDetailed && (
               <>
-                <p className="mt-2 line-clamp-2 text-xs leading-[1.55rem] text-foreground-secondary">
+                <p className="mt-2 line-clamp-2 text-xs leading-5 text-foreground-secondary">
                   {movie.synopsis}
                 </p>
-                <div className="mt-3 flex flex-wrap gap-1.5">
+                <div className="mt-2 flex flex-wrap gap-1.5">
                   <Badge variant="neutral" className="px-2 py-0.5 text-[10px]">{movie.universe}</Badge>
                   <Badge variant="neutral" className="px-2 py-0.5 text-[10px]">
                     {movie.type === "series" ? "Series" : movie.type === "special" ? "Special" : "Movie"}
@@ -99,7 +99,7 @@ export function MovieCard({ movie, variant = "detailed" }: MovieCardProps) {
         </div>
       </Link>
 
-      <div className="mt-auto px-4 pb-4">
+      <div className="mt-auto px-3 pb-3">
         <Button
           variant="secondary"
           size="sm"
