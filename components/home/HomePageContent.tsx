@@ -180,117 +180,104 @@ export function HomePageContent({
       </section>
 
       {/* Watch progress */}
-      <section id="progress" className="py-20 sm:py-24">
+      <section id="progress" className="py-16 sm:py-20">
         <Container>
-          <div className="grid gap-6 lg:grid-cols-12">
-            <div className="rounded-2xl border border-border bg-surface p-6 sm:p-8 lg:col-span-7">
-              <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="overflow-hidden rounded-2xl border border-border bg-surface">
+            <div className="p-6 sm:p-8">
+              <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-green">
                     YOUR JOURNEY
                   </p>
-
-                  <h2 className="mt-3 text-2xl font-semibold text-foreground">
+                  <h2 className="mt-2 text-2xl font-semibold text-foreground sm:text-3xl">
                     Your watch progress
                   </h2>
-
                   <p className="mt-2 text-sm text-foreground-secondary">
-                    Every title you complete brings you one
-                    step closer.
+                    Every title you finish moves you closer to Doomsday.
                   </p>
                 </div>
-
                 <Badge variant="neutral">
-                  {isLoaded ? "Progress saved locally" : "Loading"}
+                  {isLoaded ? "Saved on this device" : "Loading progress"}
                 </Badge>
               </div>
 
-              <div className="mt-9">
-                <div className="flex items-end justify-between gap-4">
-                  <p className="text-4xl font-semibold tabular-nums text-foreground">
-                    {isLoaded ? `${progressPercentage}%` : "—"}
-                  </p>
-
-                  <p className="text-sm text-foreground-secondary">
-                    {isLoaded
-                      ? `${watchedCount} of ${totalMovies} watched`
-                      : "Loading your progress"}
-                  </p>
-                </div>
-
-                <div
-                  className="mt-4 h-2 overflow-hidden rounded-full bg-background-tertiary"
-                  role="progressbar"
-                  aria-label="Overall watch progress"
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                  aria-valuenow={isLoaded ? progressPercentage : 0}
-                >
+              <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+                <div>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-5xl font-semibold tracking-tight tabular-nums text-foreground sm:text-6xl">
+                      {isLoaded ? `${progressPercentage}%` : "—"}
+                    </span>
+                    <span className="text-sm text-foreground-muted">completed</span>
+                  </div>
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-accent-green to-accent-green-light transition-[width] duration-500"
-                    style={{
-                      width: `${isLoaded ? progressPercentage : 0}%`,
-                    }}
-                  />
+                    className="mt-5 h-3 overflow-hidden rounded-full bg-background-tertiary"
+                    role="progressbar"
+                    aria-label="Overall watch progress"
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-valuenow={isLoaded ? progressPercentage : 0}
+                  >
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-accent-green to-accent-green-light transition-[width] duration-500"
+                      style={{ width: `${isLoaded ? progressPercentage : 0}%` }}
+                    />
+                  </div>
+                </div>
+                <div className="rounded-xl border border-border bg-background-secondary px-5 py-4 lg:min-w-48">
+                  <p className="text-2xl font-semibold tabular-nums text-foreground">
+                    {isLoaded ? watchedCount : "—"}
+                    <span className="px-1 text-foreground-muted">/</span>
+                    {totalMovies}
+                  </p>
+                  <p className="mt-1 text-xs text-foreground-muted">
+                    Main catalogue titles watched
+                  </p>
                 </div>
               </div>
-
-              <p className="mt-5 text-xs leading-6 text-foreground-muted">
-                Your progress is stored in this browser. It
-                stays available when you return using the same
-                browser and storage.
-              </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 lg:col-span-5">
-              <div className="rounded-2xl border border-border bg-background-secondary p-6">
-                <p className="text-xs uppercase tracking-widest text-foreground-muted">
-                  Total titles
-                </p>
-                <p className="mt-4 text-3xl font-semibold text-foreground">
-                  {totalMovies}
-                </p>
-                <p className="mt-2 text-xs text-foreground-secondary">
-                  Main catalogue
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-border bg-background-secondary p-6">
-                <p className="text-xs uppercase tracking-widest text-foreground-muted">
+            <div className="grid grid-cols-2 border-t border-border bg-background-secondary/60 sm:grid-cols-4">
+              <div className="border-b border-border px-5 py-4 sm:border-b-0 sm:border-r">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-foreground-muted">
                   Essentials
                 </p>
-                <p className="mt-4 text-3xl font-semibold text-foreground">
+                <p className="mt-1 text-2xl font-semibold tabular-nums text-foreground">
                   {essentials.length}
                 </p>
-                <p className="mt-2 text-xs text-foreground-secondary">
-                  Curated must-watches
-                </p>
+                <p className="mt-1 text-xs text-foreground-secondary">Curated must-watches</p>
               </div>
-
-              <div className="rounded-2xl border border-border bg-background-secondary p-6">
-                <p className="text-xs uppercase tracking-widest text-foreground-muted">
-                  Extras
-                </p>
-                <p className="mt-4 text-3xl font-semibold text-foreground">
-                  {totalExtras}
-                </p>
-                <p className="mt-2 text-xs text-foreground-secondary">
-                  Additional titles
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-border bg-background-secondary p-6">
-                <p className="text-xs uppercase tracking-widest text-foreground-muted">
+              <div className="border-b border-border px-5 py-4 sm:border-b-0 sm:border-r">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-foreground-muted">
                   Essentials watched
                 </p>
-                <p className="mt-4 text-3xl font-semibold text-foreground">
+                <p className="mt-1 text-2xl font-semibold tabular-nums text-accent-green">
                   {isLoaded ? essentialWatchedCount : "—"}
                 </p>
-                <p className="mt-2 text-xs text-foreground-secondary">
-                  Of {essentials.length} titles
+                <p className="mt-1 text-xs text-foreground-secondary">Of {essentials.length} titles</p>
+              </div>
+              <div className="px-5 py-4 sm:border-r sm:border-border">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-foreground-muted">
+                  Extras
                 </p>
+                <p className="mt-1 text-2xl font-semibold tabular-nums text-foreground">
+                  {totalExtras}
+                </p>
+                <p className="mt-1 text-xs text-foreground-secondary">Additional titles</p>
+              </div>
+              <div className="px-5 py-4">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-foreground-muted">
+                  Remaining
+                </p>
+                <p className="mt-1 text-2xl font-semibold tabular-nums text-foreground">
+                  {isLoaded ? Math.max(totalMovies - watchedCount, 0) : "—"}
+                </p>
+                <p className="mt-1 text-xs text-foreground-secondary">Titles left to watch</p>
               </div>
             </div>
+
+            <p className="border-t border-border px-6 py-3 text-xs leading-5 text-foreground-muted sm:px-8">
+              Your progress is stored in this browser and will be here when you return on the same device.
+            </p>
           </div>
         </Container>
       </section>
