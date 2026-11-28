@@ -13,10 +13,10 @@ interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 
 const variants: Record<BadgeVariant, string> = {
   essential:
-    "border-doom-red/40 bg-doom-red/15 text-red-300",
+    "border-accent-green/40 bg-accent-green/15 text-accent-green",
 
   recommended:
-    "border-doom-gold/30 bg-doom-gold/10 text-doom-gold",
+    "border-accent-green/30 bg-accent-green/10 text-accent-green",
 
   optional:
     "border-white/10 bg-white/5 text-foreground-secondary",
