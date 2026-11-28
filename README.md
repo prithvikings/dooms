@@ -139,23 +139,6 @@ Doomsday does not require an account. Watch progress and the selected release re
 
 This means your progress is available when you return using the same browser and storage, but it is not automatically synced between devices or browsers. Clearing browser storage may erase saved progress and preferences.
 
----
-
-## Design direction
-
-- **Cinematic dark interface:** Deep near-black surfaces with restrained contrast.
-- **Green accents:** Bright green highlights for key actions, progress, and selected states.
-- **Content-first cards:** Movie artwork, concise context, and clear watch actions.
-- **Minimal interactions:** Keep navigation and planning straightforward.
-- **Responsive layouts:** Adapt the experience for desktop and mobile screens.
-
----
-
-## Disclaimer
-
-Doomsday is an independent, fan-made project created for informational and entertainment purposes. It is not affiliated with, endorsed by, or sponsored by Marvel Entertainment, Marvel Studios, or The Walt Disney Company.
-
-All Marvel-related names, characters, films, series, and trademarks belong to their respective owners.
 
 ---
 
