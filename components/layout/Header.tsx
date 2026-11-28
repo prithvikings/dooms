@@ -65,7 +65,7 @@ export function Header() {
               key={link.label}
               href={link.href}
               className={[
-                "text-sm font-medium transition-colors hover:text-doom-gold",
+                "text-sm font-medium transition-colors hover:text-accent-green",
                 isHomePage ? "text-white/85 hover:text-white" : "text-foreground-secondary",
               ].join(" ")}
             >
@@ -113,7 +113,7 @@ export function Header() {
               href={link.href}
               onClick={closeMenu}
               className={[
-                "rounded-lg px-3 py-3 text-sm font-medium transition-colors hover:text-doom-gold",
+                "rounded-lg px-3 py-3 text-sm font-medium transition-colors hover:text-accent-green",
                 isHomePage
                   ? "text-white/85 hover:bg-white/10"
                   : "text-foreground-secondary hover:bg-surface",
