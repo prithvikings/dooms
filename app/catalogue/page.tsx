@@ -7,6 +7,7 @@ import { movies } from "@/data/movies";
 import { CataloguePageContent } from "./CataloguePageContent";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/catalogue" },
   title: "Full Catalogue",
   description:
     "Explore the complete Marvel watch catalogue for Avengers: Doomsday. Search, filter and sort movies, series and specials.",
