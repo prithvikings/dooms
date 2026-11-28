@@ -38,9 +38,17 @@ export async function generateMetadata({
     description: movie.synopsis,
     alternates: { canonical: `/movies/${movie.id}` },
     openGraph: {
+      type: "article",
+      siteName: "Doomsday",
       title: `${movie.title} — Doomsday`,
       description: movie.doomsdayRelevance,
       images: [{ url: movie.poster.startsWith("http") ? movie.poster : `https://doomsday-six-blond.vercel.app${movie.poster}` }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${movie.title} — Doomsday`,
+      description: movie.doomsdayRelevance,
+      images: [movie.poster.startsWith("http") ? movie.poster : `https://doomsday-six-blond.vercel.app${movie.poster}`],
     },
   };
 }
