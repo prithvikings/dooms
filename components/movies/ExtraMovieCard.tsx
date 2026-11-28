@@ -55,7 +55,7 @@ export function ExtraMovieCard({ movie }: ExtraMovieCardProps) {
           )}
         </div>
 
-        <div className="flex min-h-[190px] flex-col gap-2.5 p-3">
+        <div className="flex min-h-[150px] flex-col gap-2 p-3">
           <div className="flex items-center justify-between gap-2">
             <Badge variant="neutral" className="px-2.5 py-1 text-[10px] uppercase">{movie.universe}</Badge>
             <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-foreground-muted">
