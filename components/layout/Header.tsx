@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
@@ -15,18 +15,31 @@ const navigationLinks = [
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const isHomePage = pathname === "/";
+
+  useEffect(() => {
+    const updateScrollState = () => setIsScrolled(window.scrollY > 12);
+    updateScrollState();
+    window.addEventListener("scroll", updateScrollState, { passive: true });
+    return () => window.removeEventListener("scroll", updateScrollState);
+  }, []);
 
   const closeMenu = () => setMenuOpen(false);
 
   return (
     <header
       className={[
-        "z-50 w-full",
+        "sticky top-0 z-50 w-full transition-[background-color,backdrop-filter] duration-200",
         isHomePage
-          ? "absolute inset-x-0 top-0 bg-transparent text-white"
-          : "sticky top-0 border-b border-border bg-background/85 backdrop-blur-xl",
+          ? [
+              "-mb-20 text-white",
+              isScrolled || menuOpen
+                ? "bg-black/80 backdrop-blur-xl"
+                : "bg-transparent",
+            ].join(" ")
+          : "border-b border-border bg-background/85 backdrop-blur-xl",
       ].join(" ")}
     >
       <Container className="flex h-20 items-center justify-between">
