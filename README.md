@@ -1,235 +1,167 @@
 # DOOMSDAY — Marvel Watch Guide
 
-A curated Marvel watch guide built for **Avengers: Doomsday**.
+A curated, fan-made Marvel watch guide for **Avengers: Doomsday**.
 
-Explore essential MCU movies, discover multiverse connections, track your viewing progress, create a personalized watch plan, and follow the countdown to Doomsday.
+Explore the essential stories, browse the wider Marvel catalogue, follow connected timelines, track what you've watched, and build a simple day-by-day watch plan.
 
 **Less scrolling. More context. Be ready for Doomsday.**
 
 ---
 
-## Overview
+## What is Doomsday?
 
-With years of Marvel movies, interconnected storylines, alternate universes, and multiverse arcs, figuring out what to watch before _Avengers: Doomsday_ can become overwhelming.
+The Marvel universe spans films, series, alternate realities, and interconnected storylines. Knowing what to revisit before a major crossover can quickly become overwhelming.
 
-Doomsday simplifies that experience.
-
-Instead of presenting an enormous chronological archive, it provides a curated viewing experience that helps you understand the stories, characters, and universes that matter.
-
-Whether you're catching up with the MCU or revisiting the multiverse, Doomsday helps you prepare without getting lost in the entire Marvel catalogue.
-
----
+Doomsday makes that easier with a focused watchlist and context around the stories that lead into *Avengers: Doomsday*. Start with the essentials, then explore more whenever you want.
 
 ## Features
 
-### 🎬 Curated Watch Guide
+### 🎬 Home watchlist
+- Start with **16 curated essential titles**.
+- Browse movie cards with story context, metadata, and watch status.
+- Track your essentials progress directly on the home page.
+- Jump to the watch planner without navigating to a separate page.
 
-- Explore essential movies and recommended titles.
-- Discover additional content through curated collections.
-- Understand why each title matters to the larger story.
-- Browse titles across different Marvel universes.
+### 🔎 Full catalogue
+- Explore the **59-title main catalogue**.
+- Search by title and filter by importance, universe, content type, and watch status.
+- Sort titles to find the right place to continue.
 
-### 📚 Movie Catalogue
+### 🌌 Extras
+- Explore **29 additional titles** across Spider-Man, Sony, Fox X-Men, and other Marvel legacy collections.
+- Track Extras viewing progress separately from the main catalogue.
 
-- Browse the complete curated catalogue.
-- Search movies by title.
-- Filter by importance, universe, content type, and watch status.
-- Sort titles by viewing order, release date, or title.
+### 📖 Story & timelines
+- Explore curated story threads and connections between characters and universes.
+- Browse timelines across MCU, Fox, TVA, and multiverse continuities.
+- See your viewing progress while exploring the story.
 
-### ✅ Watch Progress
+### 🗓️ Watch planner
+- Build a plan from Essentials, the full catalogue, or a custom selection.
+- Choose a target finish date.
+- Arrange titles by release order or story order.
+- Optionally show titles you've already watched in the schedule.
 
-- Mark movies and series as watched or unwatched.
-- Track your overall viewing progress.
-- Keep your progress saved locally on your device.
-- Maintain separate progress for the main catalogue and Extras.
+### ⏳ Release countdown
+- View a live countdown to the configured *Avengers: Doomsday* release date.
+- Switch between supported release regions.
+- Your selected region is remembered in your browser.
 
-### 🧭 Story & Timeline
-
-- Explore the story behind the multiverse.
-- Follow curated viewing timelines.
-- Discover character and universe connections.
-- Understand how different storylines relate to Doomsday.
-
-### 🗓️ Personalized Watch Planner
-
-- Choose Essentials, the full catalogue, or a custom selection.
-- Set your daily viewing time.
-- Choose a target date.
-- Exclude already-watched titles or include them in your plan.
-- Generate a viewing schedule that respects the selected watch order.
-- Identify titles with unknown runtimes or schedules that exceed your available time.
-
-### ⏳ Release Countdown
-
-- Follow the countdown to Avengers: Doomsday.
-- Choose your release region.
-- View the corresponding release date and time.
-- Automatically remember your region preference.
+### 🎞️ Movie detail pages
+- Open a title for its synopsis, release information, and Doomsday relevance.
+- Read story context, things to notice, and its place in the bigger picture.
+- Explore related titles and optional spoiler notes where available.
 
 ---
 
-## Tech Stack
+## Tech stack
 
-| Technology     | Purpose                                   |
-| -------------- | ----------------------------------------- |
-| Next.js 16     | React framework                           |
-| React 19       | UI development                            |
-| TypeScript     | Type safety                               |
-| Tailwind CSS 4 | Styling                                   |
-| Motion 14      | Animation                                 |
-| Bun            | Package management and scripts            |
-| LocalStorage   | Persistent watch progress and preferences |
+| Technology | Purpose |
+| --- | --- |
+| Next.js 16 | React framework and application routing |
+| React 19 | UI |
+| TypeScript | Type safety |
+| Tailwind CSS 4 | Styling |
+| Motion 14 | UI animation |
+| Bun 1.4 | Package management and scripts |
+| Browser LocalStorage | Watch progress and release-region preference |
 
 ---
 
-## Getting Started
+## Run locally
 
 ### Prerequisites
 
-Make sure you have the following installed:
-
-- [Bun](https://bun.sh/)
+- [Bun](https://bun.sh/) 1.4 or compatible
 - [Git](https://git-scm.com/)
 - A modern web browser
 
 ### Installation
 
-**1. Clone the repository**
-
 ```bash
 git clone https://github.com/prithvikings/dooms.git
-```
-
-**2. Navigate into the project**
-
-```bash
 cd dooms
-```
-
-**3. Install dependencies**
-
-```bash
 bun install
-```
-
-**4. Start the development server**
-
-```bash
 bun run dev
 ```
 
-**5. Open the application**
+Open [http://localhost:3000](http://localhost:3000).
 
-Visit [http://localhost:3000](http://localhost:3000).
+### Available commands
 
----
-
-## Available Scripts
-
-| Command             | Description                  |
-| ------------------- | ---------------------------- |
-| `bun run dev`       | Start the development server |
-| `bun run build`     | Create a production build    |
-| `bun run start`     | Start the production server  |
-| `bun run lint`      | Run ESLint                   |
-| `bunx tsc --noEmit` | Run TypeScript checks        |
+| Command | Description |
+| --- | --- |
+| `bun run dev` | Start the development server |
+| `bun run build` | Create a production build |
+| `bun run start` | Run the production server |
+| `bun run lint` | Run ESLint |
+| `bunx tsc --noEmit` | Run TypeScript checks |
 
 ---
 
-## Project Structure
+## Project structure
 
 ```text
 dooms/
 ├── app/
-│   ├── catalogue/
-│   ├── countdown/
-│   ├── essentials/
-│   ├── extras/
-│   ├── planner/
-│   ├── story/
+│   ├── catalogue/       # Full catalogue page
+│   ├── essentials/      # Redirects to the home essentials section
+│   ├── extras/          # Additional Marvel collections
+│   ├── movies/[id]/     # Movie and series detail pages
+│   ├── planner/         # Redirects to the home planner section
+│   ├── story/           # Story threads and timelines
 │   ├── globals.css
 │   ├── layout.tsx
-│   └── page.tsx
-│
+│   └── page.tsx         # Home page
 ├── components/
 │   ├── countdown/
+│   ├── home/
 │   ├── layout/
 │   ├── movies/
 │   ├── planner/
 │   ├── providers/
 │   ├── story/
 │   └── ui/
-│
 ├── data/
-│   ├── config/
-│   └── movies/
-│
-├── lib/
-│   ├── countdown-storage.ts
-│   ├── constants.ts
-│   ├── planner-storage.ts
-│   └── ...
-│
+│   ├── config/          # Release-region configuration
+│   └── movies/          # Catalogue, essentials, extras, and guide content
+├── lib/                 # Storage and shared utilities
+├── public/              # Static assets, including movie posters
 ├── types/
-│
-├── public/
-│
 └── package.json
 ```
 
 ---
 
-## Design Philosophy
+## Progress and privacy
 
-Doomsday follows a simple design direction:
+Doomsday does not require an account. Watch progress and the selected release region are stored in your browser using LocalStorage.
 
-- **Dark by default:** A cinematic dark interface.
-- **Doom-inspired accents:** Deep reds and subtle gold details.
-- **Minimal UI:** Keep the focus on movies, stories, and viewing progress.
-- **Useful over flashy:** Every feature should help users prepare for the movie.
-- **Responsive experience:** Designed to work across desktop and mobile screens.
+This means your progress is available when you return using the same browser and storage, but it is not automatically synced between devices or browsers. Clearing browser storage may erase saved progress and preferences.
 
 ---
 
-## Data & Privacy
+## Design direction
 
-Doomsday uses browser LocalStorage to remember user preferences and viewing progress.
-
-Currently, user progress and planner preferences are stored locally on the device. The application does not require an account to use these features.
-
-Clearing browser storage may remove locally saved progress and preferences.
-
----
-
-## Project Status
-
-The core feature implementation is complete.
-
-The project is currently moving through its quality assurance and refinement stage, focusing on:
-
-- Responsive UI improvements.
-- Cross-page consistency.
-- Functional regression testing.
-- Accessibility and performance improvements.
-- Final production readiness checks.
+- **Cinematic dark interface:** Deep near-black surfaces with restrained contrast.
+- **Green accents:** Bright green highlights for key actions, progress, and selected states.
+- **Content-first cards:** Movie artwork, concise context, and clear watch actions.
+- **Minimal interactions:** Keep navigation and planning straightforward.
+- **Responsive layouts:** Adapt the experience for desktop and mobile screens.
 
 ---
 
 ## Disclaimer
 
-Doomsday is an independent, fan-made project created for informational and entertainment purposes.
+Doomsday is an independent, fan-made project created for informational and entertainment purposes. It is not affiliated with, endorsed by, or sponsored by Marvel Entertainment, Marvel Studios, or The Walt Disney Company.
 
-It is not affiliated with, endorsed by, or sponsored by Marvel Entertainment, Marvel Studios, or The Walt Disney Company.
-
-All Marvel-related names, characters, movies, and trademarks belong to their respective owners.
+All Marvel-related names, characters, films, series, and trademarks belong to their respective owners.
 
 ---
 
 ## Author
 
-**Prithvi**
-
-- GitHub: [@prithvikings](https://github.com/prithvikings)
+**Prithvi** · [GitHub @prithvikings](https://github.com/prithvikings)
 
 ---
 
