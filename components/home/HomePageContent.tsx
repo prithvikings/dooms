@@ -14,17 +14,24 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { useWatchProgress } from "@/components/providers/WatchProgressProvider";
 import type { Movie } from "@/types/movie";
 import { MovieCard } from "@/components/movies/MovieCard";
+import { PlannerPageContent } from "@/components/planner/PlannerPageContent";
 
 type HomePageContentProps = {
   essentials: Movie[];
   totalMovies: number;
   totalExtras: number;
+  movies: Movie[];
+  essentialsMovieIds: string[];
+  defaultTargetDate: string;
 };
 
 export function HomePageContent({
   essentials,
   totalMovies,
   totalExtras,
+  movies,
+  essentialsMovieIds,
+  defaultTargetDate,
 }: HomePageContentProps) {
   const {
     watchedCount,
@@ -155,14 +162,14 @@ export function HomePageContent({
 
           <div className="mt-9 flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row">
             <Link
-              href="/essentials"
+              href="/#essentials"
               className="inline-flex min-h-14 items-center justify-center bg-[#7cff62] px-8 py-4 text-sm font-bold shadow-[0_8px_35px_rgba(112,255,83,0.2)] transition-colors hover:bg-[#a0ff8a]"
             >
               <span style={{ color: "#000000" }}>See the essentials</span>
             </Link>
 
             <Link
-              href="/planner"
+              href="#planner"
               className="inline-flex min-h-14 items-center justify-center border border-white/35 bg-black/25 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm transition-colors hover:border-white/70 hover:bg-white/10"
             >
               Make me a watch plan
@@ -287,81 +294,66 @@ export function HomePageContent({
         </Container>
       </section>
 
-      {/* Essentials */}
+      {/* Essentials watchlist */}
       <section
         id="essentials"
-        className="border-t border-border bg-background-secondary py-20 sm:py-24"
+        className="border-t border-border bg-background-secondary py-16 sm:py-20"
       >
         <Container>
-          <div className="flex flex-col gap-8">
-            <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
-              <SectionHeading
-                eyebrow="WHERE TO BEGIN"
-                title="The essentials."
-                description="Sixteen carefully selected stories that cover the major characters, multiverse connections and events leading into Doomsday."
+          <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+            <SectionHeading
+              eyebrow="YOUR WATCHLIST"
+              title="The essentials."
+              description="Sixteen carefully selected stories that cover the major characters, multiverse connections and events leading into Doomsday. Mark each title as you complete it and your progress will stay synced with the rest of the guide."
+            />
+
+            <Badge variant="neutral">
+              {isLoaded
+                ? `${essentialWatchedCount} of ${essentials.length} completed`
+                : "Loading progress"}
+            </Badge>
+          </div>
+
+          <div
+            className="mb-10 h-2 overflow-hidden rounded-full bg-background-tertiary"
+            role="progressbar"
+            aria-label="Essentials completion"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={isLoaded
+              ? Math.round((essentialWatchedCount / Math.max(essentials.length, 1)) * 100)
+              : 0}
+          >
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-accent-green to-accent-green-light transition-[width] duration-500"
+              style={{
+                width: `${isLoaded
+                  ? Math.round((essentialWatchedCount / Math.max(essentials.length, 1)) * 100)
+                  : 0}%`,
+              }}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {essentials.map((movie) => (
+              <MovieCard
+                key={movie.id}
+                movie={movie}
+                variant="detailed"
               />
-
-              <Badge variant="essential">
-                {essentials.length} essential titles
-              </Badge>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-              {essentials.map((movie) => (
-  <MovieCard
-    key={movie.id}
-    movie={movie}
-    variant="compact"
-  />
-))}
-            </div>
-
-            <div className="flex flex-col items-center gap-3 border-t border-border pt-8 text-center">
-              <p className="text-sm text-foreground-secondary">
-                {isLoaded
-                  ? `${essentialWatchedCount} of ${essentials.length} essentials completed`
-                  : "Loading watch progress"}
-              </p>
-
-              <p className="text-xs text-foreground-muted">
-                Your journey is just getting started.
-              </p>
-            </div>
+            ))}
           </div>
+
+
         </Container>
       </section>
 
-      {/* Closing CTA */}
-      <section className="py-20">
-        <Container>
-          <div className="relative overflow-hidden rounded-2xl border border-accent-green/20 bg-gradient-to-br from-[#142116] to-background-secondary px-6 py-12 text-center sm:px-12 sm:py-16">
-            <div className="pointer-events-none absolute -right-20 -top-32 size-80 rounded-full bg-accent-green/15 blur-[100px]" />
-
-            <div className="relative mx-auto max-w-2xl space-y-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-accent-green">
-                THE MULTIVERSE AWAITS
-              </p>
-
-              <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-                Ready for what comes next?
-              </h2>
-
-              <p className="text-sm leading-7 text-foreground-secondary">
-                Start with the essentials, keep track of what
-                you have watched and explore the stories
-                connected to Doomsday.
-              </p>
-
-              <Link
-                href="#essentials"
-                className="inline-flex items-center justify-center rounded-lg bg-accent-green px-6 py-3 text-sm font-semibold text-[#071006] transition-colors hover:bg-accent-green-light"
-              >
-                Continue your journey →
-              </Link>
-            </div>
-          </div>
-        </Container>
-      </section>
+      {/* Watch planner */}
+      <PlannerPageContent
+        movies={movies}
+        essentialsMovieIds={essentialsMovieIds}
+        defaultTargetDate={defaultTargetDate}
+      />
     </>
   );
 }
